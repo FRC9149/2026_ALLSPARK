@@ -16,7 +16,10 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/** 
+ * This subsytem moves the intake in and out of the perimeter.
+ */
 public class Intake_ontop extends SubsystemBase{
-
-    private final SparkMax m1onintake = new SparkMax(1, MotorType.kBrushless);
+    
+    private final SparkMax Onintakem1 = new SparkMax(1, MotorType.kBrushless);
 }

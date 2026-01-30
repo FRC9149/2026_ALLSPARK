@@ -5,25 +5,24 @@
 
 package frc.robot.commands;
 
-
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.subsystems.Outake;
 
 /** An example command that uses an example subsystem. */
 public class ShootFuel extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
-  //private final Outake subsystem;
+  private final Shooter subsystem;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
- // public ShootFuel(Outake subsystem) {
-  //  this.subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-  //  addRequirements(subsystem);
-//  }
+  public ShootFuel(Shooter subsystem) {
+    this.subsystem = subsystem;
+     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
+  }
 
   // Called when the command is initially scheduled.
   @Override
@@ -31,11 +30,12 @@ public class ShootFuel extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {subsystem.shoot(0.5);}
+  
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {subsystem.shoot(0);}
 
   // Returns true when the command should end.
   @Override
