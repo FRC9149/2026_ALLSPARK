@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Aiming;
 
 public class Aim extends Command{
+      @SuppressWarnings("unused")
       private final Aiming subsystem;
 
   /**
