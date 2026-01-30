@@ -97,6 +97,18 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 
   }
 
+  public boolean atMinHeight() {
+  return getHeight() <= MIN_HEIGHT + encoderTolerance;
+}
+
+  public void retract() {
+  if (!atMinHeight()) {
+    setSpeed(-0.5);   //Goes down
+  } else {
+    stop();
+  }
+}
+
   public void stop() {
     Climbm1.set(0);
     Climbm2.set(0);
