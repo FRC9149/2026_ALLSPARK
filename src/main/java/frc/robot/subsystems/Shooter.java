@@ -34,21 +34,19 @@ public class Shooter extends SubsystemBase{
     config
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
-        .inverted(false)
-        ;
+        .inverted(false);
     SparkMaxConfig config2 = new SparkMaxConfig();
     config2
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
-        .inverted(true)
-        ;
+        .inverted(true);
     //SparkBaseConfig config2 = new SparkBaseConfig();
     //config3
     //    .IdleMode(int 3)
     //    .smartCurrentLimit(40)
-    //    .inverted(true)
-    //    ;
+    //    .inverted(true);
 
+    
     SM1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     SM2.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
