@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
+
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -48,7 +50,7 @@ RobotContainer {
     private RevGamePad RevGamePad = new RevGamePad(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  {
+   public RobotContainer() {
     // Configure the trigger bindings
     
     configureBindings();
