@@ -52,7 +52,7 @@ RobotContainer {
     private Ps3 ps3 = new Ps3(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  ) {
+  {
     // Configure the trigger bindings
     
     configureBindings();
