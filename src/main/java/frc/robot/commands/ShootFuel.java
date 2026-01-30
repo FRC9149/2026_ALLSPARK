@@ -26,8 +26,8 @@ public class ShootFuel extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {//Input for when George presses the shoot button on the controller 
-  }
+  public void initialize() {//Robot container has the code
+    }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -35,13 +35,10 @@ public class ShootFuel extends Command {
   
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    return false;
-  }
+  public boolean isFinished() {return false;}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {subsystem.shoot(0);}
 
-  
 }
