@@ -24,21 +24,29 @@ public class LowerIntake extends SubsystemBase{
 
     public LowerIntake() {
 
-        SparkMaxConfig config = new SparkMaxConfig();
-        // Set the limit
-        config.smartCurrentLimit(30); 
-        // Apply the config to the motor
-        intake2m.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters);
+         SparkMaxConfig config = new SparkMaxConfig();
+         // Set the limit
+         config.smartCurrentLimit(30); 
+         // Apply the config to the motor
 
          // PID tuning (start small)
-        config.closedLoop.pid(0.1, 0, 0);
+         config.closedLoop.pid(0.1, 0, 0);
+        
+         // Soft limits
+          config.softLimit.forwardSoftLimit(22);  // max down
+          config.softLimit.forwardSoftLimitEnabled(true);
+         
+          config.softLimit.reverseSoftLimit(0);   // fully up
+          config.softLimit.reverseSoftLimitEnabled(true);
+
+         intake2m.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters);
+
+        
 
          encoder.setPosition(0); // define "in" as zero
     }
-    /*
-    Sets the hopper speed from -1.0 to 1.0
-    */
-    public void intakeDown(boolean currently_out) {
+   
+    public void intakeDown() {
        controller.setReference(OUT_POS, ControlType.kPosition);
     }
 
