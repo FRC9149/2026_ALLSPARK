@@ -35,9 +35,9 @@ RobotContainer {
     null,
      true
   );
+  private final Shooter shooter = new Shooter();
 
-
-    private Ps3 ps3Controller = new Ps3(0);
+    private Ps3 RevGamePad = new Ps3(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   ) {
@@ -47,9 +47,9 @@ RobotContainer {
 
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        ps3Controller.getLeftY(),
-        ps3Controller.getLeftX(), 
-        ps3Controller.getRightX(),
+        RevGamePad.getLeftY(),
+        RevGamePad.getLeftX(), 
+        RevGamePad.getRightX(),
         true
         ), Swerve)
     );
@@ -65,15 +65,13 @@ RobotContainer {
    */
   private void configureBindings() {
     Swerve.driveTo(null);
-    ps3Controller.onB().onTrue(Swerve.driveTo(middleShootingPosition));
-    ps3Controller.onA().onTrue(Swerve.driveTo(leftShootingposition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderShootingPosition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(leftOfLadderClimbingPosition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(middleOfLadderClimbingPostion));
-    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderClimbingPositionb));
-    ps3Controller.onX().onTrue(Swerve.driveTo());
-    ps3Controller.onX().onTrue(Swerve.driveTo());
-    ps3Controller.onX().onTrue(Swerve.driveTo());
+    RevGamePad.onX().onTrue(Swerve.driveTo(middleShootingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(leftShootingposition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(rightOfLadderShootingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(leftOfLadderClimbingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(middleOfLadderClimbingPostion));
+    RevGamePad.onX().onTrue(Swerve.driveTo(rightOfLadderClimbingPositionb));
+    RevGamePad.onRt().onTrue(new ShootFuel(shooter));
   }
 
   /* 
