@@ -21,7 +21,7 @@ public class LowerIntake extends SubsystemBase{
     Sets the hopper speed from -1.0 to 1.0
     */
     public void intakeDown(boolean currently_out) {
-        if currently_out
+        // if currently_out
     }
 
     public void stop() {
