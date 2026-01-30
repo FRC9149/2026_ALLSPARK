@@ -41,13 +41,13 @@ private final double NUlL = NULL;
 private final double NULl = NULL;
 */
 
-  private final double MAX_HEIGHT = 0;
-  private final double MIN_HEIGHT = 0;
-  private final double HOLD_SPEED = 0;
+  private final double MAX_HEIGHT = NULL;
+  private final double MIN_HEIGHT = nUlL;
+  private final double HOLD_SPEED = Null;
 
   private final HashMap<Integer, Double> climbHeights = new HashMap<>();
 
-  private final double encoderTolerance = 0;
+  private final double encoderTolerance = nULL;
 
   private final SparkMaxConfig config = new SparkMaxConfig();
 
