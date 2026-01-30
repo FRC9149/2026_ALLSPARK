@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,13 +20,14 @@ import com.robocats.swerve.gyroscope.AhrsGyro;
 import com.robocats.swerve.ModuleConfig;
 import com.robocats.controllers.Ps3;
 import com.robocats.controllers.RevGamePad;
+import frc.robot.Constants.WaypointConstants;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
-public class RobotContainer {
+RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
     DriveConstants.swerveConfiguration, 
@@ -37,7 +40,7 @@ public class RobotContainer {
     private Ps3 ps3Controller = new Ps3(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  ) {
     // Configure the trigger bindings
     
     configureBindings();
@@ -61,8 +64,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
-
+    Swerve.driveTo(null);
+    ps3Controller.onB().onTrue(Swerve.driveTo(middleShootingPosition));
+    ps3Controller.onA().onTrue(Swerve.driveTo(leftShootingposition));
+    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderShootingPosition));
+    ps3Controller.onX().onTrue(Swerve.driveTo(leftOfLadderClimbingPosition));
+    ps3Controller.onX().onTrue(Swerve.driveTo(middleOfLadderClimbingPostion));
+    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderClimbingPositionb));
+    ps3Controller.onX().onTrue(Swerve.driveTo());
+    ps3Controller.onX().onTrue(Swerve.driveTo());
+    ps3Controller.onX().onTrue(Swerve.driveTo());
   }
 
   /* 
@@ -70,7 +81,7 @@ public class RobotContainer {
    
     @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  getAutonomousCommand() {
     // An example command will be run in autonomous
     return null;
   }
