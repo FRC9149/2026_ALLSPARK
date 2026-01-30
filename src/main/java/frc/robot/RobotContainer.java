@@ -44,6 +44,7 @@ public class RobotContainer {
     true
   );
   //A changing kp so if oscilation occurs, it can be corrected
+  @SuppressWarnings("unused")
   private final Shooter shooter = new Shooter();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
