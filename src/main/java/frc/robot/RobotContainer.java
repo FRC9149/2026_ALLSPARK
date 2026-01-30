@@ -5,6 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,8 +17,10 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
 import com.studica.frc.AHRS.NavXComType;
+
 
 import com.robocats.swerve.gyroscope.AhrsGyro;
 import com.robocats.swerve.ModuleConfig;
@@ -29,18 +35,24 @@ import frc.robot.Constants.WaypointConstants;
  */
 RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem Swerve = new SwerveSubsystem(
-    DriveConstants.swerveConfiguration, 
-    new PIDController(0.5,0.01,0.01), 
-    null,
-     true
-  );
-  private final Shooter shooter = new Shooter();
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-    private Ps3 RevGamePad = new Ps3(0);
+  private final SwerveSubsystem Swerve = new SwerveSubsystem(new SwerveConfig(4, 3 * Math.PI, .1016, TimedRobot.kDefaultPeriod, 
+    DriveConstants.kDriveKinematics, 
+    DriveConstants.moduleConfiguration, 
+    new AhrsGyro(NavXComType.kUSB1, Math.PI/2, false),
+    true
+  ), new PIDController(0.5,0.01,0.01));
+  //A changing kp so if oscilation occurs, it can be corrected
+  private final Shooter shooter = new shooter();
+
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // private final CommandXboxController m_driverController =
+      //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
+    private RevGamePad RevGamePad = new RevGamePad(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  ) {
+  {
     // Configure the trigger bindings
     
     configureBindings();
@@ -53,7 +65,9 @@ RobotContainer {
         true
         ), Swerve)
     );
+    Swerve.setupPathPlanner();
   }
+  // something
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
@@ -81,6 +95,6 @@ RobotContainer {
    */
   getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return Autos.exampleAuto(m_exampleSubsystem);
   }
 }
