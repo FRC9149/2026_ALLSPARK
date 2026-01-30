@@ -61,7 +61,7 @@ public class Shooter extends SubsystemBase{
 
   /** Run shooter at given speed (0.0 to 1.0) */
   public void shoot(double speed) {
-    speed = MathUtil.clamp(speed, -1, 1);
+    speed = MathUtil.clamp(speed, 1, 1);
     SM1.set(speed);
     SM2.set(speed);
   }
