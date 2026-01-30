@@ -5,10 +5,6 @@
 package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -44,12 +40,12 @@ RobotContainer {
     true
   ), new PIDController(0.5,0.01,0.01));
   //A changing kp so if oscilation occurs, it can be corrected
-
+  private final Shooter shooter = new shooter();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
-    private Ps3 ps3 = new Ps3(0);
+    private RevGamePad RevGamePad = new RevGamePad(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   {
@@ -59,11 +55,11 @@ RobotContainer {
 
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        ps3.getLeftY(),
-        ps3.getLeftX(),
-        ps3.getRightX(),
-        ps3.getRightY()
-      ), Swerve)
+        RevGamePad.getLeftY(),
+        RevGamePad.getLeftX(), 
+        RevGamePad.getRightX(),
+        true
+        ), Swerve)
     );
     Swerve.setupPathPlanner();
   }
@@ -79,15 +75,13 @@ RobotContainer {
    */
   private void configureBindings() {
     Swerve.driveTo(null);
-    ps3Controller.onB().onTrue(Swerve.driveTo(middleShootingPosition));
-    ps3Controller.onA().onTrue(Swerve.driveTo(leftShootingposition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderShootingPosition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(leftOfLadderClimbingPosition));
-    ps3Controller.onX().onTrue(Swerve.driveTo(middleOfLadderClimbingPostion));
-    ps3Controller.onX().onTrue(Swerve.driveTo(rightOfLadderClimbingPositionb));
-    ps3Controller.onX().onTrue(Swerve.driveTo());
-    ps3Controller.onX().onTrue(Swerve.driveTo());
-    ps3Controller.onX().onTrue(Swerve.driveTo());
+    RevGamePad.onX().onTrue(Swerve.driveTo(middleShootingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(leftShootingposition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(rightOfLadderShootingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(leftOfLadderClimbingPosition));
+    RevGamePad.onX().onTrue(Swerve.driveTo(middleOfLadderClimbingPostion));
+    RevGamePad.onX().onTrue(Swerve.driveTo(rightOfLadderClimbingPositionb));
+    RevGamePad.onRt().onTrue(new ShootFuel(shooter));
   }
 
   /* 

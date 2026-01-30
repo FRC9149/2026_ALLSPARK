@@ -5,11 +5,11 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase; 
 
-public class Hopper extends SubsystemBase{
+public class LowerIntake extends SubsystemBase{
 
     private final SparkMax hopperMotor = new SparkMax(1, MotorType.kBrushless);
 
-    public Hopper() {
+    public LowerIntake() {
 
         SparkMaxConfig config = new SparkMaxConfig();
         // Set the limit
@@ -20,8 +20,8 @@ public class Hopper extends SubsystemBase{
     /*
     Sets the hopper speed from -1.0 to 1.0
     */
-    public void setSpeed(double speed) {
-        hopperMotor.set(speed);
+    public void intakeDown(boolean currently_out) {
+        if currently_out
     }
 
     public void stop() {
