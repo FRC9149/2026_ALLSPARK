@@ -39,6 +39,9 @@ private final double NuLL = NULL;
 private final double NUll = NULL;
 private final double NUlL = NULL;
 private final double NULl = NULL;
+
+I found a really good youtube tutorial for making subsystems and commands
+https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 */
 
   private final double MAX_HEIGHT = 0;
