@@ -70,7 +70,11 @@ private final double NULl = NULL;
     climbHeights.put(2, 0.0);
   }
 
-  public void moveToHeight(double targetHeight, boolean hold) {
+  public void moveToHeight(int level, boolean hold) {
+    if (!climbHeights.containsKey(level)) return; // safety check
+
+    double targetHeight = climbHeights.get(level);
+
     double error = targetHeight - getHeight();
     double holdSpeed = hold ? HOLD_SPEED : 0;
 
