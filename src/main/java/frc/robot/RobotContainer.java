@@ -47,6 +47,7 @@ public class RobotContainer {
     true
   );
   //A changing kp so if oscilation occurs, it can be corrected
+  @SuppressWarnings("unused")
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
