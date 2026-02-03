@@ -20,7 +20,7 @@ public class Climber extends SubsystemBase {
   private final SparkMax Climbm2 = new SparkMax(2, MotorType.kBrushless);
 
   private final RelativeEncoder e1 = Climbm1.getEncoder();
-  private final RelativeEncoder e2 = Climbm1.getEncoder();
+  private final RelativeEncoder e2 = Climbm2.getEncoder();
 
 /* NULL memorial
    private final double NULL = 0;

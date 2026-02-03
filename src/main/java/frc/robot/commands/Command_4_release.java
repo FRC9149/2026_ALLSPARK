@@ -21,20 +21,13 @@ public class Command_4_release extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {subsystem.release();}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {subsystem.release();}
-  
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {subsystem.release();}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
