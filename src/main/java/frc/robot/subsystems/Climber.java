@@ -66,6 +66,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     initHeights();
     
   }
+  
 
   private void initHeights() {
     climbHeights.put(0, 0.0);
@@ -96,6 +97,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
         Climbm2.set(speed);
 
   }
+
 
   public boolean atMinHeight() {
   return getHeight() <= MIN_HEIGHT + encoderTolerance;
@@ -139,6 +141,10 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   public double getHeight() {
     return (Math.abs(e1.getPosition()) + Math.abs(e2.getPosition())) / 2;
   }
+
+  public double getTargetHeight(int level) {
+  return climbHeights.getOrDefault(level, getHeight());
+}
 
   public boolean atHeight(int level) {
     return Math.abs(getHeight() - climbHeights.get(level)) <= encoderTolerance;

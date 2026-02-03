@@ -8,6 +8,7 @@ public class ClimbToLevel extends Command{
 
     private final Climber subsystem;
     private int level;
+    private boolean goingDown = false;
 
   /**
    * Creates a new ExampleCommand.
@@ -22,12 +23,18 @@ public class ClimbToLevel extends Command{
  }
 
   // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+@Override
+public void initialize() {
+  double current = subsystem.getHeight();
+  double target = subsystem.getTargetHeight(level); // we’ll add this
+
+  goingDown = target < current;
+}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+     if (goingDown) return; // do nothing if trying to go down
     subsystem.moveToHeight(level, true);
   }
 
@@ -40,7 +47,6 @@ public class ClimbToLevel extends Command{
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return subsystem.atHeight(level); // stop when we reach the level
-  }
+    return goingDown || subsystem.atHeight(level);
     
 }
