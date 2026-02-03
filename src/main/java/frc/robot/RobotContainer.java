@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Command_4_intake;
+import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -52,7 +53,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
-  private final LowerIntake moveIntake = new LowerIntake();
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
@@ -86,22 +87,17 @@ public class RobotContainer {
   private void configureBindings() {
     //Reset Gyro
     RevGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
-
-
-
-
-
-    Swerve.driveTo(null);
-    RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
     RevGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     RevGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
-    RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
-    RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
+    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
+    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
+    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
     RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter));
     //RevGamePad.onTriangle().onTrue(new (lowerIntake));
     RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-    // RevGamePad.onO().onTrue(new new 
+    RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+    RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
   }
 
   /* 
