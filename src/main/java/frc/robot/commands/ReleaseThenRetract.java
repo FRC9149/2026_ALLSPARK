@@ -10,7 +10,11 @@ public class ReleaseThenRetract extends SequentialCommandGroup {
     addCommands(
         new Command_4_release(release),   // unlock first
         new WaitCommand(0.25),         // optional: let servo move
-        new RetractClimber(climber)    // then go down
+        new RetractClimber(climber),   // then go down
+        new WaitCommand(0.25),
+        new UNRelease(release),
+        new WaitCommand(0.25)
+
     );
   }
 }
