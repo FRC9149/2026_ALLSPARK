@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
+import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ReleaseThenRetract;
@@ -20,6 +21,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
@@ -44,6 +50,9 @@ import frc.robot.Constants.WaypointConstants;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
     DriveConstants.swerveConfiguration,
@@ -72,6 +81,33 @@ public class RobotContainer {
     
     configureBindings();
 
+     // ================= PATHPLANNER EVENTS =================
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, 0.5));
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake));
+    NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
+    NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
+    NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
+     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
+      NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
+       NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
+
+    // ================= AUTOS =================
+    autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+
+    autoChooser.addOption(
+        "Shoot And Leave",
+        AutoBuilder.buildAuto("ShootAndLeave")
+    );
+
+    autoChooser.addOption(
+        "Two Ball",
+        AutoBuilder.buildAuto("TwoBallAuto")
+    );
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+
+
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
         RevGamePad.getLeftY(),
@@ -99,16 +135,21 @@ public class RobotContainer {
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter));
+    RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter, 0.5));
     RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-
     RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
       leds.setAll(0, 0, 0);
     }));
+    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
   }
+
+ 
+
 
   /* 
    Use this to pass the autonomous command to the main {@link Robot} class.
@@ -117,6 +158,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoChooser.getSelected();
   }
 }
