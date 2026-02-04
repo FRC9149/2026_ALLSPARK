@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Release extends SubsystemBase{
 
-    private final Servo s1release = new Servo(20);
+    private final Servo s1release = new Servo(18);
     private final Servo s2release = new Servo(19);
     
     private static final int MIN_ANGLE = 0;
