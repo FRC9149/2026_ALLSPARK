@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
-  private final SparkMax Climbm1 = new SparkMax(67, MotorType.kBrushless);
+  private final SparkMax Climbm1 = new SparkMax(62, MotorType.kBrushless);
   private final SparkMax Climbm2 = new SparkMax(41, MotorType.kBrushless);
 
   private final RelativeEncoder e1 = Climbm1.getEncoder();

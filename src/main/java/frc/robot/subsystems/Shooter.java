@@ -25,8 +25,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
-  private final SparkMax SM1 = new SparkMax(205, MotorType.kBrushless);
-  private final SparkMax SM2 = new SparkMax(206, MotorType.kBrushless);
+  private final SparkMax SM1 = new SparkMax(56, MotorType.kBrushless);
+  private final SparkMax SM2 = new SparkMax(22, MotorType.kBrushless);
 
    public Shooter() {
     // Motor configuration
