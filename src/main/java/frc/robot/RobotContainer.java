@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
+import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ReleaseThenRetract;
@@ -103,6 +104,9 @@ public class RobotContainer {
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
   }
 
   /* 
