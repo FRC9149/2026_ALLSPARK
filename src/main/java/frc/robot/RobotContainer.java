@@ -115,6 +115,7 @@ public class RobotContainer {
         true
         ), Swerve)
     );
+     Swerve.setupPathPlanner();
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the

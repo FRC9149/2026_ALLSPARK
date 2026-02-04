@@ -75,6 +75,16 @@ public final class Constants {
       //is drive motor reversed FL, BL, FR, BR
       false, false, true, true);
 
+      public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
+    public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
+
+    public static final SwerveDriveKinematics kDriveKinematics =
+        new SwerveDriveKinematics(
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
       4 / 20,  // max linear velocity
       3 * Math.PI / 10, // max angular velocity
@@ -90,14 +100,6 @@ public final class Constants {
     // If you call DriveSubsystem.drive() with a different period make sure to update this.
     public static final double kDrivePeriod = TimedRobot.kDefaultPeriod;
 
-    public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
-
-    public static final SwerveDriveKinematics kDriveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+    
   }
 }
