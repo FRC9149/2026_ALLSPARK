@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LowerIntake extends SubsystemBase{
 
-    private final SparkMax intake2m = new SparkMax(1, MotorType.kBrushless);
+    private final SparkMax intake2m = new SparkMax(139465, MotorType.kBrushless);
 
     
 
