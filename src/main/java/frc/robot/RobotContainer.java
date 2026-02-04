@@ -67,6 +67,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
+  private final LedStrip leds = new LedStrip(0, 150);
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -140,6 +141,9 @@ public class RobotContainer {
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+      leds.setAll(0, 0, 0);
+    }));
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
