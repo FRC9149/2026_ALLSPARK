@@ -60,6 +60,10 @@ public class RobotContainer {
     null,
     true
   );
+
+  public SwerveSubsystem getSwerveSubsystem() {
+    return Swerve;
+}
   //A changing kp so if oscilation occurs, it can be corrected
   @SuppressWarnings("unused")
   private final Shooter shooter = new Shooter();
@@ -74,6 +78,10 @@ public class RobotContainer {
   // private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
     private RevGamePad RevGamePad = new RevGamePad(0);
+
+    public RevGamePad getController() {
+    return RevGamePad;
+}
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
@@ -94,15 +102,15 @@ public class RobotContainer {
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
 
-    autoChooser.addOption(
-        "Shoot And Leave",
-        AutoBuilder.buildAuto("ShootAndLeave")
-    );
-
-    autoChooser.addOption(
-        "Two Ball",
-        AutoBuilder.buildAuto("TwoBallAuto")
-    );
+    //autoChooser.addOption(
+    //    "Shoot And Leave",
+    //    AutoBuilder.buildAuto("ShootAndLeave")
+    //);
+//
+    //autoChooser.addOption(
+    //    "Two Ball",
+    //    AutoBuilder.buildAuto("TwoBallAuto")
+    //);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -116,6 +124,8 @@ public class RobotContainer {
         true
         ), Swerve)
     );
+
+    
     
   }
   /**
