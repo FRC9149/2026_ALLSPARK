@@ -156,7 +156,7 @@ public class RobotContainer {
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
     RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-      leds.setAll(0, 0, 0);
+      leds.setAll(255, 0, 0);
     }));
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
