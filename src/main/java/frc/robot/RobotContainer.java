@@ -73,6 +73,9 @@ public class RobotContainer {
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 150);
+m_ledSubsystem.setDefaultCommand(
+    new RunCommand(() -> m_ledSubsystem.setRainbow(), m_ledSubsystem)
+);
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
