@@ -33,6 +33,7 @@ import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LedStrip;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
