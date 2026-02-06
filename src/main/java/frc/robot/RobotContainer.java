@@ -33,6 +33,7 @@ import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LedStrip;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
@@ -60,19 +61,29 @@ public class RobotContainer {
     null,
     true
   );
+
+  public SwerveSubsystem getSwerveSubsystem() {
+    return Swerve;
+}
   //A changing kp so if oscilation occurs, it can be corrected
   @SuppressWarnings("unused")
-  // private final Shooter shooter = new Shooter();
-  // private final LowerIntake lowerIntake = new LowerIntake();
-  // private final Intake intake = new Intake();
-  // private final Release release = new Release();
-  // private final Climber climber = new Climber(false);
+  private final Shooter shooter = new Shooter();
+  private final LowerIntake lowerIntake = new LowerIntake();
+  private final Intake intake = new Intake();
+  private final Release release = new Release();
+  private final Climber climber = new Climber(false);
+  private final LedStrip leds = new LedStrip(0, 150);
+  
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   // private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
     private RevGamePad RevGamePad = new RevGamePad(0);
+
+    public RevGamePad getController() {
+    return RevGamePad;
+}
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
@@ -93,15 +104,17 @@ public class RobotContainer {
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
 
-    autoChooser.addOption(
-        "Shoot And Leave",
-        AutoBuilder.buildAuto("ShootAndLeave")
-    );
+  
 
-    autoChooser.addOption(
-        "Two Ball",
-        AutoBuilder.buildAuto("TwoBallAuto")
-    );
+    //autoChooser.addOption(
+    //    "Shoot And Leave",
+    //    AutoBuilder.buildAuto("ShootAndLeave")
+    //);
+//
+    //autoChooser.addOption(
+    //    "Two Ball",
+    //    AutoBuilder.buildAuto("TwoBallAuto")
+    //);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -115,6 +128,8 @@ public class RobotContainer {
         true
         ), Swerve)
     );
+
+    
     
   }
   /**
@@ -135,24 +150,18 @@ public class RobotContainer {
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    // RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter, 0.5));
-    // RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-    // RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
-    // RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
-    // RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-    // RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
-    // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
-    // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
-
-    RevGamePad.onX().onTrue(new InstantCommand( () -> {
-      //____------------------
-      leds.setAll(100, 100, 100);
-
-      //--------------------
-    })); 
+    RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter, 0.5));
+    RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
+    RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+    RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
+    RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+      leds.setAll(255, 0, 0);
+    }));
+    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
   }
-  private final LedStrip leds = new LedStrip(0, 10);
-
  
 
 

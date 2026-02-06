@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -22,10 +25,15 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private final Field2d m_field = new Field2d();
+
+  
+
   public Robot() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+
+   m_robotContainer = new RobotContainer();
   }
   
   /**
@@ -35,13 +43,24 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+@Override
+  public void robotInit() {
+    // This officially puts the Field on the dashboard when the code starts
+    SmartDashboard.putData("Field", m_field);
+  }
+
+  
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+
     CommandScheduler.getInstance().run();
+    m_field.setRobotPose(m_robotContainer.getSwerveSubsystem().getPose());
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -79,7 +98,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+     // Temporary test: This should make the robot icon drift diagonally
+ 
+  }
 
   @Override
   public void testInit() {
@@ -96,6 +118,33 @@ public class Robot extends TimedRobot {
   public void simulationInit() {}
 
   /** This function is called periodically whilst in simulation. */
-  @Override
-  public void simulationPeriodic() {}
+ @Override
+public void simulationPeriodic() {
+  var swerve = m_robotContainer.getSwerveSubsystem();
+
+  double dt = 0.02;
+var controller = m_robotContainer.getController();
+  // read joystick inputs directly (same as your default command)
+  double x = controller.getLeftY();
+  
+  double y = -controller.getLeftX();
+  double rot =controller.getRightX();
+
+  // scale like drive() does
+  x *= 4.5;   // use your maxSpeedMetersPerSecond (estimate or constant)
+  y *= 4.5;
+  rot *= 10;  // your maxAngularVelocityRadiansPerSecond
+
+  Pose2d pose = swerve.getPose();
+
+  Pose2d newPose = pose.exp(
+      new edu.wpi.first.math.geometry.Twist2d(
+          x * dt,
+          y * dt,
+          rot * dt
+      )
+  );
+
+  swerve.resetOdometry(newPose);
+}
 }
