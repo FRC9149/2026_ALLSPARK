@@ -72,7 +72,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 300);
+  private final LedStrip leds = new LedStrip(0, 10);
   
 
 
