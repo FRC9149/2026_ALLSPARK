@@ -19,8 +19,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+
+
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -95,9 +99,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
-     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
-      NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-       NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
+    NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
+    NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
+    NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
+    NamedCommands.registerCommand("Wait1", new WaitCommand(1));
+    NamedCommands.registerCommand("Wait2", new WaitCommand(2));
+    NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -118,10 +125,10 @@ public class RobotContainer {
 
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        RevGamePad.getLeftY(),
-        RevGamePad.getLeftX(), 
-        RevGamePad.getRightX(),
-        true
+        1,//RevGamePad.getLeftY(),
+        0,//RevGamePad.getLeftX(), 
+        0,//RevGamePad.getRightX(),
+        false//true
         ), Swerve)
     );
 

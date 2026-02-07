@@ -6,8 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -25,7 +24,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private final Field2d m_field = new Field2d();
+  
 
   public Robot() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -44,8 +43,8 @@ public class Robot extends TimedRobot {
    */
 @Override
   public void robotInit() {
-    // This officially puts the Field on the dashboard when the code starts
-    SmartDashboard.putData("Field", m_field);
+    
+    
   }
 
   @Override
@@ -56,7 +55,7 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
-    m_field.setRobotPose(m_robotContainer.getSwerveSubsystem().getPose());
+    
     
   }
 
@@ -115,33 +114,33 @@ public class Robot extends TimedRobot {
   public void simulationInit() {}
 
   /** This function is called periodically whilst in simulation. */
- @Override
-public void simulationPeriodic() {
-  var swerve = m_robotContainer.getSwerveSubsystem();
-
-  double dt = 0.02;
-var controller = m_robotContainer.getController();
-  // read joystick inputs directly (same as your default command)
-  double x = controller.getLeftY();
-  
-  double y = -controller.getLeftX();
-  double rot =controller.getRightX();
-
-  // scale like drive() does
-  x *= 4.5;   // use your maxSpeedMetersPerSecond (estimate or constant)
-  y *= 4.5;
-  rot *= 10;  // your maxAngularVelocityRadiansPerSecond
-
-  Pose2d pose = swerve.getPose();
-
-  Pose2d newPose = pose.exp(
-      new edu.wpi.first.math.geometry.Twist2d(
-          x * dt,
-          y * dt,
-          rot * dt
-      )
-  );
-
-  swerve.resetOdometry(newPose);
-}
+// @Override
+//public void simulationPeriodic() {
+//  var swerve = m_robotContainer.getSwerveSubsystem();
+//
+//  double dt = 0.02;
+//var controller = m_robotContainer.getController();
+//  // read joystick inputs directly (same as your default command)
+//  double x = controller.getLeftY();
+//  
+//  double y = -controller.getLeftX();
+//  double rot =controller.getRightX();
+//
+//  // scale like drive() does
+//  x *= 4.5;   // use your maxSpeedMetersPerSecond (estimate or constant)
+//  y *= 4.5;
+//  rot *= 10;  // your maxAngularVelocityRadiansPerSecond
+//
+//  Pose2d pose = swerve.getPose();
+//
+//  Pose2d newPose = pose.exp(
+//      new edu.wpi.first.math.geometry.Twist2d(
+//          x * dt,
+//          y * dt,
+//          rot * dt
+//      )
+//  );
+//
+//  swerve.resetOdometry(newPose);
+//}
 }
