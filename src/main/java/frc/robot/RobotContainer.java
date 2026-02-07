@@ -37,6 +37,7 @@ import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LedStrip;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
@@ -75,7 +76,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 150);
+  private final LedStrip leds = new LedStrip(0, 10);
+  
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -108,6 +110,8 @@ public class RobotContainer {
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+
+  
 
     //autoChooser.addOption(
     //    "Shoot And Leave",
@@ -146,10 +150,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //Reset Gyro
-    RevGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
-    RevGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
-    RevGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    RevGamePad.onLeftBumper().and(RevGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    // RevGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
+    // RevGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
+    // RevGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
+    // RevGamePad.onLeftBumper().and(RevGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
@@ -159,13 +163,12 @@ public class RobotContainer {
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
     RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-      leds.setAll(0, 0, 0);
+      leds.setAll(255, 0, 0);
     }));
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
   }
-
  
 
 
