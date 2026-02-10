@@ -59,9 +59,7 @@ import frc.robot.Constants.WaypointConstants;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
-
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
     DriveConstants.swerveConfiguration,
@@ -69,12 +67,7 @@ public class RobotContainer {
     null,
     true
   );
-
-  public SwerveSubsystem getSwerveSubsystem() {
-    return Swerve;
-}
-  //A changing kp so if oscilation occurs, it can be corrected
-  @SuppressWarnings("unused")
+  
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
@@ -88,10 +81,6 @@ public class RobotContainer {
   // private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
     private RevGamePad RevGamePad = new RevGamePad(0);
-
-    public RevGamePad getController() {
-    return RevGamePad;
-}
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
