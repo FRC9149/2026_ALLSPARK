@@ -16,20 +16,24 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
+import static edu.wpi.first.units.Units.Seconds;
+import edu.wpi.first.wpilibj.util.Color8Bit;
 
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 
 import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
@@ -129,10 +133,10 @@ public class RobotContainer {
 
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        1,//RevGamePad.getLeftY(),
-        0,//RevGamePad.getLeftX(), 
-        0,//RevGamePad.getRightX(),
-        false//true
+        RevGamePad.getLeftY(),
+        RevGamePad.getLeftX(), 
+        RevGamePad.getRightX(),
+        true
         ), Swerve)
     );
 
@@ -162,9 +166,29 @@ public class RobotContainer {
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-      leds.setAll(255, 0, 0);
-    }));
+    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+    //  leds.setAll(255, 0, 0);
+    //}));
+    RevGamePad.onSquare().onTrue(
+new SequentialCommandGroup(
+  
+        leds.runOnce(() -> leds.applyActiveLEDPattern(
+            LEDPattern.solid(Color.kRed).blink(edu.wpi.first.units.Units.Seconds.of(2))
+        )),
+
+        new WaitCommand(6),
+
+        leds.runOnce(() -> leds.applyActiveLEDPattern(
+            LEDPattern.atRGB8((index, time) -> 
+                new edu.wpi.first.wpilibj.util.Color8Bit(
+                    (int)(Math.random() * 255), 
+                    (int)(Math.random() * 255), 
+                    (int)(Math.random() * 255)
+                )
+            )
+        ))
+    )
+    );
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
