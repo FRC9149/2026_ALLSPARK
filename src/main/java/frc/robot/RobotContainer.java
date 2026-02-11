@@ -132,22 +132,34 @@ public class RobotContainer {
 
     );
 
-    leds.setDefaultCommand( new RunCommand( () -> {
-    int i = 0;
+    leds.setDefaultCommand( new SequentialCommandGroup( new RunCommand( () -> {
+    int i = 1;
 
-while (i<256) {
+
 leds.setAll(i, i, i);
-i ++;
-new WaitCommand(0.1);
+
+if (i == 255) {
+i = 1;
+}
+
+else {
+  i++;
+}
+
 //try{
 //  
 //
 //Thread.sleep(10);
 //} catch (Exception e){}
-}
+
       
 
-    }, leds));
+    }, leds),
+    
+    new WaitCommand(0.1)
+    
+    
+    )); 
     
     
   }
