@@ -136,11 +136,12 @@ public class RobotContainer {
 while (i<256) {
 leds.setAll(i, i, i);
 i ++;
-try{
-  
-
-Thread.sleep(10);
-} catch (Exception e){}
+new WaitCommand(0.1);
+//try{
+//  
+//
+//Thread.sleep(10);
+//} catch (Exception e){}
 }
       
 
