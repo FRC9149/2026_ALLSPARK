@@ -97,9 +97,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
     NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
-    NamedCommands.registerCommand("Wait1", new WaitCommand(1));
-    NamedCommands.registerCommand("Wait2", new WaitCommand(2));
-    NamedCommands.registerCommand("Wait3", new WaitCommand(3));
+    // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
+    // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
+    // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
