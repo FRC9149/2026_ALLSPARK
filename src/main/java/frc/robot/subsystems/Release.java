@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Release extends SubsystemBase{
@@ -38,7 +39,11 @@ public class Release extends SubsystemBase{
         setServos(RELEASED_ANGLE);
     }
 
-
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Released status s1", s1release.getAngle());
+        SmartDashboard.putNumber("Released status s2", s2release.getAngle());
+    }
 
 
 }
