@@ -79,7 +79,7 @@ public class RobotContainer {
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
-  private int i = 1;
+  private double i = 1;
   
 
 
@@ -138,18 +138,20 @@ public class RobotContainer {
     
 System.out.println(RevGamePad.getLeftY());
     leds.setDefaultCommand( 
-        new SequentialCommandGroup( 
+       // new SequentialCommandGroup( 
           new RunCommand( () -> {
-              leds.setAll(i, i, i);
-              if (i == 255) {
-              i = 1;
+            com.robocats.LED.Color C = new com.robocats.LED.Color(i, 1.0, 0.25);
+            int r = C.rgb()[0], g = C.rgb()[1], b = C.rgb()[2];
+              leds.applyLEDPattern(LEDPattern.solid(new Color(r, g, b)));
+              if (i >= 360) {
+              i = 0;
               }
               else {
-                i++;
+                i+= 0.75;
               }
-           }, leds),
-          new WaitCommand(0.1)
-        )
+           }, leds)
+          //new WaitCommand(0.1)
+       // )
     ); 
   }
   /**
@@ -179,16 +181,17 @@ System.out.println(RevGamePad.getLeftY());
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onSquare().whileTrue(
+    RevGamePad.onSquare().whileTrue( 
       new RunCommand(() -> {
         //code to run
-        //leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
+        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
         // Create an LED pattern that displays the first half of a strip as solid red,
 // and the second half of the strip as solid blue.
-leds.sethalf();
-      }
-    ));
-      
+// leds.sethalf();
+      },leds
+    )
+    
+    );
     
   }
  
