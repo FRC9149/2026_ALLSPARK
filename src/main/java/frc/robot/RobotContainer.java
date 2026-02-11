@@ -26,6 +26,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.Seconds;
+
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.util.Color8Bit;
 
 
@@ -138,7 +141,6 @@ public class RobotContainer {
 while (i<256) {
 leds.setAll(i, i, i);
 i ++;
-new WaitCommand(0.1);
 //try{
 //  
 //
@@ -174,36 +176,25 @@ new WaitCommand(0.1);
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-    //  leds.setAll(255, 0, 0);
-    //}));
-//    RevGamePad.onSquare().onTrue(
-//new SequentialCommandGroup(
-//  
-//        leds.runOnce(() -> leds.applyActiveLEDPattern(
-//            LEDPattern.solid(Color.kRed).blink(edu.wpi.first.units.Units.Seconds.of(2))
-//        )),
-//
-//        new WaitCommand(6),
-//
-//        leds.runOnce(() -> leds.applyActiveLEDPattern(
-//            LEDPattern.atRGB8((index, time) -> 
-//                new edu.wpi.first.wpilibj.util.Color8Bit(
-//                    (int)(Math.random() * 255), 
-//                    (int)(Math.random() * 255), 
-//                    (int)(Math.random() * 255)
-//                )
-//            )
-//        ))
-//    )
-//    );
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-      leds.setAll(1, 2, 255);
-    } ));
+    RevGamePad.onSquare().whileTrue(
+      new RunCommand(() -> {
+        //code to run
+        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
+        // Create an LED pattern that displays the first half of a strip as solid red,
+// and the second half of the strip as solid blue.
+LEDPattern steps = LEDPattern.steps(Map.of(0, Color.kRed, 0.5, Color.kBlue));
+
+// Apply the LED pattern to the data buffer
+steps.applyTo(m_ledBuffer);
+
+// Write the data to the LED strip
+m_led.setData(m_ledBuffer);
+      }, leds)
+    );
 
     
   }
