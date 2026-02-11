@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -97,7 +99,7 @@ public class LedStrip extends SubsystemBase {
         led.setData(ledBuffer);
     }
     public void setRainbow() {}
-    // TODO find a better name for this
+    // todo find a better name for this
     // should make a line that moves up the led strip
     //ex:
     // _____====__________
@@ -105,4 +107,18 @@ public class LedStrip extends SubsystemBase {
     // _____________====__
     // ...
     public void setLoading() {}
+
+    public void sethalf(){
+
+        LEDPattern steps = LEDPattern.steps(Map.of(0, Color.kWhite, 0.5, Color.kBlue));
+
+// Apply the LED pattern to the data buffer
+steps.applyTo(ledBuffer);
+
+// Write the data to the LED strip
+led.setData(ledBuffer);
+      
+
+
+    }
 }

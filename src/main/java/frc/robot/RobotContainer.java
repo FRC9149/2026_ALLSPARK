@@ -196,19 +196,13 @@ else {
     RevGamePad.onSquare().whileTrue(
       new RunCommand(() -> {
         //code to run
-        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
+        //leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
         // Create an LED pattern that displays the first half of a strip as solid red,
 // and the second half of the strip as solid blue.
-LEDPattern steps = LEDPattern.steps(Map.of(0, Color.kRed, 0.5, Color.kBlue));
-
-// Apply the LED pattern to the data buffer
-steps.applyTo(m_ledBuffer);
-
-// Write the data to the LED strip
-m_led.setData(m_ledBuffer);
-      }, leds)
-    );
-
+leds.sethalf();
+      }
+    ));
+      
     
   }
  
