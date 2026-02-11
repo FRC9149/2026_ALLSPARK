@@ -75,7 +75,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 10);
+  private final LedStrip leds = new LedStrip(0, 300);
   
 
 
@@ -99,9 +99,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
     NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
-    NamedCommands.registerCommand("Wait1", new WaitCommand(1));
-    NamedCommands.registerCommand("Wait2", new WaitCommand(2));
-    NamedCommands.registerCommand("Wait3", new WaitCommand(3));
+    // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
+    // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
+    // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -129,8 +129,24 @@ public class RobotContainer {
         RevGamePad.getRightX(),
         true
         ), Swerve)
+
     );
 
+    leds.setDefaultCommand( new RunCommand( () -> {
+    int i = 0;
+
+while (i<256) {
+leds.setAll(i, i, i);
+i ++;
+try{
+  
+
+Thread.sleep(10);
+} catch (Exception e){}
+}
+      
+
+    }, leds));
     
     
   }
@@ -183,6 +199,12 @@ public class RobotContainer {
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+
+    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+      leds.setAll(1, 2, 255);
+    } ));
+
+    
   }
  
 

@@ -5,20 +5,48 @@ import java.util.function.BiConsumer;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LedStrip {
+/**
+    //TODO
+    Once we are done with writing this class, we should move it to the library.
+    I moved the class to the main project so that it is easier to write code. 
+    The implementation will be the same, just different imports
+
+    LEDPatterns seem to be the easiet way to program complex patterns while simple or smaller patterns will be used with setLED
+*/
+public class LedStrip extends SubsystemBase {
     private AddressableLED led;
     private AddressableLEDBuffer ledBuffer;
+
+     private LEDPattern activePattern = LEDPattern.solid(edu.wpi.first.wpilibj.util.Color.kGreen);
 
     /**
      * @param port The pwm port that the LED Strip is connected to
      * @param length How many LEDs are on the strip
      */
+
+    //------------------------base stuff--------------------------------------
     public LedStrip(int port, int length) {
         led = new AddressableLED(port);
         ledBuffer = new AddressableLEDBuffer(length);
         led.setLength(length);
+
+        led.start();
     }
+
+     public void applyActiveLEDPattern(LEDPattern newPattern) {
+        this.activePattern = newPattern;
+    }
+
+    //@Override
+    //public void periodic() {
+    //    // Runs every 20ms to update the animation frames
+    //    activePattern.applyTo(ledBuffer);
+    //    led.setData(ledBuffer);
+    //}
+    
+    //------------------------------------more stuff------------------------------------------
 
     /** Sets a led to a certain color
      * @param index The index of the led you want to change
@@ -60,7 +88,14 @@ public class LedStrip {
     /** stops output to the led strip*/
     public void stop() { led.stop();}
 
-    public void setAll(int r, int g, int b) {}
+    public void setAll(int r, int g, int b) {
+
+        for (int index = 0; index < ledBuffer.getLength(); index++) {
+            ledBuffer.setRGB(index, r, g, b);
+
+        }
+        led.setData(ledBuffer);
+    }
     public void setRainbow() {}
     // TODO find a better name for this
     // should make a line that moves up the led strip
