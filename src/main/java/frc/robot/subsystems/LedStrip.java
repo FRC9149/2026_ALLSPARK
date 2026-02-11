@@ -31,12 +31,12 @@ public class LedStrip extends SubsystemBase{
         this.activePattern = newPattern;
     }
 
-    @Override
-    public void periodic() {
-        // Runs every 20ms to update the animation frames
-        activePattern.applyTo(ledBuffer);
-        led.setData(ledBuffer);
-    }
+    //@Override
+    //public void periodic() {
+    //    // Runs every 20ms to update the animation frames
+    //    activePattern.applyTo(ledBuffer);
+    //    led.setData(ledBuffer);
+    //}
     
     //------------------------------------more stuff------------------------------------------
 
@@ -80,7 +80,14 @@ public class LedStrip extends SubsystemBase{
     /** stops output to the led strip*/
     public void stop() { led.stop();}
 
-    public void setAll(int r, int g, int b) {}
+    public void setAll(int r, int g, int b) {
+
+        for (int index = 0; index < ledBuffer.getLength(); index++) {
+            ledBuffer.setRGB(index, r, g, b);
+
+        }
+        led.setData(ledBuffer);
+    }
     public void setRainbow() {}
     // TODO find a better name for this
     // should make a line that moves up the led strip

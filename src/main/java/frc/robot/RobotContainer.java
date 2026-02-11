@@ -73,7 +73,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 10);
+  private final LedStrip leds = new LedStrip(0, 300);
   
 
 
@@ -127,8 +127,24 @@ public class RobotContainer {
         RevGamePad.getRightX(),
         true
         ), Swerve)
+
     );
 
+    leds.setDefaultCommand( new RunCommand( () -> {
+    int i = 0;
+
+while (i<256) {
+leds.setAll(i, i, i);
+i ++;
+try{
+  
+
+Thread.sleep(10);
+} catch (Exception e){}
+}
+      
+
+    }, leds));
     
     
   }
@@ -155,32 +171,15 @@ public class RobotContainer {
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
-    //  leds.setAll(255, 0, 0);
-    //}));
-//    RevGamePad.onSquare().onTrue(
-//new SequentialCommandGroup(
-//  
-//        new InstantCommand(() -> leds.applyActiveLEDPattern(
-//            LEDPattern.solid(Color.kRed).blink(edu.wpi.first.units.Units.Seconds.of(2))
-//        )),
-//
-//        new WaitCommand(6),
-//
-//        new InstantCommand(() -> leds.applyActiveLEDPattern(
-//            LEDPattern.atRGB8((index, time) -> 
-//                new edu.wpi.first.wpilibj.util.Color8Bit(
-//                    (int)(Math.random() * 255), 
-//                    (int)(Math.random() * 255), 
-//                    (int)(Math.random() * 255)
-//                )
-//            )
-//        ))
-//    )
-//    );
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+
+    RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+      leds.setAll(1, 2, 255);
+    } ));
+
+    
   }
  
 
