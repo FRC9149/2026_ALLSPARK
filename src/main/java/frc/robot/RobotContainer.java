@@ -47,6 +47,7 @@ import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
 
 import com.robocats.swerve.gyroscope.AhrsGyro;
+import com.robocats.vision.LimelightCamera;
 import com.robocats.swerve.ModuleConfig;
 import com.robocats.controllers.Ps3;
 import com.robocats.controllers.RevGamePad;
@@ -60,11 +61,12 @@ import frc.robot.Constants.WaypointConstants;
  */
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private LimelightCamera limelightCamerafour;
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
     DriveConstants.swerveConfiguration,
     new PIDController(0.5,0.01,0.01),
-    null,
+    limelightCamerafour,
     true
   );
   
@@ -85,7 +87,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
     // Configure the trigger bindings
-    
+    limelightCamerafour = new LimelightCamera("Limelight-four", Swerve::getHeading, null);
     configureBindings();
 
      // ================= PATHPLANNER EVENTS =================
@@ -97,9 +99,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
     NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
-    NamedCommands.registerCommand("Wait1", new WaitCommand(1));
-    NamedCommands.registerCommand("Wait2", new WaitCommand(2));
-    NamedCommands.registerCommand("Wait3", new WaitCommand(3));
+    // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
+    // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
+    // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -172,6 +174,29 @@ new WaitCommand(0.1);
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+    //  leds.setAll(255, 0, 0);
+    //}));
+//    RevGamePad.onSquare().onTrue(
+//new SequentialCommandGroup(
+//  
+//        leds.runOnce(() -> leds.applyActiveLEDPattern(
+//            LEDPattern.solid(Color.kRed).blink(edu.wpi.first.units.Units.Seconds.of(2))
+//        )),
+//
+//        new WaitCommand(6),
+//
+//        leds.runOnce(() -> leds.applyActiveLEDPattern(
+//            LEDPattern.atRGB8((index, time) -> 
+//                new edu.wpi.first.wpilibj.util.Color8Bit(
+//                    (int)(Math.random() * 255), 
+//                    (int)(Math.random() * 255), 
+//                    (int)(Math.random() * 255)
+//                )
+//            )
+//        ))
+//    )
+//    );
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
