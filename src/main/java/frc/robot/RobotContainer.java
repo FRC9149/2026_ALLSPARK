@@ -79,6 +79,7 @@ public class RobotContainer {
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
+  private int i = 1;
   
 
 
@@ -134,37 +135,22 @@ public class RobotContainer {
         ), Swerve)
 
     );
-
-    leds.setDefaultCommand( new SequentialCommandGroup( new RunCommand( () -> {
-    int i = 1;
-
-
-leds.setAll(i, i, i);
-
-if (i == 255) {
-i = 1;
-}
-
-else {
-  i++;
-}
-
-//try{
-//  
-//
-//Thread.sleep(10);
-//} catch (Exception e){}
-
-      
-
-    }, leds),
     
-    new WaitCommand(0.1)
-    
-    
-    )); 
-    
-    
+System.out.println(RevGamePad.getLeftY());
+    leds.setDefaultCommand( 
+        new SequentialCommandGroup( 
+          new RunCommand( () -> {
+              leds.setAll(i, i, i);
+              if (i == 255) {
+              i = 1;
+              }
+              else {
+                i++;
+              }
+           }, leds),
+          new WaitCommand(0.1)
+        )
+    ); 
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
