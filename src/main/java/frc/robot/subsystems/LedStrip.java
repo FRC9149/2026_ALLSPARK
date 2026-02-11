@@ -7,7 +7,15 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LedStrip extends SubsystemBase{
+/**
+    //TODO
+    Once we are done with writing this class, we should move it to the library.
+    I moved the class to the main project so that it is easier to write code. 
+    The implementation will be the same, just different imports
+
+    LEDPatterns seem to be the easiet way to program complex patterns while simple or smaller patterns will be used with setLED
+*/
+public class LedStrip extends SubsystemBase {
     private AddressableLED led;
     private AddressableLEDBuffer ledBuffer;
 
