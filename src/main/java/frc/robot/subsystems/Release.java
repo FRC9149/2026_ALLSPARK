@@ -6,14 +6,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Release extends SubsystemBase{
-
+    //TODO we should move this to the climber subsystem
+    //If the Release is locked, then we don't want to run the climber
+    //You can add that functionality pretty easily if they are in the same subsystem
     private final Servo s1release = new Servo(18);
     private final Servo s2release = new Servo(19);
     
     private static final int MIN_ANGLE = 0;
     private static final int MAX_ANGLE = 180;
 
-    private final static int LOCKED_ANGLE = 0;
+    private final static int LOCKED_ANGLE = 0; //TODO wouldn't this be the same as min and max?
     private final static int RELEASED_ANGLE = 0;
  
     //constructor

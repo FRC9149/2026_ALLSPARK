@@ -17,6 +17,7 @@ public class LowerIntake extends SubsystemBase{
     
 
     private final RelativeEncoder encoder = intake2m.getEncoder();
+    //TODO explain to me how the closed loop controller works. I have never used this before
     private final SparkClosedLoopController controller = intake2m.getClosedLoopController();
 
     // Need position changed after a while
@@ -27,12 +28,12 @@ public class LowerIntake extends SubsystemBase{
 
          SparkMaxConfig config = new SparkMaxConfig();
          // Set the limit
-         config.smartCurrentLimit(30); 
+         config.smartCurrentLimit(30); //TODO Current Limit again. read HopperFeed.java
          // Apply the config to the motor
 
          // PID tuning (start small)
-         config.closedLoop.pid(0.1, 0, 0);
-        
+         config.closedLoop.pid(0.1, 0, 0); 
+
          // Soft limits
           config.softLimit.forwardSoftLimit(22);  // max down
           config.softLimit.forwardSoftLimitEnabled(true);
