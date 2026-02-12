@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Aiming;
 
 public class Aim extends Command{
+  //TODO format (or don't idc)
+  //also suppresswarnings isn't that great and also does nothing here
+
       @SuppressWarnings("unused")
       private final Aiming subsystem;
 

@@ -6,6 +6,7 @@ import frc.robot.subsystems.Climber;
 
 public class ClimbToLevel extends Command{
 
+
     private final Climber subsystem;
     private int level;
     private boolean goingDown = false;
@@ -15,7 +16,7 @@ public class ClimbToLevel extends Command{
    *
    * @param subsystem The subsystem used by this command.
    */
- public ClimbToLevel(Climber subsystem, int level) {
+ public ClimbToLevel(Climber subsystem, int level) { 
   this.subsystem = subsystem;
   this.level = level;
     //Use addRequirements() here to declare subsystem dependencies.
@@ -35,6 +36,7 @@ public void initialize() {
   @Override
   public void execute() {
      if (goingDown) return; // do nothing if trying to go down
+     //TODO why? why don't we just say that if we want to go down it just calls subsystem.retract();
     subsystem.moveToHeight(level, true);
   }
 

@@ -21,6 +21,7 @@ public class LedStrip extends SubsystemBase {
     private AddressableLED led;
     private AddressableLEDBuffer ledBuffer;
 
+//TODO I don't believe we need this
      private LEDPattern activePattern = LEDPattern.solid(edu.wpi.first.wpilibj.util.Color.kGreen);
 
     /**

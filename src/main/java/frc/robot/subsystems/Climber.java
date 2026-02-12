@@ -48,6 +48,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   private final double MIN_HEIGHT = 0;//TODO
   private final double HOLD_SPEED = 0; // This will be the same as last year
   //It is just the speed that the motors should run so that they don't go anywhere but also don't move via outside force
+  //We actually don't need this because we have the release
 
   private final HashMap<Integer, Double> climbHeights = new HashMap<>();
 
