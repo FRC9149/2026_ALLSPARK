@@ -9,7 +9,6 @@ import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
-import frc.robot.commands.ReleaseThenRetract;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -47,7 +46,6 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedStrip;
 import frc.robot.subsystems.LowerIntake;
-import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
 
 import com.robocats.swerve.gyroscope.AhrsGyro;
@@ -77,7 +75,6 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
-  private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
   private int i = 1;
@@ -103,7 +100,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-    NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
+    NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
     // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
@@ -175,8 +172,7 @@ System.out.println(RevGamePad.getLeftY());
     RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
-    RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
-<<<<<<< HEAD
+    RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
@@ -205,8 +201,6 @@ System.out.println(RevGamePad.getLeftY());
         )
     )
 );
-=======
->>>>>>> 994b83d84a5dd532f66b5b834e7711eea463978c
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
