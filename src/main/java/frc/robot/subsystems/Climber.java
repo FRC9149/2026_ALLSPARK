@@ -12,6 +12,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -55,7 +56,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   //TODO
   //If this value is 0, then the motors will oscolate until they hit the target exactly. 
   //(they will never hit the target exactlt because of momentum) [damn Newton]
-  private final double encoderTolerance = 0;
+  private final double encoderTolerance = .1;
 
   private final SparkMaxConfig config = new SparkMaxConfig();
 
@@ -91,6 +92,19 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
         Math.abs(error) > encoderTolerance
             ? (error > 0 ? 0.6 : -0.4)
             : holdSpeed);
+        double kP = 0.5;
+        double kI = 0.1;
+        double kD = 0.1;
+        PIDController pid = new PIDController(kP, kI, kD);
+        Climbm1.set(pid.calculate(e1.getPosition(), targetHeight));
+        // Sets the error tolerance to 5, and the error derivative tolerance to 10 per second
+        // pid.setTolerance(5, 10);
+        // Returns true if the error is less than 5 units, and the
+        // error derivative is less than 10 units
+        // pid.atSetpoint();
+        // The integral gain term will never add or subtract more than 0.5 from
+        // the total loop output
+        // pid.setIntegratorRange(-0.5, 0.5);
     //TODO
     //if we change this to a pid controller then we don't need the tollerance
     //It will be harder to tune however, but it would be more accurate
