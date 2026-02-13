@@ -19,6 +19,8 @@ public class Intake extends SubsystemBase{
     private static final double INTAKE_SPEED = 0.75;
     private static final double OUTTAKE_SPEED = -0.75;
 
+    //TODO There is a chance the motor is reversed (prepare for that)
+
     public void intake() {
         m1.set(INTAKE_SPEED);
     }

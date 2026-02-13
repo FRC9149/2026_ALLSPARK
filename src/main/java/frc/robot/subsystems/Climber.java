@@ -45,19 +45,24 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 */
 
   private final double MAX_HEIGHT = 0;
-  private final double MIN_HEIGHT = 0;
-  private final double HOLD_SPEED = 0;
+  private final double MIN_HEIGHT = 0;//TODO
+  private final double HOLD_SPEED = 0; // This will be the same as last year
+  //It is just the speed that the motors should run so that they don't go anywhere but also don't move via outside force
+  //We actually don't need this because we have the release
 
   private final HashMap<Integer, Double> climbHeights = new HashMap<>();
 
+  //TODO
+  //If this value is 0, then the motors will oscolate until they hit the target exactly. 
+  //(they will never hit the target exactlt because of momentum) [damn Newton]
   private final double encoderTolerance = 0;
 
   private final SparkMaxConfig config = new SparkMaxConfig();
 
   public Climber(boolean inverted) {
     config
-        .inverted(inverted)
-        .idleMode(IdleMode.kBrake);
+        .inverted(inverted) //TODO
+        .idleMode(IdleMode.kBrake); //This should do the same thing as hold_speed but it didn't last year (maybe this year it will work)
 
     Climbm1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     Climbm2.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -86,6 +91,9 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
         Math.abs(error) > encoderTolerance
             ? (error > 0 ? 0.6 : -0.4)
             : holdSpeed);
+    //TODO
+    //if we change this to a pid controller then we don't need the tollerance
+    //It will be harder to tune however, but it would be more accurate
   }
 
     public void setSpeed(double speed) {
@@ -104,6 +112,9 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 }
 
   public void retract() {
+    //TODO
+    //should use a pid controller. make the setpoint the min height and the current value to the encoders
+    //we won't need to use the if statement since the pid controller will slow down as we reach the target
   if (!atMinHeight()) {
     setSpeed(-0.5);   //Goes down
   } else {
@@ -127,6 +138,9 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     e2.setPosition(0);
   }
 
+  /**
+   * @return false if the speed would cause the climber to extend beyond its limits
+   */
   private boolean withinLimits(double speed) {
     double height = getHeight();
 
@@ -147,10 +161,14 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 }
 
   public boolean atHeight(int level) {
+    //TODO 
+    //This is a good use of encoder tolerance since we can't use the pid for this
     return Math.abs(getHeight() - climbHeights.get(level)) <= encoderTolerance;
   }
 
   public boolean atMaxHeight() {
+    //TODO
+    //This doesn't make since to me since we already have the within limits funciton which does this but more
     return getHeight() >= MAX_HEIGHT;
   }
 

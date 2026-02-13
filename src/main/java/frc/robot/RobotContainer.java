@@ -26,6 +26,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.Seconds;
+
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.units.Units;
 
@@ -48,6 +51,7 @@ import frc.robot.subsystems.Release;
 import frc.robot.subsystems.Shooter;
 
 import com.robocats.swerve.gyroscope.AhrsGyro;
+import com.robocats.vision.LimelightCamera;
 import com.robocats.swerve.ModuleConfig;
 import com.robocats.controllers.Ps3;
 import com.robocats.controllers.RevGamePad;
@@ -61,11 +65,12 @@ import frc.robot.Constants.WaypointConstants;
  */
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private LimelightCamera limelightCamerafour;
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
     DriveConstants.swerveConfiguration,
     new PIDController(0.5,0.01,0.01),
-    null,
+    limelightCamerafour,
     true
   );
   
@@ -74,7 +79,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 10);
+  private final LedStrip leds = new LedStrip(0, 300);
+  private double i = 1;
   
 
 
@@ -86,7 +92,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
     // Configure the trigger bindings
-    
+    limelightCamerafour = new LimelightCamera("Limelight-four", Swerve::getHeading, null);
     configureBindings();
 
      // ================= PATHPLANNER EVENTS =================
@@ -98,9 +104,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
     NamedCommands.registerCommand("RetractClimber", new ReleaseThenRetract(release, climber));
-    NamedCommands.registerCommand("Wait1", new WaitCommand(1));
-    NamedCommands.registerCommand("Wait2", new WaitCommand(2));
-    NamedCommands.registerCommand("Wait3", new WaitCommand(3));
+    // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
+    // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
+    // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -128,10 +134,26 @@ public class RobotContainer {
         RevGamePad.getRightX(),
         true
         ), Swerve)
-    );
 
+    );
     
-    
+System.out.println(RevGamePad.getLeftY());
+    leds.setDefaultCommand( 
+       // new SequentialCommandGroup( 
+          new RunCommand( () -> {
+            com.robocats.LED.Color C = new com.robocats.LED.Color(i, 1.0, 0.25);
+            int r = C.rgb()[0], g = C.rgb()[1], b = C.rgb()[2];
+              leds.applyLEDPattern(LEDPattern.solid(new Color(r, g, b)));
+              if (i >= 360) {
+              i = 0;
+              }
+              else {
+                i+= 0.75;
+              }
+           }, leds)
+          //new WaitCommand(0.1)
+       // )
+    ); 
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -156,6 +178,7 @@ public class RobotContainer {
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+<<<<<<< HEAD
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
@@ -184,9 +207,24 @@ public class RobotContainer {
         )
     )
 );
+=======
+>>>>>>> 994b83d84a5dd532f66b5b834e7711eea463978c
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+
+    RevGamePad.onSquare().whileTrue( 
+      new RunCommand(() -> {
+        //code to run
+        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
+        // Create an LED pattern that displays the first half of a strip as solid red,
+// and the second half of the strip as solid blue.
+// leds.sethalf();
+      },leds
+    )
+    
+    );
+    
   }
  
 
