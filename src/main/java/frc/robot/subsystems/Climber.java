@@ -88,7 +88,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     double error = targetHeight - getHeight();
     double holdSpeed = hold ? HOLD_SPEED : 0;
 
-    setSpeed(
+    setSpeed( //TODO you set the motor speed twice There is alao a getHeight function that takes the average of the encoder positions
         Math.abs(error) > encoderTolerance
             ? (error > 0 ? 0.6 : -0.4)
             : holdSpeed);
