@@ -50,6 +50,8 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   //It is just the speed that the motors should run so that they don't go anywhere but also don't move via outside force
   //We actually don't need this because we have the release
 
+  //lets just leave hold speed, take up a few more bytes, and pretend we need it
+
   private final HashMap<Integer, Double> climbHeights = new HashMap<>();
 
   //TODO
@@ -77,6 +79,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     climbHeights.put(0, 0.0);
     climbHeights.put(1, 0.0);
     climbHeights.put(2, 0.0);
+    climbHeights.put(4, 0.0);
   }
 
   public void moveToHeight(int level, boolean hold) {
@@ -85,13 +88,12 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     double targetHeight = climbHeights.get(level);
 
     double error = targetHeight - getHeight();
-    double holdSpeed = hold ? HOLD_SPEED : 0;
-
+    
     setSpeed(
         Math.abs(error) > encoderTolerance
             ? (error > 0 ? 0.6 : -0.4)
-            : holdSpeed);
-    //TODO
+            : 0);
+    //TODO``                                                                                                                                                          
     //if we change this to a pid controller then we don't need the tollerance
     //It will be harder to tune however, but it would be more accurate
   }
@@ -128,11 +130,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 
   }
 
-  public void hold() {
-    Climbm1.set(HOLD_SPEED);
-    Climbm2.set(HOLD_SPEED);
-  }
-
+  
   public void zeroEncoders() {
     e1.setPosition(0);
     e2.setPosition(0);

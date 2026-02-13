@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class UNRelease extends Command {
-  //TODO why is it called this
   //also I think we should just move it to climber
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final Release subsystem;

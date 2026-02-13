@@ -6,7 +6,7 @@ import frc.robot.subsystems.Release;
 
 
 public class ReleaseThenRetract extends SequentialCommandGroup {
-  public ReleaseThenRetract(Release release, Climber climber) {
+  public ReleaseThenRetract(Release release, Climber climber, int FREEME) {
     addCommands(
         new Command_4_release(release),   // unlock first
         new WaitCommand(0.25),         // optional: let servo move

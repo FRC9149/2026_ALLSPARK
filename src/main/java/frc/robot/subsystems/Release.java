@@ -16,7 +16,8 @@ public class Release extends SubsystemBase{
     private static final int MAX_ANGLE = 180;
 
     private final static int LOCKED_ANGLE = 0; //TODO wouldn't this be the same as min and max?
-    private final static int RELEASED_ANGLE = 0;
+    private final static int RELEASED_ANGLE = 0; // Doesn't this just set positions to lock the release? -Hugo
+    //NOTE they miighghhtttt mmaayyybbeee be the min and max, and you maaayyyyy be right, but I like LOCK and RELEASE better - 4est
  
     //constructor
     public Release() {
