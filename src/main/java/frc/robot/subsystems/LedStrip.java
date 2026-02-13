@@ -21,8 +21,6 @@ public class LedStrip extends SubsystemBase {
     private AddressableLED led;
     private AddressableLEDBuffer ledBuffer;
 
-//TODO I don't believe we need this
-     private LEDPattern activePattern = LEDPattern.solid(edu.wpi.first.wpilibj.util.Color.kGreen);
 
     /**
      * @param port The pwm port that the LED Strip is connected to
@@ -39,7 +37,7 @@ public class LedStrip extends SubsystemBase {
     }
 
      public void applyActiveLEDPattern(LEDPattern newPattern) {
-        this.activePattern = newPattern;
+
     }
 
     //@Override
