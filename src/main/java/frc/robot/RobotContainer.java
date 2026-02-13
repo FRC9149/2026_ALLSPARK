@@ -30,6 +30,7 @@ import static edu.wpi.first.units.Units.Seconds;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.units.Units;
 
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -177,6 +178,37 @@ System.out.println(RevGamePad.getLeftY());
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+<<<<<<< HEAD
+    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+    //  leds.setAll(255, 0, 0);
+    //}));
+    RevGamePad.onSquare().onTrue(
+    new SequentialCommandGroup(
+
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.solid(Color.kRed)
+                    .blink(Units.Seconds.of(2))
+            ),
+            leds
+        ),
+
+        new WaitCommand(6),
+
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.atRGB8(index -> new Color8Bit(
+                    (int)(Math.random() * 255),
+                    (int)(Math.random() * 255),
+                    (int)(Math.random() * 255)
+                ))
+            ),
+            leds
+        )
+    )
+);
+=======
+>>>>>>> 994b83d84a5dd532f66b5b834e7711eea463978c
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
