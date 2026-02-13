@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.units.Units;
 
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -159,25 +160,30 @@ public class RobotContainer {
     //  leds.setAll(255, 0, 0);
     //}));
     RevGamePad.onSquare().onTrue(
-new SequentialCommandGroup(
-  
-        leds.runOnce(() -> leds.applyActiveLEDPattern(
-            LEDPattern.solid(Color.kRed).blink(edu.wpi.first.units.Units.Seconds.of(2))
-        )),
+    new SequentialCommandGroup(
+
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.solid(Color.kRed)
+                    .blink(Units.Seconds.of(2))
+            ),
+            leds
+        ),
 
         new WaitCommand(6),
 
-        leds.runOnce(() -> leds.applyActiveLEDPattern(
-            LEDPattern.atRGB8((index, time) -> 
-                new edu.wpi.first.wpilibj.util.Color8Bit(
-                    (int)(Math.random() * 255), 
-                    (int)(Math.random() * 255), 
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.atRGB8(index -> new Color8Bit(
+                    (int)(Math.random() * 255),
+                    (int)(Math.random() * 255),
                     (int)(Math.random() * 255)
-                )
-            )
-        ))
+                ))
+            ),
+            leds
+        )
     )
-    );
+);
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
