@@ -30,6 +30,7 @@ import static edu.wpi.first.units.Units.Seconds;
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import edu.wpi.first.units.Units;
 
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -79,7 +80,7 @@ public class RobotContainer {
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
-  private double i = 1;
+  private int i = 1;
   
 
 
@@ -140,14 +141,12 @@ System.out.println(RevGamePad.getLeftY());
     leds.setDefaultCommand( 
        // new SequentialCommandGroup( 
           new RunCommand( () -> {
-            com.robocats.LED.Color C = new com.robocats.LED.Color(i, 1.0, 0.25);
-            int r = C.rgb()[0], g = C.rgb()[1], b = C.rgb()[2];
-              leds.applyLEDPattern(LEDPattern.solid(new Color(r, g, b)));
-              if (i >= 360) {
+              leds.applyLEDPattern(LEDPattern.solid(Color.fromHSV(i, 255, 80)));
+              if (i >= 180) {
               i = 0;
               }
               else {
-                i+= 0.75;
+                i++;
               }
            }, leds)
           //new WaitCommand(0.1)
@@ -177,6 +176,37 @@ System.out.println(RevGamePad.getLeftY());
     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     RevGamePad.onDPadLeft().onTrue(new ReleaseThenRetract(release, climber));
+<<<<<<< HEAD
+    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+    //  leds.setAll(255, 0, 0);
+    //}));
+    RevGamePad.onSquare().onTrue(
+    new SequentialCommandGroup(
+
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.solid(Color.kRed)
+                    .blink(Units.Seconds.of(2))
+            ),
+            leds
+        ),
+
+        new WaitCommand(6),
+
+        new InstantCommand(
+            () -> leds.applyActiveLEDPattern(
+                LEDPattern.atRGB8(index -> new Color8Bit(
+                    (int)(Math.random() * 255),
+                    (int)(Math.random() * 255),
+                    (int)(Math.random() * 255)
+                ))
+            ),
+            leds
+        )
+    )
+);
+=======
+>>>>>>> 994b83d84a5dd532f66b5b834e7711eea463978c
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
