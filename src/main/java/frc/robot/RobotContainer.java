@@ -80,7 +80,7 @@ public class RobotContainer {
   private final Release release = new Release();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
-  private double i = 1;
+  private int i = 1;
   
 
 
@@ -141,14 +141,12 @@ System.out.println(RevGamePad.getLeftY());
     leds.setDefaultCommand( 
        // new SequentialCommandGroup( 
           new RunCommand( () -> {
-            com.robocats.LED.Color C = new com.robocats.LED.Color(i, 1.0, 0.25);
-            int r = C.rgb()[0], g = C.rgb()[1], b = C.rgb()[2];
-              leds.applyLEDPattern(LEDPattern.solid(new Color(r, g, b)));
-              if (i >= 360) {
+              leds.applyLEDPattern(LEDPattern.solid(Color.fromHSV(i, 255, 80)));
+              if (i >= 180) {
               i = 0;
               }
               else {
-                i+= 0.75;
+                i++;
               }
            }, leds)
           //new WaitCommand(0.1)
