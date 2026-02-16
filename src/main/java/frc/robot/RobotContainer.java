@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
+import frc.robot.commands.Aim;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
@@ -42,6 +43,7 @@ import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
 import com.studica.frc.AHRS.NavXComType;
 
+import frc.robot.subsystems.Aiming;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LedStrip;
@@ -77,6 +79,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
   private final LedStrip leds = new LedStrip(0, 300);
+  private final Aiming aimer = new Aiming();
   private int i = 1;
   
 
@@ -176,47 +179,49 @@ System.out.println(RevGamePad.getLeftY());
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
-    RevGamePad.onSquare().onTrue(
-    new SequentialCommandGroup(
-
-        new InstantCommand(
-            () -> leds.applyActiveLEDPattern(
-                LEDPattern.solid(Color.kRed)
-                    .blink(Units.Seconds.of(2))
-            ),
-            leds
-        ),
-
-        new WaitCommand(6),
-
-        new InstantCommand(
-            () -> leds.applyActiveLEDPattern(
-                LEDPattern.atRGB8(index -> new Color8Bit(
-                    (int)(Math.random() * 255),
-                    (int)(Math.random() * 255),
-                    (int)(Math.random() * 255)
-                ))
-            ),
-            leds
-        )
-    )
-);
+   // RevGamePad.onSquare().onTrue(
+   // new SequentialCommandGroup(
+//
+   //     new InstantCommand(
+   //         () -> leds.applyActiveLEDPattern(
+   //             LEDPattern.solid(Color.kRed)
+   //                 .blink(Units.Seconds.of(2))
+   //         ),
+   //         leds
+   //     ),
+//
+   //     new WaitCommand(6),
+//
+   //     new InstantCommand(
+   //         () -> leds.applyActiveLEDPattern(
+   //             LEDPattern.atRGB8(index -> new Color8Bit(
+   //                 (int)(Math.random() * 255),
+   //                 (int)(Math.random() * 255),
+   //                 (int)(Math.random() * 255)
+   //             ))
+   //         ),
+   //         leds
+   //     )
+   // )
+//);
     RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
     RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onSquare().whileTrue( 
-      new RunCommand(() -> {
+    RevGamePad.onRightTrigger(0.1).whileTrue(new Aim(aimer, RevGamePad::getRightTrigger));
+
+//    RevGamePad.onSquare().whileTrue( 
+//      new RunCommand(() -> {
         //code to run
-        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
+//        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));
         // Create an LED pattern that displays the first half of a strip as solid red,
 // and the second half of the strip as solid blue.
 // leds.sethalf();
-      },leds
-    )
-    
-    );
-    
+//      },leds
+//    )
+//    
+//    );
+//    
   }
  
 
