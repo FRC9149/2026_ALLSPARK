@@ -30,7 +30,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void stop() {
-        m1.stopMotor();
+        m1.set(0);
     }
 
 //----------------------------------------------------------------------------------------------------------------
