@@ -126,7 +126,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
-
+/*
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
         RevGamePad.getLeftY(),
@@ -135,9 +135,9 @@ public class RobotContainer {
         true
         ), Swerve)
 
-    );
+    );*/
+
     
-System.out.println(RevGamePad.getLeftY());
     leds.setDefaultCommand( 
        // new SequentialCommandGroup( 
           new RunCommand( () -> {
@@ -171,11 +171,11 @@ System.out.println(RevGamePad.getLeftY());
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    RevGamePad.onRightTrigger(1).onTrue(new ShootFuel(shooter, 0.5));
-    RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-    RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
-    RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
-    RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
+    RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    // RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
+    // RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+    // RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
+    // RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
@@ -204,11 +204,12 @@ System.out.println(RevGamePad.getLeftY());
    //     )
    // )
 //);
-    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
-    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
-    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+    // RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onRightTrigger(0.1).whileTrue(new Aim(aimer, RevGamePad::getRightTrigger));
+    RevGamePad.onO().whileTrue(new Aim(aimer, 1.0));
+    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
 
 //    RevGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {

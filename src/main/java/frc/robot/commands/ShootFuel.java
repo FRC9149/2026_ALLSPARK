@@ -13,6 +13,7 @@ public class ShootFuel extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final Shooter subsystem;
   private double speed;
+  private int i = 0;
 
   /**
    * Creates a new ExampleCommand.
@@ -28,12 +29,18 @@ public class ShootFuel extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {//Robot container has the code
+  public void initialize() {//Robot container has the code //huh???
+    subsystem.flyWheel(speed);
     }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {subsystem.shoot(speed);}
+  public void execute() {
+    if(i > 75)
+    subsystem.lower(speed);
+
+    i++;
+  }
   
   // Returns true when the command should end.
   @Override
@@ -41,6 +48,9 @@ public class ShootFuel extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {subsystem.shoot(0);}
+  public void end(boolean interrupted) {
+    subsystem.stop();
+    i=0;
+  }
 
 }

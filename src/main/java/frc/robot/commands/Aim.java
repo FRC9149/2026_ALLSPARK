@@ -16,8 +16,8 @@ public class Aim extends Command{
    *
    * @param subsystem The subsystem used by this command.
    */
-    private DoubleSupplier aimHeight;
- public Aim(Aiming subsystem, DoubleSupplier aimHeight) {
+    private double aimHeight;
+ public Aim(Aiming subsystem, double aimHeight) {
   this.subsystem = subsystem;
   this.aimHeight = aimHeight;
     //Use addRequirements() here to declare subsystem dependencies.
@@ -27,19 +27,19 @@ public class Aim extends Command{
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystem.setHeight(aimHeight.getAsDouble());
+    subsystem.setHeight(aimHeight);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subsystem.setHeight(aimHeight.getAsDouble());
+    subsystem.setHeight(aimHeight);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return false; 
   }
   
   // Called once the command ends or is interrupted.

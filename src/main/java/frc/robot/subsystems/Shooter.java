@@ -25,8 +25,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
-  private final SparkMax SM1 = new SparkMax(56, MotorType.kBrushless);
-  private final SparkMax SM2 = new SparkMax(22, MotorType.kBrushless);
+  private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //lower side
+  private final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
+  private final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
 
    public Shooter() {
     // Motor configuration
@@ -34,7 +35,7 @@ public class Shooter extends SubsystemBase{
     config
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
-        .inverted(false);
+        .inverted(true);
     SparkMaxConfig config2 = new SparkMaxConfig();
     config2
         .idleMode(IdleMode.kCoast)
@@ -57,12 +58,16 @@ public class Shooter extends SubsystemBase{
   }
 
   /** Run shooter at given speed (0.0 to 1.0) */
-  public void shoot(double speed) {
-    speed = MathUtil.clamp(speed, 1, 1);
+  public void lower(double speed) {
+    speed = MathUtil.clamp(speed, -1, 1);
     SM1.set(speed);
-    SM2.set(speed);
   }
 
+  public void flyWheel(double speed) {
+    speed = MathUtil.clamp(speed, -1, 1);
+    SM2.set(speed);
+    SM3.set(speed);
+  }
 
 
 
@@ -71,6 +76,7 @@ public class Shooter extends SubsystemBase{
   public void stop() {
     SM1.set(0);
     SM2.set(0);
+    SM3.set(0);
   }
 
  
