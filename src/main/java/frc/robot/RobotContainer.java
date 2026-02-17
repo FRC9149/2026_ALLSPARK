@@ -204,13 +204,13 @@ public class RobotContainer {
    //     )
    // )
 //);
-    // RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
-    // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
-    // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onO().whileTrue(new Aim(aimer, 1.0));
-    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
-
+    //RevGamePad.onO().whileTrue(new Aim(aimer, 180));
+    //RevGamePad.onTriangle().whileTrue(new Aim(aimer, 90));
+    //RevGamePad.onSquare().whileTrue(new Aim(aimer, 0));
 //    RevGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run

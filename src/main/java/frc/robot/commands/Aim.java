@@ -33,7 +33,8 @@ public class Aim extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subsystem.setHeight(aimHeight);
+    //System.out.println("L");
+     subsystem.setHeight(aimHeight);
   }
 
   // Returns true when the command should end.
