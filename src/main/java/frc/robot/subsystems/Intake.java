@@ -24,10 +24,10 @@ public class Intake extends SubsystemBase{
     public void intake() {
         m1.set(INTAKE_SPEED);
     }
-
-    public void outtake() {
-        m1.set(OUTTAKE_SPEED);
-    }
+//we don't actually need this:
+    //public void outtake() {
+    //    m1.set(OUTTAKE_SPEED);
+    //}
 
     public void stop() {
         m1.set(0);
