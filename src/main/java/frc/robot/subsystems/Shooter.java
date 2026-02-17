@@ -21,15 +21,17 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
   private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //lower side
-  private final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
-  private final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
-  private boolean STOP_PERIODIC_SPEED = false;
+  public final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
+  public final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
+ 
+  //private boolean STOP_PERIODIC_SPEED = false;
 
    public Shooter() {
     // Motor configuration
@@ -77,11 +79,24 @@ public class Shooter extends SubsystemBase{
     speed = MathUtil.clamp(speed, -1, 1);
     SM2.set(speed);
     SM3.set(speed);
-    STOP_PERIODIC_SPEED = true;
+    
     
   }
 
+//4EST NOTE: Perfection incarnate:
 
+//public void spool_down(double speed, SparkMax motor) {
+//  double last_speed = motor.get();
+//
+//  while (motor.get() > speed ) {
+//    motor.set(last_speed - 0.25);
+//    last_speed = motor.get();
+//
+//  }
+//  motor.set(speed);
+//  
+//
+//}
 
 
   /** Stop shooter */
@@ -89,9 +104,11 @@ public class Shooter extends SubsystemBase{
     SM1.set(0);
     SM2.set(0.2);
     SM3.set(0.2);
+
+    
   }
   public void actually_stop_or_it_will_cut_your_fingers_off() {
-    SM1.set(0);
+   SM1.set(0);
     SM2.set(0);
     SM3.set(0);
   }

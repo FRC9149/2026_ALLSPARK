@@ -66,7 +66,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 
   private final static int LOCKED_ANGLE = 180; //TODO wouldn't this be the same as min and max?
   private final static int RELEASED_ANGLE = 0; // Doesn't this just set positions to lock the release? -Hugo
-  //NOTE they miighghhtttt mmaayyybbeee be the min and max, and you maaayyyyy be right, but I like LOCK and RELEASE better - 4est
+  //4EST NOTE they miighghhtttt mmaayyybbeee be the min and max, and you maaayyyyy be right, but I like LOCK and RELEASE better - 4est
 
   //lets just leave hold speed, take up a few more bytes, and pretend we need it
 
@@ -150,7 +150,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 }
 
   public void retract() {
-    //TODO
+    //NOTTODO
     //should use a pid controller. make the setpoint the min height and the current value to the encoders
     //we won't need to use the if statement since the pid controller will slow down as we reach the target
   if (!atMinHeight()) {
@@ -197,6 +197,8 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   public boolean atHeight(int level) {
     //TODO 
     //This is a good use of encoder tolerance since we can't use the pid for this
+
+    //4EST NOTE: Thank you?
     return Math.abs(getHeight() - climbHeights.get(level)) <= encoderTolerance;
   }
 
