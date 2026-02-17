@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-importimport frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimbToLevel;
@@ -238,3 +238,5 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return autoChooser.getSelected();
+  }
+}
