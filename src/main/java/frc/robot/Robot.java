@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Shooter;
 
 /*import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,6 +24,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  private final Shooter shooter_but_here = new Shooter();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,7 +50,7 @@ public class Robot extends TimedRobot {
    */
 @Override
   public void robotInit() {
-    
+    shooter_but_here.stop();
     
   }
 
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
+
   }
 
   /** This function is called periodically during autonomous. */
