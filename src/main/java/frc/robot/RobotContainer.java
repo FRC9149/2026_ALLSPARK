@@ -75,11 +75,11 @@ public class RobotContainer {
     true
   );
   
-  private final Shooter shooter = new Shooter();
+  final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
-  private final LedStrip leds = new LedStrip(0, 300);
+  final LedStrip leds = new LedStrip(0, 300);
   private final Aiming aimer = new Aiming();
   private int i = 1;
   
@@ -152,7 +152,33 @@ public class RobotContainer {
            }, leds)
           //new WaitCommand(0.1)
        // )
-    ); 
+ 
+       ); 
+
+
+  shooter.setDefaultCommand( 
+       // new SequentialCommandGroup( 
+          new RunCommand( () -> {
+            if (shooter.SM2.get() > 0.2){
+              shooter.SM2.set(shooter.SM2.get()-0.1);
+            }
+            else{
+              shooter.SM2.set(0.2);
+            }
+            if (shooter.SM3.get() > 0.2){
+              shooter.SM3.set(shooter.SM2.get()-0.1);
+            }
+            else{
+              shooter.SM3.set(0.2);
+            }
+        
+           }, shooter)
+          //new WaitCommand(0.1)
+       // )
+ 
+       ); 
+
+       
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
