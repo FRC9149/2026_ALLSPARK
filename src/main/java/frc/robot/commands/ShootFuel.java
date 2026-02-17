@@ -27,10 +27,12 @@ public class ShootFuel extends Command {
     addRequirements(subsystem);
   }
 
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {//Robot container has the code //huh???
     subsystem.flyWheel(speed);
+    
     }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,6 +51,7 @@ public class ShootFuel extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
     subsystem.stop();
     i=0;
   }

@@ -21,16 +21,18 @@ public class Intake extends SubsystemBase{
 
     //TODO There is a chance the motor is reversed (prepare for that)
 
+    //4EST NOTE: NO, MUAHAHAHAHAHAHAHA
+
     public void intake() {
         m1.set(INTAKE_SPEED);
     }
-
-    public void outtake() {
-        m1.set(OUTTAKE_SPEED);
-    }
+//we don't actually need this:
+    //public void outtake() {
+    //    m1.set(OUTTAKE_SPEED);
+    //}
 
     public void stop() {
-        m1.stopMotor();
+        m1.set(0);
     }
 
 //----------------------------------------------------------------------------------------------------------------
