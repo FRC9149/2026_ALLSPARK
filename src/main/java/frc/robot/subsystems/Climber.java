@@ -200,12 +200,6 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     return Math.abs(getHeight() - climbHeights.get(level)) <= encoderTolerance;
   }
 
-  public boolean atMaxHeight() {
-    //TODO
-    //This doesn't make since to me since we already have the within limits funciton which does this but more
-    return getHeight() >= MAX_HEIGHT;
-  }
-
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Climber Encoders", getHeight());
