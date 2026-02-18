@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Aiming extends SubsystemBase{
 
-    private final Servo s1OnAiming = new Servo(2); //servo linear actuator
+    private final Servo s1OnAiming = new Servo(8); //servo linear actuator
     //private final Servo s2OnAiming = new Servo(1);
 
     private static final double MIN_ANGLE = 0;

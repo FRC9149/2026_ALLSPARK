@@ -198,12 +198,12 @@ public class RobotContainer {
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
     RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
-    RevGamePad.onRightBumper().whileTrue(new RunCommand(()->{
-      shooter.temp.set(1);
-    }, shooter));
+    // RevGamePad.onRightBumper().whileTrue(new RunCommand(()->{
+      // shooter.temp.set(1);
+    // }, shooter));
     // RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
-     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
+    //  RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+    //  RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     // RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
@@ -233,13 +233,13 @@ public class RobotContainer {
    //     )
    // )
 //);
-    RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
-    RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
-    RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+    // RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    //RevGamePad.onO().whileTrue(new Aim(aimer, 180));
-    //RevGamePad.onTriangle().whileTrue(new Aim(aimer, 90));
-    //RevGamePad.onSquare().whileTrue(new Aim(aimer, 0));
+    RevGamePad.onO().whileTrue(new Aim(aimer, 180));
+    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 90));
+    RevGamePad.onSquare().whileTrue(new Aim(aimer, 0));
 //    RevGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run
