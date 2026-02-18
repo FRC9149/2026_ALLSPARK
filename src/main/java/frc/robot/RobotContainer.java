@@ -157,24 +157,23 @@ public class RobotContainer {
 
 
   shooter.setDefaultCommand( 
-       // new SequentialCommandGroup( 
+       
           new RunCommand( () -> {
             if (shooter.SM2.get() > 0.2){
-              shooter.SM2.set(shooter.SM2.get()-0.1);
+              shooter.SM2.set(shooter.SM2.get()-0.05);
             }
             else{
               shooter.SM2.set(0.2);
             }
             if (shooter.SM3.get() > 0.2){
-              shooter.SM3.set(shooter.SM2.get()-0.1);
+              shooter.SM3.set(shooter.SM2.get()-0.05);
             }
             else{
               shooter.SM3.set(0.2);
             }
         
            }, shooter)
-          //new WaitCommand(0.1)
-       // )
+          
  
        ); 
 
@@ -199,9 +198,12 @@ public class RobotContainer {
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
     RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    RevGamePad.onRightBumper().whileTrue(new RunCommand(()->{
+      shooter.temp.set(1);
+    }, shooter));
     // RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-    // RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
-    // RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
+     RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+     RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     // RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);

@@ -15,7 +15,7 @@ public class Aiming extends SubsystemBase{
 private static final double MAX_ANGLE = 180.0;
 
     public void setHeight(double height){
-    //height = MathUtil.clamp(height, MIN_ANGLE, MAX_ANGLE);
+    height = MathUtil.clamp(height, MIN_ANGLE, MAX_ANGLE);
     //s1OnAiming.setAngle(height);
     s1OnAiming.setAngle(height);
     // s1OnAiming.set(height);
