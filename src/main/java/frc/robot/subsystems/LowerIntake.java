@@ -19,6 +19,10 @@ public class LowerIntake extends SubsystemBase{
     private final RelativeEncoder encoder = intake2m.getEncoder();
     //TODO explain to me how the closed loop controller works. I have never used this before
     private final SparkClosedLoopController controller = intake2m.getClosedLoopController();
+    // Closed loop adjusts number to find the correct spot for PIDs.
+    // Ex. You want to throw a baseball at 30 mph. First throw is 36, so you soften your throw to 28. 
+    // You strengthen it again back to 30 mph
+    // - Hugo
 
     // Need position changed after a while
     private static final double IN_POS = 0.0;
