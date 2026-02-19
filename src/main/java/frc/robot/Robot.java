@@ -51,7 +51,6 @@ public class Robot extends TimedRobot {
 @Override
   public void robotInit() {
     m_robotContainer.shooter.stop();
-  
     
   }
 
@@ -65,7 +64,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
-    
     
   }
 
