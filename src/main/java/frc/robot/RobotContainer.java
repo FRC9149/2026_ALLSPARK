@@ -42,11 +42,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
 import com.studica.frc.AHRS.NavXComType;
+import com.robocats.LED.LedStrip;
 
 import frc.robot.subsystems.Aiming;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LedStrip;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Shooter;
 

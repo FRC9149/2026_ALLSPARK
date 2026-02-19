@@ -74,7 +74,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
 
   //TODO
   //If this value is 0, then the motors will oscolate until they hit the target exactly. 
-  //(they will never hit the target exactlt because of overshoot) [damn Newton]
+  //(they will never hit the target exactly because of overshoot) [Darn Isaac Newton]
   private final double encoderTolerance = .1;
 
   private final SparkMaxConfig config = new SparkMaxConfig();
