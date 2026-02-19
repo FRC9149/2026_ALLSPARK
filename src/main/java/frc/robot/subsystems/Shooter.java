@@ -7,6 +7,8 @@ notes:
 
 4. YES THIS IS JUST A COPY PASTE FROM INTAKE
 
+5. I am lying, the code works now
+
 
 */
 
@@ -30,6 +32,7 @@ public class Shooter extends SubsystemBase{
   private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //lower side
   public final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
   public final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
+  public final SparkMax temp = new SparkMax(11, MotorType.kBrushless); // hopper feed
  
   //private boolean STOP_PERIODIC_SPEED = false;
 
@@ -49,7 +52,7 @@ public class Shooter extends SubsystemBase{
     config3
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
-        .inverted(true);
+        .inverted(false);
     //SparkBaseConfig config2 = new SparkBaseConfig();
     //config3
     //    .IdleMode(int 3)
