@@ -25,7 +25,7 @@ public class LowerIntake extends SubsystemBase{
     private final RelativeEncoder encoder = intake2m.getEncoder();
 
     private final RelativeEncoder encoder2 = intake2m.getEncoder();
-    //TODO explain to me how the closed loop controller works. I have never used this before
+    
     private final SparkClosedLoopController controller = intake2m.getClosedLoopController();
     private final SparkClosedLoopController controller2 = intake2m.getClosedLoopController();
     // Closed loop adjusts number to find the correct spot for PIDs.
