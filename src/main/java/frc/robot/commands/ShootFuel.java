@@ -37,9 +37,9 @@ public class ShootFuel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(i > 75)
+    if(i > 50){
     subsystem.lower(speed);
-
+    subsystem.temp.set(-speed);}
     i++;
   }
   
@@ -51,6 +51,7 @@ public class ShootFuel extends Command {
   @Override
   public void end(boolean interrupted) {
     subsystem.lower(0);
+    subsystem.temp.set(0);
     //subsystem.stop();
     i=0;
   }

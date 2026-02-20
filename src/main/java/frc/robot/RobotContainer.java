@@ -157,25 +157,25 @@ public class RobotContainer {
 
 
   shooter.setDefaultCommand( 
+      
+         new RunCommand( () -> {
+           if (shooter.SM2.get() > 0.2){
+             shooter.SM2.set(shooter.SM2.get()-0.05);
+           }
+           else{
+             shooter.SM2.set(0.2);
+           }
+           if (shooter.SM3.get() > 0.2){
+             shooter.SM3.set(shooter.SM2.get()-0.05);
+           }
+           else{
+             shooter.SM3.set(0.2);
+           }
        
-          new RunCommand( () -> {
-            if (shooter.SM2.get() > 0.2){
-              shooter.SM2.set(shooter.SM2.get()-0.05);
-            }
-            else{
-              shooter.SM2.set(0.2);
-            }
-            if (shooter.SM3.get() > 0.2){
-              shooter.SM3.set(shooter.SM2.get()-0.05);
-            }
-            else{
-              shooter.SM3.set(0.2);
-            }
-        
-           }, shooter)
-          
+          }, shooter)
+         
  
-       ); 
+      ); 
 
        
   }
@@ -237,8 +237,8 @@ public class RobotContainer {
     // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onO().whileTrue(new Aim(aimer, 180));
-    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 90));
+    RevGamePad.onO().whileTrue(new Aim(aimer, 1));
+    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
     RevGamePad.onSquare().whileTrue(new Aim(aimer, 0));
 //    RevGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {

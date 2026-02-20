@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
    */
 @Override
   public void robotInit() {
-    m_robotContainer.shooter.stop();
+   // m_robotContainer.shooter.stop();
     
   }
 
@@ -105,6 +105,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
      // Temporary test: This should make the robot icon drift diagonally
+     
  
   }
 
