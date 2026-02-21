@@ -7,48 +7,30 @@ package frc.robot;
 
  //14 -> intake
     //13 -> climber
-    //12 -> lowerIntake???
+    //12 -> lowerIntake
     //11 -> Hopper
     //10 -> shooter
 
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import static edu.wpi.first.units.Units.Seconds;
-
-import java.util.Map;
-
-import edu.wpi.first.wpilibj.util.Color8Bit;
-import edu.wpi.first.units.Units;
-
-
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.SwerveSubsystem;
-import com.studica.frc.AHRS.NavXComType;
 import com.robocats.LED.LedStrip;
 
 import frc.robot.subsystems.Aiming;
@@ -57,10 +39,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Shooter;
 
-import com.robocats.swerve.gyroscope.AhrsGyro;
 import com.robocats.vision.LimelightCamera;
-import com.robocats.swerve.ModuleConfig;
-import com.robocats.controllers.Ps3;
 import com.robocats.controllers.RevGamePad;
 
 /*import frc.robot.Constants.WaypointConstants;
@@ -75,33 +54,30 @@ public class RobotContainer {
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
 
-  private final SwerveSubsystem Swerve = new SwerveSubsystem(
-    DriveConstants.swerveConfiguration,
-    //2.55, 1.5, 0.2
-    new PIDController(0.5,0.01,0.01),
-    limelightCamerafour,
-    true
-  );
+  private final SwerveSubsystem Swerve;
   
-  final Shooter shooter = new Shooter();
+  private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
-  final LedStrip leds = new LedStrip(0, 300);
+  private final LedStrip leds = new LedStrip(9, 300);
   private final Aiming aimer = new Aiming();
   private int i = 1;
-  
-
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  // private final CommandXboxController m_driverController =
-      //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
-    private RevGamePad RevGamePad = new RevGamePad(0);
+  private RevGamePad revGamePad = new RevGamePad(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
     // Configure the trigger bindings
+    Swerve = new SwerveSubsystem(
+      DriveConstants.swerveConfiguration,
+      //2.55, 1.5, 0.2
+      new PIDController(0.5,0.0,0.0),
+      null,
+      true
+    );
+
     limelightCamerafour = new LimelightCamera("Limelight-four", Swerve::getHeading, null);
+    
     configureBindings();
 
      // ================= PATHPLANNER EVENTS =================
@@ -139,16 +115,15 @@ public class RobotContainer {
     SmartDashboard.putData("Should use flywheel", shooterChooser);
 
 
-/*
+
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        RevGamePad.getLeftY(),
-        RevGamePad.getLeftX(), 
-        RevGamePad.getRightX(),
-        true
+        revGamePad.getLeftY(),
+        revGamePad.getLeftX(), 
+        revGamePad.getRightX(),
+        false
         ), Swerve)
-
-    );*/
+    );
 
     
     leds.setDefaultCommand( 
@@ -202,25 +177,25 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //Reset Gyro
-    // RevGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
-    // RevGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
-    // RevGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    // RevGamePad.onLeftBumper().and(RevGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
-    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
-    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
-    // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    ////RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
-    // RevGamePad.onRightBumper().whileTrue(new RunCommand(()->{
+    // revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
+    // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
+    // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
+    // revGamePad.onLeftBumper().and(revGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
+    // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
+    // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    // revGamePad.onRightBumper().whileTrue(new RunCommand(()->{
       // shooter.temp.set(1);
     // }, shooter));
-    // RevGamePad.onLeftTrigger(1).onTrue(new Command_4_intake(intake));
-    //  RevGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
-    //  RevGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
-    // RevGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
-    //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
+    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake));
+    //  revGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
+    //  revGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
+    // revGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
+    //revGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
-   // RevGamePad.onSquare().onTrue(
+   // revGamePad.onSquare().onTrue(
    // new SequentialCommandGroup(
 //
    //     new InstantCommand(
@@ -245,14 +220,14 @@ public class RobotContainer {
    //     )
    // )
 //);
-    // RevGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
-    // RevGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
-    // RevGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
+    // revGamePad.onDPadDown().onTrue(new ClimbToLevel(climber, 1));
+    // revGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
+    // revGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    RevGamePad.onO().whileTrue(new Aim(aimer, 1));
-    RevGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
-    RevGamePad.onSquare().whileTrue(new Aim(aimer, 0));
-//    RevGamePad.onSquare().whileTrue( 
+    revGamePad.onO().whileTrue(new Aim(aimer, 1));
+    revGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
+    revGamePad.onSquare().whileTrue(new Aim(aimer, 0));
+//    revGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run
 //        leds.applyLEDPattern(LEDPattern.solid(Color.kRed));

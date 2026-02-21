@@ -16,7 +16,7 @@ public class LowerIntake extends SubsystemBase{
 
     private final SparkMax intake2m = new SparkMax(12, MotorType.kBrushless); // or 11
 
-    private final SparkMax intake3m = new SparkMax(14, MotorType.kBrushless);
+    private final SparkMax intake3m = new SparkMax(19, MotorType.kBrushless);
 
     
 
