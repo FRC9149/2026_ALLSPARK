@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+
+ //14 -> intake
+    //13 -> climber
+    //12 -> lowerIntake???
+    //11 -> Hopper
+    //10 -> shooter
+
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
@@ -65,6 +72,7 @@ import com.robocats.controllers.RevGamePad;
  */
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
@@ -111,6 +119,7 @@ public class RobotContainer {
 
     // ================= AUTOS =================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+    shooterChooser.setDefaultOption("true", true);
 
   
 
@@ -124,7 +133,10 @@ public class RobotContainer {
     //    AutoBuilder.buildAuto("TwoBallAuto")
     //);
 
+    shooterChooser.addOption("false", false);
+
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putData("Should use flywheel", shooterChooser);
 
 
 /*
@@ -156,26 +168,26 @@ public class RobotContainer {
        ); 
 
 
-  //shooter.setDefaultCommand( 
-  //    
-  //       new RunCommand( () -> {
-  //         if (shooter.SM2.get() > 0.2){
-  //           shooter.SM2.set(shooter.SM2.get()-0.05);
-  //         }
-  //         else{
-  //           shooter.SM2.set(0.2);
-  //         }
-  //         if (shooter.SM3.get() > 0.2){
-  //           shooter.SM3.set(shooter.SM2.get()-0.05);
-  //         }
-  //         else{
-  //           shooter.SM3.set(0.2);
-  //         }
-  //     
-  //        }, shooter)
-  //       
- //
-  //    ); 
+  shooter.setDefaultCommand( 
+     
+        new RunCommand( () -> {
+          if (shooter.SM2.get() > 0.2){
+            shooter.SM2.set(shooter.SM2.get()-0.05);
+          }
+          else{
+            shooter.SM2.set(shooterChooser.getSelected() ? 0.2 : 0);
+          }
+          if (shooter.SM3.get() > 0.2){
+            shooter.SM3.set(shooter.SM2.get()-0.05);
+          }
+          else{
+            shooter.SM3.set(shooterChooser.getSelected() ? 0.2 : 0);
+          }
+      
+         }, shooter)
+        
+ 
+     ); 
 
        
   }
