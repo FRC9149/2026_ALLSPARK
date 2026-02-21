@@ -10,11 +10,17 @@ public class Aiming extends SubsystemBase{
 
     private final Servo s1OnAiming = new Servo(1); //servo linear actuator
     //private final Servo s2OnAiming = new Servo(1);
-    private final Servo s2OnAiming = new Servo(2);
+    private final Servo s2OnAiming = new Servo(3);
 
 
     private static final double MIN_ANGLE = 0;
     private static final double MAX_ANGLE = 1;
+
+    public Aiming() {
+    // Calibrate signals for L16-R (1ms to 2ms range)
+    s1OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
+    s2OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
+}
 
     public void setHeight(double height){
     height = MathUtil.clamp(height, MIN_ANGLE, MAX_ANGLE);

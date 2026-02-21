@@ -156,26 +156,26 @@ public class RobotContainer {
        ); 
 
 
-  shooter.setDefaultCommand( 
-      
-         new RunCommand( () -> {
-           if (shooter.SM2.get() > 0.2){
-             shooter.SM2.set(shooter.SM2.get()-0.05);
-           }
-           else{
-             shooter.SM2.set(0.2);
-           }
-           if (shooter.SM3.get() > 0.2){
-             shooter.SM3.set(shooter.SM2.get()-0.05);
-           }
-           else{
-             shooter.SM3.set(0.2);
-           }
-       
-          }, shooter)
-         
- 
-      ); 
+  //shooter.setDefaultCommand( 
+  //    
+  //       new RunCommand( () -> {
+  //         if (shooter.SM2.get() > 0.2){
+  //           shooter.SM2.set(shooter.SM2.get()-0.05);
+  //         }
+  //         else{
+  //           shooter.SM2.set(0.2);
+  //         }
+  //         if (shooter.SM3.get() > 0.2){
+  //           shooter.SM3.set(shooter.SM2.get()-0.05);
+  //         }
+  //         else{
+  //           shooter.SM3.set(0.2);
+  //         }
+  //     
+  //        }, shooter)
+  //       
+ //
+  //    ); 
 
        
   }
@@ -197,7 +197,7 @@ public class RobotContainer {
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // RevGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    ////RevGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
     // RevGamePad.onRightBumper().whileTrue(new RunCommand(()->{
       // shooter.temp.set(1);
     // }, shooter));
