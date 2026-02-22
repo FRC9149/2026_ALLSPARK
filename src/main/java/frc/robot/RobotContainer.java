@@ -100,7 +100,7 @@ public class RobotContainer {
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
     shooterChooser.setDefaultOption("true", true);
 
-  
+    
 
     //autoChooser.addOption(
     //    "Shoot And Leave",

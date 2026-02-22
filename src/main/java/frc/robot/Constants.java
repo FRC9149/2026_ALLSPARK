@@ -35,20 +35,20 @@ public final class Constants {
   }
 
   public static final class DriveConstants {
-    public static final int kFrontLeftDriveMotorPort = 2;
-    public static final int kRearLeftDriveMotorPort = 3;
+    public static final int kFrontLeftDriveMotorPort = 2;//2
+    public static final int kRearLeftDriveMotorPort = 3;//3
     public static final int kFrontRightDriveMotorPort = 5;
     public static final int kRearRightDriveMotorPort = 7;
 
-    public static final int kFrontLeftTurningMotorPort = 1;
-    public static final int kRearLeftTurningMotorPort = 4;
+    public static final int kFrontLeftTurningMotorPort = 1;//1
+    public static final int kRearLeftTurningMotorPort = 4;//4
     public static final int kFrontRightTurningMotorPort = 6;
     public static final int kRearRightTurningMotorPort = 8;
 
-    public static final int kFrontLeftEncoderPort = 14;
-    public static final int kRearLeftEncoderPort = 17;
-    public static final int kFrontRightEncoderPort = 16;
-    public static final int kRearRightEncoderPort = 15;
+    public static final int kFrontLeftEncoderPort = 14; //14
+    public static final int kRearLeftEncoderPort = 17;//17
+    public static final int kFrontRightEncoderPort = 16;//16
+    public static final int kRearRightEncoderPort = 15;//15
 
     public static final ModuleConfig moduleConfiguration = new ModuleConfig(
       kFrontLeftDriveMotorPort, //FL Drive port
