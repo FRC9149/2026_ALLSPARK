@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Aiming;
 
@@ -18,6 +19,8 @@ public class Aim extends Command{
    * @param subsystem The subsystem used by this command.
    */
     private boolean up;
+    private double height = 0;
+    
  public Aim(Aiming subsystem, boolean up){//double aimHeight) {
   this.subsystem = subsystem;
   this.up = up;
@@ -29,20 +32,29 @@ public class Aim extends Command{
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    subsystem.setHeight(aimHeight);
+    //subsystem.setHeight(aimHeight);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     //System.out.println("L");
-     subsystem.setHeight(aimHeight);
+    // subsystem.setHeight(aimHeight);
+    
+
+    height += up ? 0.05 : -0.05;
+      height = MathUtil.clamp(height, 0, 0.8);
+    
+    subsystem.setHeight(height);
+
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; 
+    return true; 
   }
   
   // Called once the command ends or is interrupted.

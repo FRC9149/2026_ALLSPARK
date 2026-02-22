@@ -35,12 +35,12 @@ public final class Constants {
   }
 
   public static final class DriveConstants {
-    public static final int kFrontLeftDriveMotorPort = 1;
+    public static final int kFrontLeftDriveMotorPort = 2;
     public static final int kRearLeftDriveMotorPort = 3;
     public static final int kFrontRightDriveMotorPort = 5;
     public static final int kRearRightDriveMotorPort = 7;
 
-    public static final int kFrontLeftTurningMotorPort = 2;
+    public static final int kFrontLeftTurningMotorPort = 1;
     public static final int kRearLeftTurningMotorPort = 4;
     public static final int kFrontRightTurningMotorPort = 6;
     public static final int kRearRightTurningMotorPort = 8;
@@ -49,17 +49,6 @@ public final class Constants {
     public static final int kRearLeftEncoderPort = 17;
     public static final int kFrontRightEncoderPort = 16;
     public static final int kRearRightEncoderPort = 15;
-
-    //TODO add this into the CANCoders and not code
-    public static final double kFrontLeftAbsoluteEncoderOffset = -0.334229; //0.397461 - 0.206787;//-0.358154; //0.647461; //0.195801; //1.215576;
-//0.206787 rotations
-
-    public static final double kRearLeftAbsoluteEncoderOffset = 0.040039; //0.029785;
-
-    public static final double kFrontRightAbsoluteEncoderOffset = 0.455322; //1.461426;
-
-    public static final double kRearRightAbsoluteEncoderOffset = 0.715332; //0.221924;
-
 
     public static final ModuleConfig moduleConfiguration = new ModuleConfig(
       kFrontLeftDriveMotorPort, //FL Drive port
@@ -76,13 +65,8 @@ public final class Constants {
       kRearLeftEncoderPort, //BR Encoder port
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
-
-      0,//kFrontLeftAbsoluteEncoderOffset, //FL Encoder offset
-      0,//kRearLeftAbsoluteEncoderOffset, //BL Encoder offset
-      0,//kFrontRightAbsoluteEncoderOffset, //FR Encoder offset
-      0,//kRearRightAbsoluteEncoderOffset, //BR Encoder offset
       //is drive motor reversed FL, BL, FR, BR
-      false, true, true, true);
+      true, true, false, true);
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot

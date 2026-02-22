@@ -124,7 +124,7 @@ public class RobotContainer {
         revGamePad.getLeftY(),
         revGamePad.getLeftX(), 
         revGamePad.getRightX(),
-        revGamePad.getRightY()
+        false
         ), Swerve)
     );
 
@@ -232,9 +232,9 @@ public class RobotContainer {
     // revGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     // revGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    revGamePad.onO().whileTrue(new Aim(aimer, 0.8));
-    revGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
-    revGamePad.onX().whileTrue(new Aim(aimer, 0));
+    revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
+    
+    revGamePad.onX().whileTrue(new Aim(aimer, false));
 //    revGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run
