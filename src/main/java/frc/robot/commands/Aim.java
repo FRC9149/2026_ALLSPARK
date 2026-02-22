@@ -11,18 +11,20 @@ public class Aim extends Command{
   //also suppresswarnings isn't that great and also does nothing here
       private final Aiming subsystem;
 
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-    private double aimHeight;
- public Aim(Aiming subsystem, double aimHeight) {
+    private boolean up;
+ public Aim(Aiming subsystem, boolean up){//double aimHeight) {
   this.subsystem = subsystem;
-  this.aimHeight = aimHeight;
+  this.up = up;
     //Use addRequirements() here to declare subsystem dependencies.
   addRequirements(subsystem);
- }
+ } 
+
 
   // Called when the command is initially scheduled.
   @Override

@@ -16,12 +16,18 @@ public class Intake extends SubsystemBase{
   
     private final SparkMax m1 = new SparkMax(14, MotorType.kBrushless);
 
+    public Intake() {
+        //TODO make a config for m1
+    }
+
     public void intake(double speed) {
-        m1.set(speed);
+        m1.set(-speed);
     }
 
     public void stop() {
         m1.set(0);
     }
+
+
 }
 

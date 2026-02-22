@@ -50,30 +50,39 @@ public final class Constants {
     public static final int kFrontRightEncoderPort = 16;
     public static final int kRearRightEncoderPort = 15;
 
-    public static final double kFrontLeftAbsoluteEncoderOffset = 0.195801; //1.215576;
+    //TODO add this into the CANCoders and not code
+    public static final double kFrontLeftAbsoluteEncoderOffset = -0.334229; //0.397461 - 0.206787;//-0.358154; //0.647461; //0.195801; //1.215576;
+//0.206787 rotations
+
     public static final double kRearLeftAbsoluteEncoderOffset = 0.040039; //0.029785;
+
     public static final double kFrontRightAbsoluteEncoderOffset = 0.455322; //1.461426;
+
     public static final double kRearRightAbsoluteEncoderOffset = 0.715332; //0.221924;
+
 
     public static final ModuleConfig moduleConfiguration = new ModuleConfig(
       kFrontLeftDriveMotorPort, //FL Drive port
       kRearLeftDriveMotorPort, //BL Drive port
       kFrontRightDriveMotorPort, //FR Drive port
       kRearRightDriveMotorPort, //BR Drive port
+
       kFrontLeftTurningMotorPort, //FL Turn port
       kRearLeftTurningMotorPort, //BL Turn port
       kFrontRightTurningMotorPort, //FR Turn port
       kRearRightTurningMotorPort, //BR Turn port 
+
       kFrontLeftEncoderPort, //FL Encoder port
       kRearLeftEncoderPort, //BR Encoder port
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
-      kFrontLeftAbsoluteEncoderOffset, //FL Encoder offset
-      kRearLeftAbsoluteEncoderOffset, //BL Encoder offset
-      kFrontRightAbsoluteEncoderOffset, //FR Encoder offset
-      kRearRightAbsoluteEncoderOffset, //BR Encoder offset
+
+      0,//kFrontLeftAbsoluteEncoderOffset, //FL Encoder offset
+      0,//kRearLeftAbsoluteEncoderOffset, //BL Encoder offset
+      0,//kFrontRightAbsoluteEncoderOffset, //FR Encoder offset
+      0,//kRearRightAbsoluteEncoderOffset, //BR Encoder offset
       //is drive motor reversed FL, BL, FR, BR
-      false, false, true, true);
+      false, true, true, true);
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
@@ -86,7 +95,7 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
-      4 / 20,  // max linear velocity
+      4,
       3 * Math.PI / 10, // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 

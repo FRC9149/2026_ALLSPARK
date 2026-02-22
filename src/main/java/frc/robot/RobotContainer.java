@@ -18,12 +18,15 @@ import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import java.util.ArrayList;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -82,7 +85,7 @@ public class RobotContainer {
 
      // ================= PATHPLANNER EVENTS =================
     NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, 0.5));
-    NamedCommands.registerCommand("Intake", new Command_4_intake(intake));
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.5));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
@@ -121,7 +124,7 @@ public class RobotContainer {
         revGamePad.getLeftY(),
         revGamePad.getLeftX(), 
         revGamePad.getRightX(),
-        false
+        revGamePad.getRightY()
         ), Swerve)
     );
 
@@ -177,7 +180,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //Reset Gyro
-    // revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
+    revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
+    //revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.setModuleStates(new SwerveModuleState[] {
+    //            new SwerveModuleState(),
+    //            new SwerveModuleState(),
+    //            new SwerveModuleState(),
+    //            new SwerveModuleState()
+    //    })));
     // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
     // revGamePad.onLeftBumper().and(revGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
@@ -185,10 +194,9 @@ public class RobotContainer {
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
-    // revGamePad.onRightBumper().whileTrue(new RunCommand(()->{
-      // shooter.temp.set(1);
-    // }, shooter));
-    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake));
+    //////revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.5));
+    revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
+    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
     //  revGamePad.onO().onTrue(new MoveIntake(lowerIntake, false));
     //  revGamePad.onTriangle().onTrue(new MoveIntake(lowerIntake, true));
     // revGamePad.onDPadLeft().onTrue(new RunCommand(climber :: retract, climber));
@@ -224,9 +232,9 @@ public class RobotContainer {
     // revGamePad.onDPadRight().onTrue(new ClimbToLevel(climber, 2));
     // revGamePad.onDPadUp().onTrue(new ClimbToLevel(climber, 3));
 
-    revGamePad.onO().whileTrue(new Aim(aimer, 1));
+    revGamePad.onO().whileTrue(new Aim(aimer, 0.8));
     revGamePad.onTriangle().whileTrue(new Aim(aimer, 0.5));
-    revGamePad.onSquare().whileTrue(new Aim(aimer, 0));
+    revGamePad.onX().whileTrue(new Aim(aimer, 0));
 //    revGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run
