@@ -1,0 +1,4 @@
+[submodule "src/main/java/Bill-lib"]
+	path = src/main/java/Bill-lib
+	url = https://github.com/FRC9149/Bill-Lib.git
+	branch = submoduleTest
