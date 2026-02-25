@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import static edu.wpi.first.units.Units.Seconds;
@@ -88,6 +90,15 @@ public class RobotContainer {
   // private final CommandXboxController m_driverController =
       //new CommandXboxController(OperatorConstants.kDriverControllerPort); EXAMPLE
     private RevGamePad RevGamePad = new RevGamePad(0);
+    private Joystick ButtonBoard = new Joystick(1);
+    JoystickButton A1 = new JoystickButton(ButtonBoard, 1);
+    JoystickButton A2 = new JoystickButton(ButtonBoard, 2);
+    JoystickButton A3 = new JoystickButton(ButtonBoard, 3);
+    JoystickButton A4 = new JoystickButton(ButtonBoard, 4);
+    JoystickButton A5 = new JoystickButton(ButtonBoard, 5);
+    JoystickButton A6 = new JoystickButton(ButtonBoard, 6);
+    JoystickButton A7 = new JoystickButton(ButtonBoard, 7);
+    JoystickButton A8 = new JoystickButton(ButtonBoard, 8);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
@@ -179,7 +190,9 @@ public class RobotContainer {
     //RevGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
+
    // RevGamePad.onSquare().onTrue(
+    // A1.onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
    // new SequentialCommandGroup(
 //
    //     new InstantCommand(
