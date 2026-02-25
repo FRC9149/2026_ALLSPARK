@@ -14,6 +14,8 @@ public class HopperFeed extends SubsystemBase{
         SparkMaxConfig config = new SparkMaxConfig();
         // Set the limit
         //TODO I am pretty sure the current limit is 40. also you don't really need to change this
+
+        //4EST NOTE: ok?
         config.smartCurrentLimit(30); 
         // Apply the config to the motor
         hopperMotor.configure(config, SparkMax.ResetMode.kResetSafeParameters, SparkMax.PersistMode.kPersistParameters);
@@ -21,7 +23,7 @@ public class HopperFeed extends SubsystemBase{
     /*
     Sets the hopper speed from -1.0 to 1.0
     */
-    public void setSpeed(double speed) {
+    public void setSpeed(double speed) { 
         hopperMotor.set(speed);
     }
 

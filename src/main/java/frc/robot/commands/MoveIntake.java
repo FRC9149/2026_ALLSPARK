@@ -27,20 +27,22 @@ public class MoveIntake extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-        if (intake_retracted) {
-            subsystem.intakeDown();
-        }
-        else {
-            subsystem.intakeUp();
-
-        }
+    subsystem.just_run_the_motor_man(0.4);
+        //if (intake_retracted) {
+        //    subsystem.intakeDown();
+        //}
+        //else {
+        //    subsystem.intakeUp();
+//
+        //}
   }
   
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    subsystem.stop();
+  }
 
   // Returns true when the command should end.
   @Override

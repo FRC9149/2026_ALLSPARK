@@ -14,32 +14,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase{
   
-    private final SparkMax m1 = new SparkMax(42, MotorType.kBrushless);
+    private final SparkMax m1 = new SparkMax(14, MotorType.kBrushless);
 
-    private static final double INTAKE_SPEED = 0.75;
-    private static final double OUTTAKE_SPEED = -0.75;
-
-    //TODO There is a chance the motor is reversed (prepare for that)
-
-    public void intake() {
-        m1.set(INTAKE_SPEED);
+    public Intake() {
+        //TODO make a config for m1
     }
 
-    public void outtake() {
-        m1.set(OUTTAKE_SPEED);
+    public void intake(double speed) {
+        m1.set(-speed);
     }
 
     public void stop() {
         m1.set(0);
     }
 
-//----------------------------------------------------------------------------------------------------------------
-
-
-
-  
-//-----------------------------------------------------------------------------------------------
 
 }
 
-//============================================================================================================
