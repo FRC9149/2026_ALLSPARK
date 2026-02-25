@@ -93,7 +93,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     
   }
   
-    public void setServos(double position) {
+    public void setServos(double position) { 
         position = MathUtil.clamp(position, MIN_ANGLE, MAX_ANGLE);
 
         s1release.setAngle(position);
@@ -115,7 +115,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
     climbHeights.put(4, 0.0);
   }
 
-  public void moveToHeight(int level) {
+  public void moveToHeight(int level) { //pretty self explanitory
     if (!climbHeights.containsKey(level)) return; // safety check
 
     double targetHeight = climbHeights.get(level);

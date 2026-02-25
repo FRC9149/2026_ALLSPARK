@@ -13,6 +13,7 @@ package frc.robot;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.Aim;
+import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.ArrayList;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -91,6 +93,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
+      NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
@@ -102,15 +105,19 @@ public class RobotContainer {
 
     
 
-    //autoChooser.addOption(
-    //    "Shoot And Leave",
-    //    AutoBuilder.buildAuto("ShootAndLeave")
-    //);
-//
-    //autoChooser.addOption(
-    //    "Two Ball",
-    //    AutoBuilder.buildAuto("TwoBallAuto")
-    //);
+    autoChooser.addOption(
+       "Left of Ladder Starting Position",
+       AutoBuilder.buildAuto("LeftOfLadderStartingPosition")
+    );
+    autoChooser.addOption(
+       "Middle of Ladder Starting Position",
+       AutoBuilder.buildAuto("MiddleOfLadderStartingPosition")
+    );
+    autoChooser.addOption(
+       "Right of Ladder Starting Position",
+       AutoBuilder.buildAuto("RightOfLadderStartingPosition")
+    );
+
 
     shooterChooser.addOption("false", false);
 

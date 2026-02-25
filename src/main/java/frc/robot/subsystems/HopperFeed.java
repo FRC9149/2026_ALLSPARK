@@ -23,7 +23,7 @@ public class HopperFeed extends SubsystemBase{
     /*
     Sets the hopper speed from -1.0 to 1.0
     */
-    public void setSpeed(double speed) {
+    public void setSpeed(double speed) { 
         hopperMotor.set(speed);
     }
 

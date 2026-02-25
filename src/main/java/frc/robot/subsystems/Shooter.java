@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase{
 
   /** Run shooter at given speed (0.0 to 1.0) */
   public void lower(double speed) {
-    speed = MathUtil.clamp(speed, -1, 1);
+    speed = MathUtil.clamp(speed, -1, 1); //WHY THE FLIP IS IT NAMED LOWER?!?!!?!?!?!?!?!
     SM1.set(speed);
   }
 
