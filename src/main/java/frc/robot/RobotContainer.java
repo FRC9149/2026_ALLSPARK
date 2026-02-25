@@ -131,7 +131,7 @@ public class RobotContainer {
         revGamePad.getLeftY(),
         revGamePad.getLeftX(), 
         revGamePad.getRightX(),
-        false
+        revGamePad.getRightY()
         ), Swerve)
     );
 
