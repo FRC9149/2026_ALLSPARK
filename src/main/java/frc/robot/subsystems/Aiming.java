@@ -22,11 +22,15 @@ public class Aiming extends SubsystemBase{
     s2OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
 }
 
+  public double getHeight(){
+    return s1OnAiming.get();
+  }
+
     public void setHeight(double height){
     height = MathUtil.clamp(height, MIN_ANGLE, MAX_ANGLE);
       s1OnAiming.set(height);
       s2OnAiming.set(height);
-\[]
+    
 
 
     //s1OnAiming.setAngle(height);

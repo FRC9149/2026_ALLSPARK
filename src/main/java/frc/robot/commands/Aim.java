@@ -33,6 +33,7 @@ public class Aim extends Command{
   @Override
   public void initialize() {
     //subsystem.setHeight(aimHeight);
+    height = subsystem.getHeight();
     
   }
 
@@ -43,8 +44,8 @@ public class Aim extends Command{
     // subsystem.setHeight(aimHeight);
     
 
-    height += up ? 0.05 : -0.05;
-      height = MathUtil.clamp(height, 0, 0.8);
+    height += up ? 0.025 : -0.025;
+      height = MathUtil.clamp(height, 0, 0.85);
     
     subsystem.setHeight(height);
 

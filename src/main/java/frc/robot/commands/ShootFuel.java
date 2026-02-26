@@ -39,8 +39,8 @@ public class ShootFuel extends Command {
   public void execute() {
     //Make it so that the 
     if(i > 50){
-    subsystem.lower(speed);
-    subsystem.temp.set(speed);}
+    subsystem.lower(1);
+    subsystem.temp.set(1);}
     i++;
   }
   

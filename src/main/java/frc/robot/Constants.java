@@ -66,26 +66,26 @@ public final class Constants {
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
       //is drive motor reversed FL, BL, FR, BR
-      false, false, false, false);
+      true, true, true, true);
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
 
     public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
       4,
-      3 * Math.PI / 10, // max angular velocity
+      2 * Math.PI / 2, // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
-      new AhrsGyro(NavXComType.kUSB1, Math.PI/2, false),
+      new AhrsGyro(NavXComType.kUSB1, Math.PI / 2, false),
       true //is field symmetric
     );
       

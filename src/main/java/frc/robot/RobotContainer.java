@@ -87,7 +87,7 @@ public class RobotContainer {
     Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       //2.55, 1.5, 0.2
-      new PIDController(0.5,0.0,0.0),
+      new PIDController(0.04,0.000,0.1), //TODO Configure controls how fast the robot turns
       null,
       true
     );
@@ -104,7 +104,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-      NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
+    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
@@ -211,7 +211,7 @@ public class RobotContainer {
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 0.65));
     //////revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.5));
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
