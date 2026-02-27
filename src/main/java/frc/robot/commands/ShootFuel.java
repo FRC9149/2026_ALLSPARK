@@ -14,15 +14,16 @@ public class ShootFuel extends Command {
   private final Shooter subsystem;
   private double speed;
   private int i = 0;
-
+  private boolean Reverse = false;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShootFuel(Shooter subsystem, double speed) {
+  public ShootFuel(Shooter subsystem, double speed, boolean Reverse) {
     this.subsystem = subsystem;
     this.speed = speed;
+    this.Reverse = Reverse; 
      // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -31,14 +32,18 @@ public class ShootFuel extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {//Robot container has the code //huh???
-    subsystem.flyWheel(speed);
-    }
+    if(!Reverse){subsystem.flyWheel(speed);}
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(Reverse == true) {
+      subsystem.lower(-speed);
+      subsystem.temp.set(-speed);
+    }
     //Make it so that the 
-    if(i > 50){
+    else if(i > 50){
     subsystem.lower(speed);
     subsystem.temp.set(speed);}
     i++;

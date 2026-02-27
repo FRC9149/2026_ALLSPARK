@@ -66,7 +66,7 @@ public final class Constants {
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
       //is drive motor reversed FL, BL, FR, BR
-      false, false, false, false);
+      true, false, false, false);
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot

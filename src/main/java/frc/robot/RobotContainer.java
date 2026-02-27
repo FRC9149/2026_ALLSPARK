@@ -84,16 +84,15 @@ public class RobotContainer {
     limelightCamerafour = new LimelightCamera("Limelight-four", Swerve::getHeading, null);
     
     configureBindings();
-
      // ================= PATHPLANNER EVENTS =================
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, 0.5));
-    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.5));
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, 1, false));
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-      NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
+      NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
@@ -200,7 +199,8 @@ public class RobotContainer {
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1, false));
+    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, 1, true));
     //////revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.5));
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
@@ -241,7 +241,7 @@ public class RobotContainer {
 
     revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
     
-    revGamePad.onX().whileTrue(new Aim(aimer, false));
+    revGamePad.onX().whileTrue(new AimExact(aimer, .35));
 //    revGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run

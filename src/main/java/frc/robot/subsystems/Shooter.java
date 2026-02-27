@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
 
-  private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //lower side
+  private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //green wheels
   public final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
   public final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
   public final SparkMax temp = new SparkMax(11, MotorType.kBrushless); // hopper feed
@@ -80,8 +80,8 @@ public class Shooter extends SubsystemBase{
 
   public void flyWheel(double speed) {
     speed = MathUtil.clamp(speed, -1, 1);
-    SM2.set(speed);
-    SM3.set(speed);
+    SM2.set(speed/1.5);
+    SM3.set(speed/1.5);
     
     
   }
