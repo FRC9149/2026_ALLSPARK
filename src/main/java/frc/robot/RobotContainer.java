@@ -20,11 +20,13 @@ import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.ArrayList;
@@ -69,6 +71,15 @@ public class RobotContainer {
   private final Aiming aimer = new Aiming();
   private int i = 1;
   private RevGamePad revGamePad = new RevGamePad(0);
+    private Joystick ButtonBoard = new Joystick(1);
+    JoystickButton A1 = new JoystickButton(ButtonBoard, 1);
+    JoystickButton A2 = new JoystickButton(ButtonBoard, 2);
+    JoystickButton A3 = new JoystickButton(ButtonBoard, 3);
+    JoystickButton A4 = new JoystickButton(ButtonBoard, 4);
+    JoystickButton A5 = new JoystickButton(ButtonBoard, 5);
+    JoystickButton A6 = new JoystickButton(ButtonBoard, 6);
+    JoystickButton A7 = new JoystickButton(ButtonBoard, 7);
+    JoystickButton A8 = new JoystickButton(ButtonBoard, 8);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
@@ -76,7 +87,7 @@ public class RobotContainer {
     Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       //2.55, 1.5, 0.2
-      new PIDController(0.5,0.0,0.0),
+      new PIDController(0.04,0.000,0.1), //TODO Configure controls how fast the robot turns
       null,
       true
     );
@@ -92,7 +103,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
+<<<<<<< HEAD
       NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
+=======
+    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
+>>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
@@ -199,8 +214,12 @@ public class RobotContainer {
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
+<<<<<<< HEAD
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, 1, true));
+=======
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 0.65));
+>>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
     //////revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.5));
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
@@ -210,7 +229,9 @@ public class RobotContainer {
     //revGamePad.onSquare().onTrue(new InstantCommand( () -> {
     //  leds.setAll(255, 0, 0);
     //}));
-   // revGamePad.onSquare().onTrue(
+
+   // RevGamePad.onSquare().onTrue(
+    // A1.onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
    // new SequentialCommandGroup(
 //
    //     new InstantCommand(
