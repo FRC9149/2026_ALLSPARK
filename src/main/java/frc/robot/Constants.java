@@ -66,11 +66,7 @@ public final class Constants {
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
       //is drive motor reversed FL, BL, FR, BR
-<<<<<<< HEAD
-      true, false, false, false);
-=======
       true, true, true, true);
->>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
@@ -89,7 +85,7 @@ public final class Constants {
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
-      new AhrsGyro(NavXComType.kUSB1, Math.PI / 2, false),
+      new AhrsGyro(NavXComType.kUSB1, 0, true),
       true //is field symmetric
     );
       

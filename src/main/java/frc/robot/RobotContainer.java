@@ -12,6 +12,7 @@ package frc.robot;
     //10 -> shooter
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
 import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
@@ -19,6 +20,8 @@ import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -61,7 +64,12 @@ public class RobotContainer {
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
 
-  private final SwerveSubsystem Swerve;
+  private final SwerveSubsystem Swerve = new SwerveSubsystem(
+      DriveConstants.swerveConfiguration,
+      //2.55, 1.5, 0.2
+      new PIDController(0.4,0.3,.1), //TODO Configure controls how fast the robot turns
+      true
+    );
   
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
@@ -84,15 +92,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
     // Configure the trigger bindings
-    Swerve = new SwerveSubsystem(
-      DriveConstants.swerveConfiguration,
-      //2.55, 1.5, 0.2
-      new PIDController(0.04,0.000,0.1), //TODO Configure controls how fast the robot turns
-      null,
-      true
-    );
 
-    limelightCamerafour = new LimelightCamera("Limelight-four", Swerve::getHeading, null);
+    limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
+    Swerve.setCamera(limelightCamerafour);
     
     configureBindings();
      // ================= PATHPLANNER EVENTS =================
@@ -103,17 +105,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
     NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-<<<<<<< HEAD
       NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
-=======
-    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .7));
->>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
     // NamedCommands.registerCommand("Wait1", new WaitCommand(1)); There is already a wait command inside pathplanner
     // NamedCommands.registerCommand("Wait2", new WaitCommand(2));
     // NamedCommands.registerCommand("Wait3", new WaitCommand(3));
 
-    // ================= AUTOS =================
+    // ================= AUTOS ================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
     shooterChooser.setDefaultOption("true", true);
 
@@ -201,7 +199,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //Reset Gyro
-    revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.swerveConfig.gyroscope().zero(), Swerve));
+    revGamePad.onSquare().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
     //revGamePad.onSquare().onTrue(new InstantCommand(()->Swerve.setModuleStates(new SwerveModuleState[] {
     //            new SwerveModuleState(),
     //            new SwerveModuleState(),
@@ -210,16 +208,12 @@ public class RobotContainer {
     //    })));
     // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    // revGamePad.onLeftBumper().and(revGamePad.onRightBumper()).onTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    revGamePad.onDPadLeft().whileTrue(Swerve.driveTo(new Pose2d(15, 4, new Rotation2d(0))));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
-<<<<<<< HEAD
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, 1, true));
-=======
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 0.65));
->>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
     //////revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.5));
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));

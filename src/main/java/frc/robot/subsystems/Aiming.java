@@ -30,11 +30,8 @@ public class Aiming extends SubsystemBase{
     height = MathUtil.clamp(height, MIN_ANGLE, MAX_ANGLE);
       s1OnAiming.set(height);
       s2OnAiming.set(height);
-<<<<<<< HEAD
 
-=======
     
->>>>>>> 4b2fd72cf65047063898f3f4758bd01a6f4ca60f
 
 
     //s1OnAiming.setAngle(height);
