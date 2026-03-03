@@ -143,7 +143,7 @@ public class RobotContainer {
         revGamePad.getLeftY(),
         revGamePad.getLeftX(), 
         revGamePad.getRightX(),
-        revGamePad.getRightY()
+        true
         ), Swerve)
     );
 
@@ -208,7 +208,7 @@ public class RobotContainer {
     //    })));
     // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    revGamePad.onDPadLeft().whileTrue(Swerve.driveTo(new Pose2d(15, 4, new Rotation2d(0))));
+    revGamePad.onDPadLeft().whileTrue(Swerve.driveTo(new Pose2d(12.5, 7, new Rotation2d(Math.PI / 2))));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
