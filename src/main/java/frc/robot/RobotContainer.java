@@ -22,12 +22,14 @@ import frc.robot.commands.ShootFuel;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -67,7 +69,7 @@ public class RobotContainer {
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       //2.55, 1.5, 0.2
-      new PIDController(0.4,0.3,.1), //TODO Configure controls how fast the robot turns
+      new PIDController(0.025,0.00000000,0.0), //TODO Configure controls how fast the robot turns
       true
     );
   
@@ -136,14 +138,12 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
     SmartDashboard.putData("Should use flywheel", shooterChooser);
 
-
-
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        revGamePad.getLeftY(),
-        revGamePad.getLeftX(), 
+        -revGamePad.getLeftX(),
+        revGamePad.getLeftY(), 
         revGamePad.getRightX(),
-        true
+        revGamePad.getRightY()
         ), Swerve)
     );
 
@@ -208,7 +208,14 @@ public class RobotContainer {
     //    })));
     // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    revGamePad.onDPadLeft().whileTrue(Swerve.driveTo(new Pose2d(12.5, 7, new Rotation2d(Math.PI / 2))));
+    revGamePad.onDPadLeft().toggleOnTrue(
+      new SequentialCommandGroup(
+        new InstantCommand(()->System.out.println("A")),
+        new InstantCommand(()->Swerve.resetAutoBuilder(), Swerve),
+        new InstantCommand(()->System.out.println("ASD")),
+        new RunCommand(()->{Swerve.driveTo(new Pose2d(12.5, 7, new Rotation2d(Math.PI / 2)));System.out.println("B");}, Swerve).repeatedly()
+      )
+    );
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));

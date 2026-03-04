@@ -80,13 +80,13 @@ public final class Constants {
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
       4,
-      2 * Math.PI / 2, // max angular velocity
+      2 * Math.PI , // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
       new AhrsGyro(NavXComType.kUSB1, 0, true),
-      true //is field symmetric
+      false //is field symmetric
     );
       
 
