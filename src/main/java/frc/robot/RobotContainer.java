@@ -38,6 +38,9 @@ import java.util.ArrayList;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PathPlannerLogging;
+
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -66,6 +69,7 @@ public class RobotContainer {
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
   private final Field2d m_field = new Field2d();
+  
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
@@ -93,27 +97,28 @@ public class RobotContainer {
     JoystickButton A7 = new JoystickButton(ButtonBoard, 7);
     JoystickButton A8 = new JoystickButton(ButtonBoard, 8);
 
+    public void periodic() {
+    }
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
     // Configure the trigger bindings
+        SmartDashboard.putData("Field", m_field);
 
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
     Swerve.setCamera(limelightCamerafour);
     
 
-    public RobotContainer() {
         // 2. Put it on the dashboard
-        SmartDashboard.putData("Field", m_field);
 
         // 3. Set up PathPlanner logging to update the same field object
         //-----I HAVE NO IDEA IF THIS WORKS, WILL TEST AND RESEARCH LATER:
-        //PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
-        //    m_field.getObject("target pose").setPose(pose);
-        //});
-//
-        //PathPlannerLogging.setLogActivePathCallback((poses) -> {
-        //    m_field.getObject("path").setPoses(poses);
-        //});
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+           m_field.getObject("target pose").setPose(pose);
+        });
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+           m_field.getObject("path").setPoses(poses);
+        });
     
     configureBindings();
      // ================= PATHPLANNER EVENTS =================
