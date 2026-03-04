@@ -63,12 +63,14 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
+  private final Field2d m_field = new Field2d();
 
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       //2.55, 1.5, 0.2
       new PIDController(0.4,0.3,.1), //TODO Configure controls how fast the robot turns
-      true
+      true,
+      m_field
     );
   
   private final Shooter shooter = new Shooter();
@@ -95,6 +97,21 @@ public class RobotContainer {
 
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
     Swerve.setCamera(limelightCamerafour);
+    
+
+    public RobotContainer() {
+        // 2. Put it on the dashboard
+        SmartDashboard.putData("Field", m_field);
+
+        // 3. Set up PathPlanner logging to update the same field object
+        //-----I HAVE NO IDEA IF THIS WORKS, WILL TEST AND RESEARCH LATER:
+        //PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+        //    m_field.getObject("target pose").setPose(pose);
+        //});
+//
+        //PathPlannerLogging.setLogActivePathCallback((poses) -> {
+        //    m_field.getObject("path").setPoses(poses);
+        //});
     
     configureBindings();
      // ================= PATHPLANNER EVENTS =================
