@@ -105,7 +105,7 @@ public class RobotContainer {
         SmartDashboard.putData("Field", m_field);
 
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
-    Swerve.setCamera(limelightCamerafour);
+    Swerve.addCamera(0, limelightCamerafour);
     
 
         // 2. Put it on the dashboard
