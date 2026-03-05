@@ -68,6 +68,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
   private LimelightCamera limelightCamerafour;
+  private LimelightCamera limelightCameraBack;
   private final Field2d m_field = new Field2d();
   
 
@@ -105,7 +106,9 @@ public class RobotContainer {
         SmartDashboard.putData("Field", m_field);
 
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
+    limelightCameraBack = new LimelightCamera("limelight", Swerve::getRotation, null);
     Swerve.addCamera(0, limelightCamerafour);
+    Swerve.addCamera(1, limelightCameraBack);
     
 
         // 2. Put it on the dashboard
