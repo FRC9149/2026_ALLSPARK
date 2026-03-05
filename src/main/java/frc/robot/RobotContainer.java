@@ -4,13 +4,6 @@
 
 package frc.robot;
 
-
- //14 -> intake
-    //13 -> climber
-    //12 -> lowerIntake
-    //11 -> Hopper
-    //10 -> shooter
-
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
