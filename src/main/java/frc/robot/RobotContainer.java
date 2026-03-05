@@ -74,7 +74,6 @@ public class RobotContainer {
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       //2.55, 1.5, 0.2
-      new PIDController(0.4,0.3,.1), //TODO Configure controls how fast the robot turns
       true,
       m_field
     );
@@ -165,7 +164,7 @@ public class RobotContainer {
         -revGamePad.getLeftX(),
         revGamePad.getLeftY(), 
         revGamePad.getRightX(),
-        revGamePad.getRightY()
+        true
         ), Swerve)
     );
 
@@ -230,14 +229,22 @@ public class RobotContainer {
     //    })));
     // revGamePad.onLeftBumper().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     // revGamePad.onRightBumper().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    revGamePad.onDPadLeft().toggleOnTrue(
-      new SequentialCommandGroup(
-        new InstantCommand(()->System.out.println("A")),
-        new InstantCommand(()->Swerve.resetAutoBuilder(), Swerve),
-        new InstantCommand(()->System.out.println("ASD")),
-        new RunCommand(()->{Swerve.driveTo(new Pose2d(12.5, 7, new Rotation2d(Math.PI / 2)));System.out.println("B");}, Swerve).repeatedly()
-      )
+    //////revGamePad.onDPadLeft().toggleOnTrue(
+    //////  new SequentialCommandGroup(
+    //////    new InstantCommand(()->System.out.println("A")),
+    //////    new InstantCommand(()->Swerve.resetAutoBuilder(), Swerve),
+    //////    new InstantCommand(()->System.out.println("ASD")),
+    //////    new RunCommand(()->{Swerve.driveTo(new Pose2d(12.5, 7, new Rotation2d(Math.PI / 2)));System.out.println("B");}, Swerve).repeatedly()
+    //////  )
+    //////);
+    /// 
+    revGamePad.onDPadLeft().whileTrue(
+      Swerve.driveTo(new Pose2d(12, 6, new Rotation2d(Math.PI)))
     );
+    revGamePad.onDPadDown().whileTrue(
+      Swerve.driveTo(new Pose2d(12.326, 7.191, Rotation2d.fromDegrees(270-97.336)))
+    );
+
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.leftOfLadderClimbingPosition));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.middleOfLadderClimbingPostion));
     // revGamePad.onX().onTrue(Swerve.driveTo(WaypointConstants.rightOfLadderClimbingPosition));
@@ -285,7 +292,7 @@ public class RobotContainer {
 
     revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
     
-    revGamePad.onX().whileTrue(new AimExact(aimer, .35));
+    revGamePad.onX().whileTrue(new Aim(aimer, false));
 //    revGamePad.onSquare().whileTrue( 
 //      new RunCommand(() -> {
         //code to run
@@ -297,7 +304,9 @@ public class RobotContainer {
 //    )
 //    
 //    );
-//    
+
+//    ][\
+]
   }
  
 
