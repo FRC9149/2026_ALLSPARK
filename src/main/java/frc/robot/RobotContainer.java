@@ -58,7 +58,7 @@ import com.robocats.controllers.RevGamePad;
  */
 public class RobotContainer {
   //misc setup ================================================================================================
-  private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
+  
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
 
   private LimelightCamera limelightCamerafour;
@@ -73,6 +73,7 @@ public class RobotContainer {
       true,
       m_field
     );
+    private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
   private final Shooter shooter = new Shooter();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
@@ -98,7 +99,7 @@ public class RobotContainer {
   public RobotContainer() {
     //misc ==================================================================================================================
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
-    limelightCameraBack = new LimelightCamera("limelight", Swerve::getRotation, null);
+    limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
     Swerve.addCamera(0, limelightCamerafour);
     Swerve.addCamera(1, limelightCameraBack);
 
