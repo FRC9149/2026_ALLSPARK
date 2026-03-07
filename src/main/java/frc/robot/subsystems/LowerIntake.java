@@ -44,8 +44,7 @@ public class LowerIntake extends SubsystemBase{
     }
 
     public void stop() {
-            intake2m.set(0);
-            
+        intake2m.set(0);
     }
 
     @Override

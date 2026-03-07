@@ -27,7 +27,7 @@ public class MoveIntake extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    subsystem.just_run_the_motor_man(0.8);
+    subsystem.just_run_the_motor_man(intake_retracted ? -0.8 : 0.8);
         //if (intake_retracted) {
         //    subsystem.intakeDown();
         //}

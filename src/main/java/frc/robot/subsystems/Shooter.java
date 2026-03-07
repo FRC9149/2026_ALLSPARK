@@ -16,8 +16,8 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -28,16 +28,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase{
-
-  private final SparkMax SM1 = new SparkMax(10, MotorType.kBrushless); //green wheels
-  public final SparkMax SM2 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
-  public final SparkMax SM3 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
-  public final SparkMax temp = new SparkMax(11, MotorType.kBrushless); // hopper feed
- 
-  //private boolean STOP_PERIODIC_SPEED = false;
-
+  private final SparkMax lowerMotor = new SparkMax(10, MotorType.kBrushless); //green wheels
+  private final SparkMax flyMotor1 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
+  private final SparkMax flyMotor2 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
+  
    public Shooter() {
-    // Motor configuration
     SparkMaxConfig config = new SparkMaxConfig();
     config
         .idleMode(IdleMode.kCoast)
@@ -52,38 +47,29 @@ public class Shooter extends SubsystemBase{
     config3
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
+        // .follow(flyMotor1)
         .inverted(false);
-    //SparkBaseConfig config2 = new SparkBaseConfig();
-    //config3
-    //    .IdleMode(int 3)
-    //    .smartCurrentLimit(40)
-    //    .inverted(true);
 
     
-    SM1.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    SM2.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    SM3.configure(config3, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-
-
-    // Invert one of the motors so the wheels spin opposite directions and launch the ball up between them
-    // SM1.setInverted(false);
-    // SM2.setInverted(true);
-    
+    lowerMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    flyMotor1.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    flyMotor2.configure(config3, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   /** Run shooter at given speed (0.0 to 1.0) */
   public void lower(double speed) {
     speed = MathUtil.clamp(speed, -1, 1); //WHY THE FLIP IS IT NAMED LOWER?!?!!?!?!?!?!?!
-    SM1.set(speed);
+    lowerMotor.set(speed);                     //Because it's the lower part of the shooter, idk what else to call it
   }
 
   public void flyWheel(double speed) {
     speed = MathUtil.clamp(speed, -1, 1);
-    SM2.set(speed);
-    SM3.set(speed);
-    
-    
+    flyMotor1.set(speed);
+    flyMotor2.set(speed);
+  }
+
+  public double getSpeed() {
+    return flyMotor1.get();
   }
 
 //4EST NOTE: Perfection incarnate:
@@ -104,16 +90,16 @@ public class Shooter extends SubsystemBase{
 
   /** Stop shooter */
   public void stop() {
-    SM1.set(0);
-    SM2.set(0.2);
-    SM3.set(0.2);
+    lowerMotor.set(0);
+    flyMotor1.set(0.2);
+    flyMotor2.set(0.2);
 
     
   }
   public void actually_stop_or_it_will_cut_your_fingers_off() {
-   SM1.set(0);
-    SM2.set(0);
-    SM3.set(0);
+   lowerMotor.set(0);
+    flyMotor1.set(0);
+    flyMotor2.set(0);
   }
 
   

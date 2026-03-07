@@ -50,6 +50,8 @@ import frc.robot.subsystems.Shooter;
 import com.robocats.vision.LimelightCamera;
 import com.robocats.controllers.RevGamePad;
 
+import frc.robot.subsystems.HopperFeed;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -75,6 +77,7 @@ public class RobotContainer {
     );
     private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
   private final Shooter shooter = new Shooter();
+  private final HopperFeed hopper = new HopperFeed();
   private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
@@ -107,7 +110,7 @@ public class RobotContainer {
 
 
     // ================= PATHPLANNER EVENTS ===================================================================================================================================
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, 1, false));
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, 1, false));
     NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
@@ -129,12 +132,6 @@ public class RobotContainer {
 
     // ================= Choosers ==================================================================================================================================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
-    // autoChooser.addOption("MiddleOfLadderStartingAutoBankLeft", getAutonomousCommand());
-    // autoChooser.addOption("MiddleOfLadderStartingAutoBankRight", getAutonomousCommand());
-    // autoChooser.addOption("MiddleOfLadderStartingAutoBankForward", getAutonomousCommand());
-    // autoChooser.addOption("LeftOfLadderStartingAuto", getAutonomousCommand());
-    // autoChooser.addOption("RightOfLadderStartingAuto", getAutonomousCommand());
-    // autoChooser.addOption("CheckTheGyro", getAutonomousCommand());
 
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
@@ -160,12 +157,10 @@ public class RobotContainer {
 
     shooter.setDefaultCommand( 
       new RunCommand( () -> {
-        if (shooter.SM2.get() > 0.2){
-          shooter.SM2.set(shooter.SM2.get()-0.05);
-          shooter.SM3.set(shooter.SM2.get()-0.05);
+        if (shooter.getSpeed() > 0.2){
+          shooter.flyWheel(shooter.getSpeed()-0.05);
         } else {
-          shooter.SM2.set(shooterChooser.getSelected() ? 0.2 : 0);
-          shooter.SM3.set(shooterChooser.getSelected() ? 0.2 : 0);
+          shooter.flyWheel(shooterChooser.getSelected() ? 0.2 : 0);
         }
       }, shooter)
     );      
@@ -191,15 +186,18 @@ public class RobotContainer {
     
 
     //Waypoints ==================================================================================================================
-    // revGamePad.onDPadLeft().whileTrue( Swerve.driveTo(new Pose2d(12, 6, new Rotation2d(Math.PI))) );
-    revGamePad.onDPadDown().whileTrue( Swerve.driveTo(new Pose2d(15.516, 6.148, Rotation2d.fromDegrees(270-30.307))) );
-
+    revGamePad.onDPadDown().whileTrue( Swerve.driveTo(WaypointConstants.middleShootingPosition) );
+    A5.toggleOnTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    A6.toggleOnTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
+    A4.toggleOnTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
+    
     
     //Intake/Outake ==================================================================================================================
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1, false));
-    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, 1, true));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, 1, false));
+    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, 1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
+    revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
   }
  
