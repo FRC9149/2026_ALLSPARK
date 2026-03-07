@@ -129,6 +129,13 @@ public class RobotContainer {
 
     // ================= Choosers ==================================================================================================================================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+    autoChooser.addOption("MiddleOfLadderStartingAutoBankLeft", getAutonomousCommand());
+    autoChooser.addOption("MiddleOfLadderStartingAutoBankRight", getAutonomousCommand());
+    autoChooser.addOption("MiddleOfLadderStartingAutoBankForward", getAutonomousCommand());
+
+    autoChooser.addOption("LeftOfLadderStartingAuto", getAutonomousCommand());
+    autoChooser.addOption("RightOfLadderStartingAuto", getAutonomousCommand());
+
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
 
