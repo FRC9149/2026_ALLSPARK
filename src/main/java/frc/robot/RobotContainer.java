@@ -133,8 +133,12 @@ public class RobotContainer {
     autoChooser.addOption("MiddleOfLadderStartingAutoBankRight", getAutonomousCommand());
     autoChooser.addOption("MiddleOfLadderStartingAutoBankForward", getAutonomousCommand());
 
+
+
     autoChooser.addOption("LeftOfLadderStartingAuto", getAutonomousCommand());
     autoChooser.addOption("RightOfLadderStartingAuto", getAutonomousCommand());
+
+    autoChooser.addOption("CheckTheGyro", getAutonomousCommand());
 
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
