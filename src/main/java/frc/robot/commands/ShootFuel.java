@@ -7,45 +7,47 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.HopperFeed;
 
 /** An example command that uses an example subsystem. */
 public class ShootFuel extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
-  private final Shooter subsystem;
+  private final Shooter shooterSub;
+  private final HopperFeed hopperSub;
   private double speed;
   private int i = 0;
   private boolean Reverse = false;
   /**
    * Creates a new ExampleCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param shooterSub The subsystem used by this command.
    */
-  public ShootFuel(Shooter subsystem, double speed, boolean Reverse) {
-    this.subsystem = subsystem;
+  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, double speed, boolean Reverse) {
+    this.shooterSub = shooterSub;
+    this.hopperSub = hopperSub;
     this.speed = speed;
     this.Reverse = Reverse; 
      // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(shooterSub, hopperSub);
   }
 
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {//Robot container has the code //huh???
-    if(!Reverse){subsystem.flyWheel(speed);}
+    if(!Reverse){shooterSub.flyWheel(speed);}
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(Reverse == true) {
-      subsystem.lower(-speed);
-      subsystem.temp.set(-speed);
+      shooterSub.lower(-speed);
+      hopperSub.setSpeed(-speed);
+    } else if(i > 50) {
+      shooterSub.lower(speed);
+      hopperSub.setSpeed(speed);
     }
-    //Make it so that the 
-    else if(i > 50){
-    subsystem.lower(speed);
-    subsystem.temp.set(speed);}
     i++;
   }
   
@@ -56,10 +58,10 @@ public class ShootFuel extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.lower(0);
-    subsystem.temp.set(0);
+    shooterSub.lower(0);
+    hopperSub.stop();
     //subsystem.stop();
-    i=0;
+    i = 0 ;
   }
 
 }

@@ -28,14 +28,25 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static class WaypointConstants {
-    private static BooleanSupplier isRedAlliance = ()-> {return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;};
+    private static final double fieldLengthMeters = 16.54;
+    private static final double fieldWidthMeters = 8.070;
+    private static final Boolean isRedAlliance = DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
 
-    public static final Pose2d middleShootingPosition = new Pose2d(2.5, 4, new Rotation2d(0 * Math.PI / 180)); 
-    public static final Pose2d leftOfLadderShootingPosition = new Pose2d(2.5, 5.3, new Rotation2d(-30 * Math.PI / 180));
-    public static final Pose2d rightOfLadderShootingPosition = new Pose2d(2.5, 2.65, new Rotation2d(30 * Math.PI / 180));
-    public static final Pose2d leftOfLadderClimbingPosition = new Pose2d(1.6, 4.3, new Rotation2d(0 * Math.PI / 180));
-    public static final Pose2d middleOfLadderClimbingPostion = new Pose2d(1.6, 4, new Rotation2d(0 * Math.PI / 180));
-    public static final Pose2d rightOfLadderClimbingPosition = new Pose2d(1.6, 3.55, new Rotation2d(0 * Math.PI / 180));
+    public static final Pose2d middleShootingPosition;
+    public static final Pose2d leftOfLadderShootingPosition;
+    public static final Pose2d rightOfLadderShootingPosition;
+    public static final Pose2d leftOfLadderClimbingPosition;
+    public static final Pose2d middleOfLadderClimbingPostion;
+    public static final Pose2d rightOfLadderClimbingPosition;
+
+    static {
+      middleShootingPosition =        new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4   ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) )); 
+      leftOfLadderShootingPosition =  new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 5.3 ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (-30 * Math.PI / 180) ));
+      rightOfLadderShootingPosition = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 2.65), new Rotation2d((isRedAlliance ? Math.PI : 0) + (30 * Math.PI / 180 ) ));
+      leftOfLadderClimbingPosition =  new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4.3 ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+      middleOfLadderClimbingPostion = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4   ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+      rightOfLadderClimbingPosition = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 3.55), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+    }
     // x-2.5, y-4 Directly in front of scoring
   }
 

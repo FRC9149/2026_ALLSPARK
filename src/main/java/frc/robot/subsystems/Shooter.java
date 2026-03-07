@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase{
   private final SparkMax lowerMotor = new SparkMax(10, MotorType.kBrushless); //green wheels
   private final SparkMax flyMotor1 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
   private final SparkMax flyMotor2 = new SparkMax(15, MotorType.kBrushless); //right Flywheel
- 
+  
    public Shooter() {
     SparkMaxConfig config = new SparkMaxConfig();
     config
@@ -47,7 +47,7 @@ public class Shooter extends SubsystemBase{
     config3
         .idleMode(IdleMode.kCoast)
         .smartCurrentLimit(40)
-        .follow(flyMotor1)
+        // .follow(flyMotor1)
         .inverted(false);
 
     
@@ -65,9 +65,11 @@ public class Shooter extends SubsystemBase{
   public void flyWheel(double speed) {
     speed = MathUtil.clamp(speed, -1, 1);
     flyMotor1.set(speed);
-    // flyMotor2.set(speed);
-    
-    
+    flyMotor2.set(speed);
+  }
+
+  public double getSpeed() {
+    return flyMotor1.get();
   }
 
 //4EST NOTE: Perfection incarnate:
