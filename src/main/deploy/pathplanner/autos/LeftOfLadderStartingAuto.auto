@@ -17,33 +17,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "LeftClimb"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Climb1"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 8.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RetractClimber"
+            "pathName": "FREEMETHE2NDLEFT"
           }
         }
       ]

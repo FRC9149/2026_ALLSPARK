@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.robocats.swerve.ModuleConfig;
 import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.gyroscope.AhrsGyro;
@@ -13,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
@@ -25,12 +28,25 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static class WaypointConstants {
-    public static final Pose2d middleShootingPosition = new Pose2d(2.5, 4, new Rotation2d(0 * Math.PI / 180));
-    public static final Pose2d leftOfLadderShootingPosition = new Pose2d(2.5, 5.3, new Rotation2d(-30 * Math.PI / 180));
-    public static final Pose2d rightOfLadderShootingPosition = new Pose2d(2.5, 2.65, new Rotation2d(30 * Math.PI / 180));
-    public static final Pose2d leftOfLadderClimbingPosition = new Pose2d(1.6, 4.3, new Rotation2d(0 * Math.PI / 180));
-    public static final Pose2d middleOfLadderClimbingPostion = new Pose2d(1.6, 4, new Rotation2d(0 * Math.PI / 180));
-    public static final Pose2d rightOfLadderClimbingPosition = new Pose2d(1.6, 3.55, new Rotation2d(0 * Math.PI / 180));
+    private static final double fieldLengthMeters = 16.54;
+    private static final double fieldWidthMeters = 8.070;
+    private static final Boolean isRedAlliance = DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
+
+    public static final Pose2d middleShootingPosition;
+    public static final Pose2d leftOfLadderShootingPosition;
+    public static final Pose2d rightOfLadderShootingPosition;
+    public static final Pose2d leftOfLadderClimbingPosition;
+    public static final Pose2d middleOfLadderClimbingPostion;
+    public static final Pose2d rightOfLadderClimbingPosition;
+
+    static {
+      middleShootingPosition =        new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4   ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) )); 
+      leftOfLadderShootingPosition =  new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 5.3 ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (-30 * Math.PI / 180) ));
+      rightOfLadderShootingPosition = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 2.5), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 2.65), new Rotation2d((isRedAlliance ? Math.PI : 0) + (30 * Math.PI / 180 ) ));
+      leftOfLadderClimbingPosition =  new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4.3 ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+      middleOfLadderClimbingPostion = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4   ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+      rightOfLadderClimbingPosition = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 3.55), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+    }
     // x-2.5, y-4 Directly in front of scoring
   }
 
@@ -66,33 +82,31 @@ public final class Constants {
       kFrontRightEncoderPort, //FR Encoder port
       kRearRightEncoderPort, //BR Encoder port
       //is drive motor reversed FL, BL, FR, BR
-      false, false, false, false);
+      true, true, true, true);
 
       public static final double kTrackWidth = 0.56515; // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = 0.56515 ; // Distance between front and back wheels on robot
 
     public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
+            new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
-      4,
-      3 * Math.PI / 10, // max angular velocity
+      1.4239,
+      1.4414 , // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
-      new AhrsGyro(NavXComType.kUSB1, Math.PI/2, false),
-      true //is field symmetric
+      new AhrsGyro(NavXComType.kUSB1, 0, true),
+      false //is field symmetric
     );
       
 
     // If you call DriveSubsystem.drive() with a different period make sure to update this.
     public static final double kDrivePeriod = TimedRobot.kDefaultPeriod;
-
-    
   }
 }

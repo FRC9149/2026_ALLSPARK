@@ -111,6 +111,7 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDIUrBEMSCW0M&index=10
   private void initHeights() {
     climbHeights.put(0, 0.0);
     climbHeights.put(1, 0.0);
+
     climbHeights.put(2, 0.0);
     climbHeights.put(4, 0.0);
   }

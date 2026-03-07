@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
   public Robot() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    edu.wpi.first.wpilibj.Timer.delay(1.0);
 
    m_robotContainer = new RobotContainer();
   }
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
 @Override
   public void robotInit() {
    // m_robotContainer.shooter.stop();
+   edu.wpi.first.wpilibj.Timer.delay(1.0);
     
   }
 
@@ -64,7 +66,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
 
     CommandScheduler.getInstance().run();
-    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
