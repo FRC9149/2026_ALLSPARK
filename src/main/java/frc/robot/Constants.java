@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import com.robocats.swerve.ModuleConfig;
 import com.robocats.swerve.SwerveConfig;
 import com.robocats.swerve.gyroscope.AhrsGyro;
@@ -13,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
@@ -25,7 +28,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static class WaypointConstants {
-    public static final Pose2d middleShootingPosition = new Pose2d(2.5, 4, new Rotation2d(0 * Math.PI / 180));
+    private static BooleanSupplier isRedAlliance = ()-> {return DriverStation.getAlliance().get() == DriverStation.Alliance.Red;};
+
+    public static final Pose2d middleShootingPosition = new Pose2d(2.5, 4, new Rotation2d(0 * Math.PI / 180)); 
     public static final Pose2d leftOfLadderShootingPosition = new Pose2d(2.5, 5.3, new Rotation2d(-30 * Math.PI / 180));
     public static final Pose2d rightOfLadderShootingPosition = new Pose2d(2.5, 2.65, new Rotation2d(30 * Math.PI / 180));
     public static final Pose2d leftOfLadderClimbingPosition = new Pose2d(1.6, 4.3, new Rotation2d(0 * Math.PI / 180));
@@ -92,7 +97,5 @@ public final class Constants {
 
     // If you call DriveSubsystem.drive() with a different period make sure to update this.
     public static final double kDrivePeriod = TimedRobot.kDefaultPeriod;
-
-    
   }
 }

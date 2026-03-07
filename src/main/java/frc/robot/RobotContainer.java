@@ -160,12 +160,10 @@ public class RobotContainer {
 
     shooter.setDefaultCommand( 
       new RunCommand( () -> {
-        if (shooter.SM2.get() > 0.2){
-          shooter.SM2.set(shooter.SM2.get()-0.05);
-          shooter.SM3.set(shooter.SM2.get()-0.05);
+        if (shooter.flyMotor1.get() > 0.2){
+          shooter.flyWheel(shooter.flyMotor1.get()-0.05);
         } else {
-          shooter.SM2.set(shooterChooser.getSelected() ? 0.2 : 0);
-          shooter.SM3.set(shooterChooser.getSelected() ? 0.2 : 0);
+          shooter.flyWheel(shooterChooser.getSelected() ? 0.2 : 0);
         }
       }, shooter)
     );      
@@ -191,9 +189,11 @@ public class RobotContainer {
     
 
     //Waypoints ==================================================================================================================
-    // revGamePad.onDPadLeft().whileTrue( Swerve.driveTo(new Pose2d(12, 6, new Rotation2d(Math.PI))) );
     revGamePad.onDPadDown().whileTrue( Swerve.driveTo(new Pose2d(15.516, 6.148, Rotation2d.fromDegrees(270-30.307))) );
-
+    A1.toggleOnTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
+    A2.toggleOnTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
+    A3.toggleOnTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
+    
     
     //Intake/Outake ==================================================================================================================
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, 1, false));
