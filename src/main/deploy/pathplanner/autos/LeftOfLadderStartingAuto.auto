@@ -15,6 +15,12 @@
           "data": {
             "name": "Shoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FREEMETHE2NDLEFT"
+          }
         }
       ]
     }

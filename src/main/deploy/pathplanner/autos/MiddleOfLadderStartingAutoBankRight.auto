@@ -27,6 +27,12 @@
           "data": {
             "pathName": "BankRight"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FREEMERIGHT"
+          }
         }
       ]
     }

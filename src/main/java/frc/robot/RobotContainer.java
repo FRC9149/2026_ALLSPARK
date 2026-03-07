@@ -129,16 +129,12 @@ public class RobotContainer {
 
     // ================= Choosers ==================================================================================================================================
     autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("MiddleOfLadderStartingAutoBankLeft", getAutonomousCommand());
-    autoChooser.addOption("MiddleOfLadderStartingAutoBankRight", getAutonomousCommand());
-    autoChooser.addOption("MiddleOfLadderStartingAutoBankForward", getAutonomousCommand());
-
-
-
-    autoChooser.addOption("LeftOfLadderStartingAuto", getAutonomousCommand());
-    autoChooser.addOption("RightOfLadderStartingAuto", getAutonomousCommand());
-
-    autoChooser.addOption("CheckTheGyro", getAutonomousCommand());
+    // autoChooser.addOption("MiddleOfLadderStartingAutoBankLeft", getAutonomousCommand());
+    // autoChooser.addOption("MiddleOfLadderStartingAutoBankRight", getAutonomousCommand());
+    // autoChooser.addOption("MiddleOfLadderStartingAutoBankForward", getAutonomousCommand());
+    // autoChooser.addOption("LeftOfLadderStartingAuto", getAutonomousCommand());
+    // autoChooser.addOption("RightOfLadderStartingAuto", getAutonomousCommand());
+    // autoChooser.addOption("CheckTheGyro", getAutonomousCommand());
 
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
@@ -190,12 +186,13 @@ public class RobotContainer {
     revGamePad.onSquare().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
 
     revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
+    // revGamePad.onO().whileTrue(new Aim(aimer, false));
     revGamePad.onX().whileTrue(new Aim(aimer, false));
     
 
     //Waypoints ==================================================================================================================
-    revGamePad.onDPadLeft().whileTrue( Swerve.driveTo(new Pose2d(12, 6, new Rotation2d(Math.PI))) );
-    revGamePad.onDPadDown().whileTrue( Swerve.driveTo(new Pose2d(12.326, 7.191, Rotation2d.fromDegrees(270-97.336))) );
+    // revGamePad.onDPadLeft().whileTrue( Swerve.driveTo(new Pose2d(12, 6, new Rotation2d(Math.PI))) );
+    revGamePad.onDPadDown().whileTrue( Swerve.driveTo(new Pose2d(15.516, 6.148, Rotation2d.fromDegrees(270-30.307))) );
 
     
     //Intake/Outake ==================================================================================================================

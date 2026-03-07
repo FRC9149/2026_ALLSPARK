@@ -80,8 +80,8 @@ public class Shooter extends SubsystemBase{
 
   public void flyWheel(double speed) {
     speed = MathUtil.clamp(speed, -1, 1);
-    SM2.set(speed/1.5);
-    SM3.set(speed/1.5);
+    SM2.set(speed);
+    SM3.set(speed);
     
     
   }

@@ -27,6 +27,12 @@
           "data": {
             "pathName": "BankLeft"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FREEMELEFT"
+          }
         }
       ]
     }
