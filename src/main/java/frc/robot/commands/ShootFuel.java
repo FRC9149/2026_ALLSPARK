@@ -44,7 +44,7 @@ public class ShootFuel extends Command {
     if(Reverse == true) {
       shooterSub.lower(-speed);
       hopperSub.setSpeed(-speed);
-    } else if(i > 50) {
+    } else if(i >50) {
       shooterSub.lower(speed);
       hopperSub.setSpeed(speed);
     }
