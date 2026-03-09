@@ -101,8 +101,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    shootFuel = new ShootFuel(shooter, hopper, 1, false);
-
     // ================= PATHPLANNER EVENTS ===================================================================================================================================
     
    
@@ -164,11 +162,7 @@ public class RobotContainer {
     
     Swerve.setupPathPlanner();
 
-    NamedCommands.registerCommand("Shoot", new RunCommand(() -> {
-      shootFuel.initialize();
-      shootFuel.execute();
-      SmartDashboard.putBoolean("Shooter Auto Works", true);
-    }, shooter, hopper));
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, 0.55, false));
     NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
@@ -212,12 +206,12 @@ public class RobotContainer {
     
     
     //Intake/Outake ==================================================================================================================
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, 1, false));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, 0.55, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, 1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
-    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
+    // revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.75));
   }
  
 

@@ -29,16 +29,20 @@ public class LowerIntake extends SubsystemBase{
     public LowerIntake() {
         SparkMaxConfig config = new SparkMaxConfig();
         config.idleMode(IdleMode.kBrake);
-        // config.closedLoop.pid(0.1, 0, 0); 
+        // config.closedLoop.pid(0.5, 0, 0);
+        config.encoder.positionConversionFactor(60/24);
 
-        intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);         
+        intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        encoder.setPosition(0);
     }
    
     public void intakeDown() {
     //    controller.setSetpoint(OUT_POS, ControlType.kPosition);
+        // intake2m.set(0.1);
     }
     public void intakeUp() {
-        // controller.setSetpoint(IN_POS, ControlType.kPosition);    
+        // controller.setSetpoint(IN_POS, ControlType.kPosition);
+        intake2m.set(-0.05);
     }
 
     public void just_run_the_motor_man(double speed) {
