@@ -95,7 +95,7 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
-      1.4239,
+      1,
       1.4414 , // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 

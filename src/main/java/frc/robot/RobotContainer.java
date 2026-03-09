@@ -85,8 +85,6 @@ public class RobotContainer {
   private final LedStrip leds = new LedStrip(9, 300);
   private int i = 1;
 
-  private ShootFuel shootFuel;
-
   //Controllers ================================================================================================
   private RevGamePad revGamePad = new RevGamePad(0);
   private Joystick ButtonBoard = new Joystick(1);
@@ -162,7 +160,7 @@ public class RobotContainer {
     
     Swerve.setupPathPlanner();
 
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, 0.55, false));
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, Swerve, 0.55, false));
     NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
@@ -206,8 +204,8 @@ public class RobotContainer {
     
     
     //Intake/Outake ==================================================================================================================
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, 0.55, false));
-    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, 1, true));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, Swerve, 0.55, false));
+    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));

@@ -5,6 +5,8 @@
 
 package frc.robot.commands;
 
+import com.robocats.swerve.SwerveSubsystem;
+
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HopperFeed;
@@ -14,6 +16,7 @@ public class ShootFuel extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final Shooter shooterSub;
   private final HopperFeed hopperSub;
+  private final SwerveSubsystem swerve;
   private double speed;
   private int i = 0;
   private boolean Reverse = false;
@@ -22,13 +25,14 @@ public class ShootFuel extends Command {
    *
    * @param shooterSub The subsystem used by this command.
    */
-  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, double speed, boolean Reverse) {
+  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double speed, boolean Reverse) {
     this.shooterSub = shooterSub;
     this.hopperSub = hopperSub;
+    this.swerve = swerve;
     this.speed = speed;
     this.Reverse = Reverse; 
      // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSub, hopperSub);
+    addRequirements(shooterSub, hopperSub, swerve);
   }
 
 
@@ -36,6 +40,7 @@ public class ShootFuel extends Command {
   @Override
   public void initialize() {//Robot container has the code //huh???
     if(!Reverse){shooterSub.flyWheel(speed);}
+    swerve.lock();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
