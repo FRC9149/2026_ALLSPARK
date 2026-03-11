@@ -101,7 +101,7 @@ public final class Constants {
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
-      new AhrsGyro(NavXComType.kUSB1, 0, true),
+      new AhrsGyro(NavXComType.kUSB1, Math.PI / 2, true),
       false //is field symmetric
     );
       
