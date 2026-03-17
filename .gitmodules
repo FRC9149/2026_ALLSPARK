@@ -1,5 +1,5 @@
-[submodule "src/main/java/Bill-lib"]
-	path = src/main/java/Bill-lib
+[submodule "src/main/java/com/robocats"]
+	path = src/main/java/com/robocats
 	url = https://github.com/FRC9149/Bill-Lib.git
 [submodule "src/main/java/com/robocats"]
 	path = src/main/java/com/robocats
