@@ -96,6 +96,7 @@ public class RobotContainer {
   JoystickButton A6 = new JoystickButton(ButtonBoard, 6);
   JoystickButton A7 = new JoystickButton(ButtonBoard, 7);
   JoystickButton A8 = new JoystickButton(ButtonBoard, 8);
+  JoystickButton A9 = new JoystickButton(ButtonBoard, 9);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -197,7 +198,7 @@ public class RobotContainer {
     
 
     //Waypoints ==================================================================================================================
-    revGamePad.onDPadDown().whileTrue( Swerve.driveTo(WaypointConstants.middleShootingPosition) );
+    revGamePad.onDPadDown().whileTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition) );
     A5.toggleOnTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
     A6.toggleOnTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     A4.toggleOnTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
