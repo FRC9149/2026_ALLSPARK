@@ -27,7 +27,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Shooter extends SubsystemBase{
+public class Shooter extends SubsystemBase {
   private final SparkMax lowerMotor = new SparkMax(10, MotorType.kBrushless); //green wheels
   private final SparkMax flyMotor1 = new SparkMax(16, MotorType.kBrushless); //left Flywheel
   private final SparkMax flyMotor2 = new SparkMax(15, MotorType.kBrushless); //right Flywheel

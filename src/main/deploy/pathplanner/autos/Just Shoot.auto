@@ -17,34 +17,16 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 8.0
+                  "waitTime": 20.0
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MiddleOfLadderStartingPosition"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BankRight"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FREEMERIGHT"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

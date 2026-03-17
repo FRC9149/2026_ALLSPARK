@@ -72,10 +72,10 @@ public class RobotContainer {
   //Subsystems ================================================================================================
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
-      true,
+      false,
       m_field
     );
-    private final SendableChooser<Command> autoChooser = AutoBuilder.buildAutoChooser();
+    private final SendableChooser<Command> autoChooser;
   private final Shooter shooter = new Shooter();
   private final HopperFeed hopper = new HopperFeed();
   private final LowerIntake lowerIntake = new LowerIntake();
@@ -84,7 +84,6 @@ public class RobotContainer {
   private final Aiming aimer = new Aiming();
   private final LedStrip leds = new LedStrip(9, 300);
   private int i = 1;
-
 
   //Controllers ================================================================================================
   private RevGamePad revGamePad = new RevGamePad(0);
@@ -101,25 +100,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    //misc ==================================================================================================================
-    limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
-    limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
-    Swerve.addCamera(0, limelightCamerafour);
-    Swerve.addCamera(1, limelightCameraBack);
-
-    configureBindings();
-
-
     // ================= PATHPLANNER EVENTS ===================================================================================================================================
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, 1, false));
-    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
-    NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
-    NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
-    NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
-    NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
-    NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
-    NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
+    
+   
+
 
     PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
       m_field.getObject("target pose").setPose(pose);
@@ -131,13 +115,20 @@ public class RobotContainer {
     SmartDashboard.putData("Field", m_field);
 
 
+    //misc ==================================================================================================================
+    limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
+    limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
+    Swerve.addCamera(0, limelightCamerafour);
+    Swerve.addCamera(1, limelightCameraBack);
+
+
+
     // ================= Choosers ==================================================================================================================================
-    autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
+    // autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
 
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
     SmartDashboard.putData("Should use flywheel", shooterChooser);
 
 
@@ -147,7 +138,7 @@ public class RobotContainer {
         -revGamePad.getLeftX(),
         revGamePad.getLeftY(), 
         revGamePad.getRightX(),
-        true
+        revGamePad.getRightY()
         ), Swerve)
     );
 
@@ -156,6 +147,8 @@ public class RobotContainer {
         ), leds)
     ); 
 
+   
+    
     shooter.setDefaultCommand( 
       new RunCommand( () -> {
         if (shooter.getSpeed() > 0.2){
@@ -164,7 +157,25 @@ public class RobotContainer {
           shooter.flyWheel(shooterChooser.getSelected() ? 0.2 : 0);
         }
       }, shooter)
-    );      
+    );    
+    
+    Swerve.setupPathPlanner();
+
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, Swerve, 0.55, false));
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
+    NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
+    NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
+    NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
+    NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
+    NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
+    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
+    NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
+
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    configureBindings();
+
     
   }
 
@@ -194,12 +205,12 @@ public class RobotContainer {
     
     
     //Intake/Outake ==================================================================================================================
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, 1, false));
-    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, 1, true));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, Swerve, 0.55, false));
+    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
-    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.9));
+    // revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.75));
   }
  
 

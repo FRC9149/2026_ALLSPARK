@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,17 +27,22 @@ public class LowerIntake extends SubsystemBase{
     // no but close enough - El
 
     public LowerIntake() {
-        // SparkMaxConfig config = new SparkMaxConfig();
-        // config.closedLoop.pid(0.1, 0, 0); 
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(IdleMode.kBrake);
+        // config.closedLoop.pid(0.5, 0, 0);
+        config.encoder.positionConversionFactor(60/24);
 
-        // intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);         
+        intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        encoder.setPosition(0);
     }
    
     public void intakeDown() {
     //    controller.setSetpoint(OUT_POS, ControlType.kPosition);
+        // intake2m.set(0.1);
     }
     public void intakeUp() {
-        // controller.setSetpoint(IN_POS, ControlType.kPosition);    
+        // controller.setSetpoint(IN_POS, ControlType.kPosition);
+        intake2m.set(-0.05);
     }
 
     public void just_run_the_motor_man(double speed) {

@@ -15,8 +15,8 @@ public class Aiming extends SubsystemBase{
 
   public Aiming() {
     // Calibrate signals for L16-R (1ms to 2ms range)
-    s1OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
-    s2OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
+    // s1OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
+    // s2OnAiming.setBoundsMicroseconds(2000, 1501, 1500, 1499, 1000);
   }
 
   public double getHeight(){

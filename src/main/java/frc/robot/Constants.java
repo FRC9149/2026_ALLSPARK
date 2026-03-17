@@ -95,13 +95,13 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
-      1.4239,
+      1,
       1.4414 , // max angular velocity
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 
       DriveConstants.moduleConfiguration, 
-      new AhrsGyro(NavXComType.kUSB1, 0, true),
+      new AhrsGyro(NavXComType.kUSB1, Math.PI / 2, true),
       false //is field symmetric
     );
       
