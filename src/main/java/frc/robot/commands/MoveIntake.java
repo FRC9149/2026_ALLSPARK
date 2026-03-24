@@ -28,20 +28,18 @@ public class MoveIntake extends Command{
   @Override
   public void execute() {
     subsystem.just_run_the_motor_man(intake_retracted ? -0.8 : 0.8);
-        //if (intake_retracted) {
-        //    subsystem.intakeDown();
-        //}
-        //else {
-        //    subsystem.intakeUp();
-//
-        //}
   }
   
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.stop();
+    if (intake_retracted) {
+      subsystem.intakeDown();
+    }
+    else {
+      subsystem.stop();
+    }
   }
 
   // Returns true when the command should end.
