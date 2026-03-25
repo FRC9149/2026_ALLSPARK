@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.regex.Pattern;
+
 import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.ResetMode;
@@ -9,13 +11,16 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.robocats.LED.LedStrip;
 
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LowerIntake extends SubsystemBase{
-    private final SparkMax intake2m = new SparkMax(12, MotorType.kBrushless);
+    private final SparkMax intake2m = new SparkMax(9, MotorType.kBrushless);//was 12
     private final RelativeEncoder encoder = intake2m.getEncoder();
+    LedStrip subsystem;
     // private final SparkClosedLoopController controller = intake2m.getClosedLoopController();
     // private static final double IN_POS = 0.0;
     // private static final double OUT_POS = 0.8;
@@ -26,7 +31,8 @@ public class LowerIntake extends SubsystemBase{
     // - Hugo
     // no but close enough - El
 
-    public LowerIntake() {
+    public LowerIntake(LedStrip ledstrip) {
+        this.subsystem = ledstrip;
         SparkMaxConfig config = new SparkMaxConfig();
         config.idleMode(IdleMode.kBrake);
         // config.closedLoop.pid(0.5, 0, 0);
@@ -38,7 +44,10 @@ public class LowerIntake extends SubsystemBase{
    
     public void intakeDown() {
     //    controller.setSetpoint(OUT_POS, ControlType.kPosition);
-        // intake2m.set(0.1);
+        intake2m.set(0.1);
+        subsystem.BoringSolidColorsNavy();
+
+    }
     }
     public void intakeUp() {
         // controller.setSetpoint(IN_POS, ControlType.kPosition);
@@ -58,4 +67,7 @@ public class LowerIntake extends SubsystemBase{
         SmartDashboard.putNumber("Lower intake encoder", encoder.getPosition());
       
     }
+     
+
+    
 }
