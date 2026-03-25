@@ -78,11 +78,11 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
   private final Shooter shooter = new Shooter();
   private final HopperFeed hopper = new HopperFeed();
-  private final LowerIntake lowerIntake = new LowerIntake();
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
   private final Aiming aimer = new Aiming();
   private final LedStrip leds = new LedStrip(9, 300);
+  private final LowerIntake lowerIntake = new LowerIntake(leds);
   private int i = 1;
 
   //Controllers ================================================================================================

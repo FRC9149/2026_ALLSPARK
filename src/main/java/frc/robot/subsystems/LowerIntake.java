@@ -48,7 +48,7 @@ public class LowerIntake extends SubsystemBase{
         subsystem.BoringSolidColorsNavy();
 
     }
-    }
+    
     public void intakeUp() {
         // controller.setSetpoint(IN_POS, ControlType.kPosition);
         intake2m.set(-0.05);
