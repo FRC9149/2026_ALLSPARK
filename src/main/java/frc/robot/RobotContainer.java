@@ -70,6 +70,7 @@ public class RobotContainer {
 
 
   //Subsystems ================================================================================================
+
   private final SwerveSubsystem Swerve = new SwerveSubsystem(
       DriveConstants.swerveConfiguration,
       false,
@@ -86,6 +87,7 @@ public class RobotContainer {
   private int i = 1;
 
   //Controllers ================================================================================================
+
   private RevGamePad revGamePad = new RevGamePad(0);
   private Joystick ButtonBoard = new Joystick(1);
   JoystickButton A1 = new JoystickButton(ButtonBoard, 1);
@@ -101,9 +103,6 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // ================= PATHPLANNER EVENTS ===================================================================================================================================
-    
-   
-
 
     PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
       m_field.getObject("target pose").setPose(pose);
@@ -114,10 +113,11 @@ public class RobotContainer {
 
     SmartDashboard.putData("Field", m_field);
 
-
     //misc ==================================================================================================================
+
     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
     limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
+
     Swerve.addCamera(0, limelightCamerafour);
     Swerve.addCamera(1, limelightCameraBack);
 
@@ -130,7 +130,6 @@ public class RobotContainer {
     shooterChooser.addOption("false", false);
 
     SmartDashboard.putData("Should use flywheel", shooterChooser);
-
 
     //Default Commands ==================================================================================================================
     Swerve.setDefaultCommand(
@@ -147,8 +146,6 @@ public class RobotContainer {
         ), leds)
     ); 
 
-   
-    
     shooter.setDefaultCommand( 
       new RunCommand( () -> {
         if (shooter.getSpeed() > 0.2){
@@ -175,8 +172,6 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
-
-    
   }
 
   /**
@@ -195,29 +190,33 @@ public class RobotContainer {
     revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
     // revGamePad.onO().whileTrue(new Aim(aimer, false));
     revGamePad.onX().whileTrue(new Aim(aimer, false));
-    
+
 
     //Waypoints ==================================================================================================================
     revGamePad.onDPadDown().whileTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition) );
+
+
     A5.toggleOnTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
     A6.toggleOnTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     A4.toggleOnTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-    
-    
+
+
     //Intake/Outake ==================================================================================================================
+-/
+    revGamePad.onDPadLeft().whileTrue(new Command_4_intake(intake, -0.35));
+
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, Swerve, 0.55, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
-    // revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.75));
+    revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.7));
+    
   }
- 
-
 
   /* 
    Use this to pass the autonomous command to the main {@link Robot} class.
-   
+
     @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {

@@ -62,9 +62,9 @@ public final class Constants {
     public static final int kRearRightTurningMotorPort = 8;
 
     public static final int kFrontLeftEncoderPort = 14; //14
-    public static final int kRearLeftEncoderPort = 17;//17
+    public static final int kRearLeftEncoderPort = 15;//17
     public static final int kFrontRightEncoderPort = 16;//16
-    public static final int kRearRightEncoderPort = 15;//15
+    public static final int kRearRightEncoderPort = 17;//15
 
     public static final ModuleConfig moduleConfiguration = new ModuleConfig(
       kFrontLeftDriveMotorPort, //FL Drive port

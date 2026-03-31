@@ -19,7 +19,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LowerIntake extends SubsystemBase{
     private final SparkMax intake2m = new SparkMax(9, MotorType.kBrushless);//was 12
+    private final SparkMax intake3m = new SparkMax(12, MotorType.kBrushless);
     private final RelativeEncoder encoder = intake2m.getEncoder();
+    private final RelativeEncoder encoder2 = intake3m.getEncoder();
     LedStrip subsystem;
     // private final SparkClosedLoopController controller = intake2m.getClosedLoopController();
     // private static final double IN_POS = 0.0;
@@ -33,41 +35,50 @@ public class LowerIntake extends SubsystemBase{
 
     public LowerIntake(LedStrip ledstrip) {
         this.subsystem = ledstrip;
+
         SparkMaxConfig config = new SparkMaxConfig();
+        SparkMaxConfig config2 = new SparkMaxConfig();
+        
         config.idleMode(IdleMode.kBrake);
+        config2.idleMode(IdleMode.kBrake).inverted(true);
         // config.closedLoop.pid(0.5, 0, 0);
         config.encoder.positionConversionFactor(60/24);
+        config2.encoder.positionConversionFactor(60/24);
 
         intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        intake2m.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+
         encoder.setPosition(0);
+        encoder2.setPosition(0);
     }
    
     public void intakeDown() {
     //    controller.setSetpoint(OUT_POS, ControlType.kPosition);
         intake2m.set(0.1);
-        subsystem.BoringSolidColorsNavy();
+        intake3m.set(0.1);
 
+        subsystem.BoringSolidColorsNavy();
     }
     
     public void intakeUp() {
         // controller.setSetpoint(IN_POS, ControlType.kPosition);
         intake2m.set(-0.05);
+        intake3m.set(-0.05);
     }
 
     public void just_run_the_motor_man(double speed) {
         intake2m.set(speed);
+        intake3m.set(speed);
     }
 
     public void stop() {
         intake2m.set(0);
+        intake3m.set(0);
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Lower intake encoder", encoder.getPosition());
-      
+        SmartDashboard.putNumber("2nd Lower intake encoder", encoder2.getPosition());
     }
-     
-
-    
 }

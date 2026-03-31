@@ -17,7 +17,7 @@ public class ShootFuel extends Command {
   private final Shooter shooterSub;
   private final HopperFeed hopperSub;
   private final SwerveSubsystem swerve;
-  private double speed;
+  private double flyspeed;
   private int i = 0;
   private boolean Reverse = false;
   /**
@@ -25,11 +25,11 @@ public class ShootFuel extends Command {
    *
    * @param shooterSub The subsystem used by this command.
    */
-  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double speed, boolean Reverse) {
+  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double flyspeed,  boolean Reverse) {
     this.shooterSub = shooterSub;
     this.hopperSub = hopperSub;
     this.swerve = swerve;
-    this.speed = speed;
+    this.flyspeed = flyspeed;
     this.Reverse = Reverse; 
      // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooterSub, hopperSub, swerve);
@@ -39,7 +39,7 @@ public class ShootFuel extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {//Robot container has the code //huh???
-    if(!Reverse){shooterSub.flyWheel(speed);}
+    if(!Reverse){shooterSub.flyWheel(flyspeed);}
     swerve.lock();
   }
 

@@ -26,7 +26,7 @@ public class Command_4_intake extends Command{
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {subsystem.intake(1);}
+  public void execute() {subsystem.intake(-0.5);}
   
 
   // Called once the command ends or is interrupted.
