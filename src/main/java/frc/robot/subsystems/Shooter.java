@@ -62,7 +62,7 @@ public class Shooter extends SubsystemBase {
     lowerMotor.set(0.7);                     //Because it's the lower part of the shooter, idk what else to call it
     //MAKE ANOTHER VARIABLE SOON
   }
-
+// Matty here. It spins when it shouldn't se matty for details
   public void flyWheel(double speed) {
     speed = MathUtil.clamp(speed, -1, 1);
     flyMotor1.set(speed);
