@@ -19,6 +19,7 @@ public class ShootFuel extends Command {
   private final SwerveSubsystem swerve;
   private double flyspeed;
   private int i = 0;
+  private int j = 0;
   private boolean Reverse = false;
   /**
    * Creates a new ExampleCommand.
@@ -50,8 +51,12 @@ public class ShootFuel extends Command {
       shooterSub.lower(-0.7);
       hopperSub.setSpeed(-1);
     } else if(i >50) {
-      shooterSub.lower(0.7);
-      hopperSub.setSpeed(1);
+      shooterSub.lower(1);
+      
+      if (j>25){
+        hopperSub.setSpeed(1);
+      }
+      j++;
     }
     i++;
   }
@@ -67,6 +72,7 @@ public class ShootFuel extends Command {
     hopperSub.stop();
     //subsystem.stop();
     i = 0 ;
+    j = 0 ;
   }
 
 }
