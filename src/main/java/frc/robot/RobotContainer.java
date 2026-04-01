@@ -48,6 +48,7 @@ import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Shooter;
 
 import com.robocats.vision.LimelightCamera;
+import com.robocats.controllers.DancePad;
 import com.robocats.controllers.RevGamePad;
 
 import frc.robot.subsystems.HopperFeed;
@@ -89,6 +90,7 @@ public class RobotContainer {
   //Controllers ================================================================================================
 
   private RevGamePad revGamePad = new RevGamePad(0);
+  private DancePad dancePad = new DancePad(2);
   private Joystick ButtonBoard = new Joystick(1);
   JoystickButton A1 = new JoystickButton(ButtonBoard, 1);
   JoystickButton A2 = new JoystickButton(ButtonBoard, 2);
@@ -192,6 +194,10 @@ public class RobotContainer {
     // revGamePad.onO().whileTrue(new Aim(aimer, false));
     revGamePad.onX().whileTrue(new Aim(aimer, false));
 
+    
+
+
+
 
     //Waypoints ==================================================================================================================
     
@@ -213,6 +219,28 @@ public class RobotContainer {
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.7));
+
+    //DANCE PAD ==========================================================================================================
+    //Ex:
+    //FOR STANDING ON CENTER WHILE PRESSING:
+    //dancePad.onCenter().and(dancePad::getO);
+    //----------------
+    //FOR NOT STANDING ON CENTER WHILE PRESSING:
+    //dancePad.onCenter().negate().and(dancePad::getO)
+
+    //gyro
+    dancePad.onUp().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
+    //aimer
+    dancePad.onCenter().and(dancePad::getX).whileTrue(new AimExact(aimer, 1));
+    dancePad.onCenter().and(dancePad::getO).whileTrue(new AimExact(aimer, 0.75));
+    dancePad.onCenter().and(dancePad::getTriangle).whileTrue(new AimExact(aimer, 0));
+    dancePad.onCenter().and(dancePad::getSquare).whileTrue(new AimExact(aimer, 0.25));
+    dancePad.onCenter().and(dancePad::getLeft).whileTrue(new AimExact(aimer, 0.5));
+    //shooter/hopper/intake
+    dancePad.onCenter().and(dancePad::getRight).whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
+    dancePad.onCenter().and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, true));
+
+    
     
   }
 
