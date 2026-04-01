@@ -185,6 +185,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //misc Commands ==================================================================================================================
+
     revGamePad.onSquare().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
 
     revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
@@ -193,6 +194,7 @@ public class RobotContainer {
 
 
     //Waypoints ==================================================================================================================
+    
     revGamePad.onDPadDown().whileTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition) );
 
 
@@ -202,7 +204,7 @@ public class RobotContainer {
 
 
     //Intake/Outake ==================================================================================================================
--/
+
     revGamePad.onDPadLeft().whileTrue(new Command_4_intake(intake, -0.35));
 
     revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, Swerve, 0.55, false));

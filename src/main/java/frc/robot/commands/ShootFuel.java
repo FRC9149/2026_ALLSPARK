@@ -47,10 +47,10 @@ public class ShootFuel extends Command {
   @Override
   public void execute() {
     if(Reverse == true) {
-      shooterSub.lower(-1);
+      shooterSub.lower(-0.7);
       hopperSub.setSpeed(-1);
     } else if(i >50) {
-      shooterSub.lower(1);
+      shooterSub.lower(0.7);
       hopperSub.setSpeed(1);
     }
     i++;

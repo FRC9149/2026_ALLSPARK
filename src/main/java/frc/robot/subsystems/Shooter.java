@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
   /** Run shooter at given speed (0.0 to 1.0) */
   public void lower(double speed) {
     speed = MathUtil.clamp(speed, -1, 1); //WHY THE FLIP IS IT NAMED LOWER?!?!!?!?!?!?!?!
-    lowerMotor.set(0.7);                     //Because it's the lower part of the shooter, idk what else to call it
+    lowerMotor.set(speed);                     //Because it's the lower part of the shooter, idk what else to call it
     //MAKE ANOTHER VARIABLE SOON
   }
 // Matty here. It spins when it shouldn't se matty for details
