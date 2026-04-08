@@ -6,59 +6,50 @@
 package frc.robot.commands;
 
 import com.robocats.swerve.SwerveSubsystem;
+import com.robocats.vision.LimelightCamera;
 
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HopperFeed;
 
 /** An example command that uses an example subsystem. */
-public class ShootFuel extends Command {
+public class FaceTag extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
-  private final Shooter shooterSub;
-  private final HopperFeed hopperSub;
+  
+  private final LimelightCamera camera;
   private final SwerveSubsystem swerve;
-  private double flyspeed;
-  private int i = 0;
-  private int j = 0;
-  private boolean Reverse = false;
+ 
   /**
    * Creates a new ExampleCommand.
    *
    * @param shooterSub The subsystem used by this command.
    */
-  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double flyspeed,  boolean Reverse) {
-    this.shooterSub = shooterSub;
-    this.hopperSub = hopperSub;
+  public FaceTag(SwerveSubsystem swerve, LimelightCamera camera) {
     this.swerve = swerve;
-    this.flyspeed = flyspeed;
-    this.Reverse = Reverse; 
+    this.camera = camera;
      // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooterSub, hopperSub, swerve);
+    addRequirements(swerve, camera);
   }
 
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {//Robot container has the code //huh???
-    if(!Reverse){shooterSub.flyWheel(flyspeed);}
-    swerve.lock();
+  public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(Reverse == true) {
-      shooterSub.lower(-1);
-      hopperSub.setSpeed(-1);
-    } else if(i >25) {
-      shooterSub.lower(1);
+     if (camera.hasTargets()) {
+      // Use your existing faceTag() method to get the PID calculation
+      double rotationSpeed = camera.faceTag();
       
-      if (j>13){
-        hopperSub.setSpeed(1);
-      }
-      j++;
+      // Apply to drive (assuming a standard drive method: forward, strafe, rotation)
+      swerve.drive(0, 0, rotationSpeed, true); 
+    } else{
+        swerve.drive(0, 0, 0, true);
     }
-    i++;
   }
   
   // Returns true when the command should end.
@@ -68,11 +59,7 @@ public class ShootFuel extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSub.lower(0);
-    hopperSub.stop();
-    //subsystem.stop();
-    i = 0 ;
-    j = 0 ;
+    swerve.drive(0, 0, 0, true);
   }
 
 }

@@ -30,7 +30,6 @@ public class MoveIntake extends Command{
     subsystem.just_run_the_motor_man(intake_retracted ? -0.3 : 0.3);
   }
   
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

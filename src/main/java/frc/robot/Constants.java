@@ -46,6 +46,7 @@ public final class Constants {
       leftOfLadderClimbingPosition =  new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4.3 ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
       middleOfLadderClimbingPostion = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 4   ), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
       rightOfLadderClimbingPosition = new Pose2d(Math.abs((isRedAlliance ? fieldLengthMeters : 0) - 1.6), Math.abs((isRedAlliance ? fieldWidthMeters : 0) - 3.55), new Rotation2d((isRedAlliance ? Math.PI : 0) + (0 * Math.PI / 180  ) ));
+      
     }
     // x-2.5, y-4 Directly in front of scoring
   }
@@ -95,8 +96,8 @@ public final class Constants {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     public static final SwerveConfig swerveConfiguration = new SwerveConfig(
-      1,
-      1.4414 , // max angular velocity
+      4,
+      Math.PI , // max angular velocity was 1.4414...then 2*Math.PI
       .1016, //wheel diameter
       TimedRobot.kDefaultPeriod, 
       DriveConstants.kDriveKinematics, 

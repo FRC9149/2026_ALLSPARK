@@ -28,7 +28,6 @@ public class Command_4_intake extends Command{
   @Override
   public void execute() {subsystem.intake(-0.5);}
   
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

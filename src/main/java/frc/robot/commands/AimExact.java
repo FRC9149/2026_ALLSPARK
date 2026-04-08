@@ -10,9 +10,7 @@ public class AimExact extends Command{
   //TODO format (or don't idc)
   
   //also suppresswarnings isn't that great and also does nothing here
-      private final Aiming subsystem;
-
-
+    private final Aiming subsystem;
   /**
    * Creates a new ExampleCommand.
    *
@@ -41,14 +39,10 @@ public class AimExact extends Command{
   public void execute() {
     //System.out.println("L");
     // subsystem.setHeight(aimHeight);
-    
-
-    
+  
     height = MathUtil.clamp(height, 0, 0.8);
     
     subsystem.setHeight(height);
-
-
   }
 
   // Returns true when the command should end.
@@ -59,9 +53,7 @@ public class AimExact extends Command{
   
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }  
+  public void end(boolean interrupted) {}  
 
  
 }

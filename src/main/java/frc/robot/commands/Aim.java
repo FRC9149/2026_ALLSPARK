@@ -10,9 +10,8 @@ public class Aim extends Command{
   //TODO format (or don't idc)
   
   //also suppresswarnings isn't that great and also does nothing here
-      private final Aiming subsystem;
-
-
+    private final Aiming subsystem;
+    
   /**
    * Creates a new ExampleCommand.
    *
@@ -27,7 +26,6 @@ public class Aim extends Command{
     //Use addRequirements() here to declare subsystem dependencies.
   addRequirements(subsystem);
  } 
-
 
   // Called when the command is initially scheduled.
   @Override
@@ -54,9 +52,5 @@ public class Aim extends Command{
   
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }  
-
- 
+  public void end(boolean interrupted) {}  
 }

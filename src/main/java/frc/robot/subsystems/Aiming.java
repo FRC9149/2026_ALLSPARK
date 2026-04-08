@@ -31,6 +31,6 @@ public class Aiming extends SubsystemBase{
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Shooter aiming position", s1OnAiming.get());
+    SmartDashboard.putNumber("Shooter aiming position", (s1OnAiming.get()+s2OnAiming.get())/2);
   }
 }

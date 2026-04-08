@@ -13,6 +13,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.robocats.LED.LedStrip;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -45,7 +46,7 @@ public class LowerIntake extends SubsystemBase{
         config.encoder.positionConversionFactor(60/24);
         config2.encoder.positionConversionFactor(60/24);
 
-        intake2m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        intake3m.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
         intake2m.configure(config2, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
 
         encoder.setPosition(0);
@@ -75,9 +76,25 @@ public class LowerIntake extends SubsystemBase{
         intake2m.set(0);
         intake3m.set(0);
     }
-
+            SparkMaxConfig config3 = new SparkMaxConfig();
+            SparkMaxConfig config4 = new SparkMaxConfig();
     @Override
     public void periodic() {
+            
+        if (DriverStation.isDisabled()){
+            
+        
+        config3.idleMode(IdleMode.kCoast);
+        config4.idleMode(IdleMode.kCoast);
+        }
+        else {
+           
+        
+            config3.idleMode(IdleMode.kBrake);
+         config4.idleMode(IdleMode.kBrake);
+        }
+        intake3m.configure(config3, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+            intake2m.configure(config4, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
         SmartDashboard.putNumber("Lower intake encoder", encoder.getPosition());
         SmartDashboard.putNumber("2nd Lower intake encoder", encoder2.getPosition());
     }

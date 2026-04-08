@@ -10,8 +10,10 @@ import frc.robot.commands.Aim;
 import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
+import frc.robot.commands.FaceTag;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
+import frc.robot.commands.ShootFuelNoLock;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -117,13 +119,11 @@ public class RobotContainer {
 
     //misc ==================================================================================================================
 
-    limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
-    limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
+     limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
+     limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
 
-    Swerve.addCamera(0, limelightCamerafour);
-    Swerve.addCamera(1, limelightCameraBack);
-
-
+     Swerve.addCamera(0, limelightCamerafour);
+     Swerve.addCamera(1, limelightCameraBack);
 
     // ================= Choosers ==================================================================================================================================
     // autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -160,8 +160,8 @@ public class RobotContainer {
     
     Swerve.setupPathPlanner();
 
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, Swerve, 0.55, false));
-    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.75));
+    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, Swerve, 0.45, false));
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.7));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
     NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
@@ -169,6 +169,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
     NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
     NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
+
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -185,29 +186,25 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+
   private void configureBindings() {
+
     //misc Commands ==================================================================================================================
 
     revGamePad.onSquare().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
 
-    revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
+    //revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
     // revGamePad.onO().whileTrue(new Aim(aimer, false));
-    revGamePad.onX().whileTrue(new Aim(aimer, false));
-
-    
-
-
-
+    //revGamePad.onX().whileTrue(new Aim(aimer, false));
 
     //Waypoints ==================================================================================================================
     
     revGamePad.onDPadDown().whileTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition) );
-
+    revGamePad.onDPadRight().whileTrue(Swerve.driveTo(new Pose2d(14.4, 4.4, new Rotation2d(3*Math.PI))));
 
     A5.toggleOnTrue(Swerve.driveTo(WaypointConstants.middleShootingPosition));
     A6.toggleOnTrue(Swerve.driveTo(WaypointConstants.leftOfLadderShootingPosition));
     A4.toggleOnTrue(Swerve.driveTo(WaypointConstants.rightOfLadderShootingPosition));
-
 
     //Intake/Outake ==================================================================================================================
 
@@ -220,6 +217,8 @@ public class RobotContainer {
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.7));
 
+    revGamePad.onDPadUp().whileTrue(new FaceTag(Swerve, limelightCamerafour));
+
     //DANCE PAD ==========================================================================================================
     //Ex:
     //FOR STANDING ON CENTER WHILE PRESSING:
@@ -229,19 +228,18 @@ public class RobotContainer {
     //dancePad.onCenter().negate().and(dancePad::getO)
 
     //gyro
-    dancePad.onUp().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
+    dancePad.onCenter().and(dancePad::getUp).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
     //aimer
-    dancePad.onCenter().and(dancePad::getX).whileTrue(new AimExact(aimer, 1));
-    dancePad.onCenter().and(dancePad::getO).whileTrue(new AimExact(aimer, 0.75));
-    dancePad.onCenter().and(dancePad::getTriangle).whileTrue(new AimExact(aimer, 0));
-    dancePad.onCenter().and(dancePad::getSquare).whileTrue(new AimExact(aimer, 0.25));
-    dancePad.onCenter().and(dancePad::getLeft).whileTrue(new AimExact(aimer, 0.5));
+    dancePad.onCenter().and(dancePad::getX).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
+    dancePad.onCenter().and(dancePad::getO).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     //shooter/hopper/intake
     dancePad.onCenter().and(dancePad::getRight).whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
-    dancePad.onCenter().and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, true));
+    dancePad.onCenter().and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, false));
 
-    
-    
+
   }
 
   /* 
@@ -249,6 +247,7 @@ public class RobotContainer {
 
     @return the command to run in autonomous
    */
+
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return autoChooser.getSelected();

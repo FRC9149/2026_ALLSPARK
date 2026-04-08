@@ -6,8 +6,7 @@ import frc.robot.subsystems.Climber;
 
 public class RetractClimber extends Command{
 
-    private final Climber subsystem;
-
+  private final Climber subsystem;
 
   /**
    * Creates a new ExampleCommand.
