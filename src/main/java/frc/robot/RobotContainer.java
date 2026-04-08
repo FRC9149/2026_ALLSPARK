@@ -10,6 +10,7 @@ import frc.robot.commands.Aim;
 import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
+import frc.robot.commands.Leds;
 import frc.robot.commands.FaceTag;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
@@ -41,8 +42,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
 import com.robocats.swerve.SwerveSubsystem;
-import com.robocats.LED.LedStrip;
 
+import frc.robot.subsystems.Led;
 import frc.robot.subsystems.Aiming;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -141,11 +142,6 @@ public class RobotContainer {
         revGamePad.getRightX(),
         revGamePad.getRightY()
         ), Swerve)
-    );
-
-    leds.setDefaultCommand( 
-      new RunCommand( () -> leds.applyLEDPattern(LEDPattern.solid(Color.fromHSV(i++, 255, 80))
-        ), leds)
     ); 
 
     shooter.setDefaultCommand( 
@@ -247,6 +243,24 @@ public class RobotContainer {
 
     @return the command to run in autonomous
    */
+  private final Led ledd = new Led();
+
+  public Command Leds() {
+  Optional<Alliance> alliance = DriverStation.getAlliance();
+  
+  if (alliance.isPresent()) {
+    if (alliance.get() == Alliance.Red) {
+      // Make LEDs red
+      return new Leds(ledd, 255, 0, 0);
+    } if (alliance.get() == Alliance.Blue) {
+      // Make LEDs blue
+      return new Leds(ledd, 0, 0, 139);
+    } else { 
+      // Gold when not on an alliance
+      return new Leds(ledd, 255, 215, 0);
+    }
+  }
+    return null;
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
