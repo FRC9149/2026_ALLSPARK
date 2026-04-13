@@ -58,7 +58,7 @@ public class LowerIntake extends SubsystemBase{
         intake2m.set(0.1);
         intake3m.set(0.1);
 
-        subsystem.BoringSolidColorsNavy();
+        subsystem.solidNavy();
     }
     
     public void intakeUp() {
@@ -81,11 +81,11 @@ public class LowerIntake extends SubsystemBase{
             boolean obiWanKenobi = false;
     @Override
     public void periodic() {
+        //subsystem.solidIvyGreen();
+        //TODO Read this then delete it
+        //by putting this in the periodic function you are making it unable to change from this, you need to put the leds in the commands, not the subsystems
+        //you can make a default command/pattern inside robot container that will run when nothing else is happening (I'd suggest the red/blue alliance but idc)
 
-        subsystem.BoringSolidColorsIvyGreen();
-
-
-            
             if (DriverStation.isDisabled()){
             
         
