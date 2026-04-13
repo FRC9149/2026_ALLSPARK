@@ -85,7 +85,7 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
   private final Aiming aimer = new Aiming();
-  private final LedStrip leds = new LedStrip(9, 300);
+  private final LedStrip leds = new LedStrip(2, 300);
   private final LowerIntake lowerIntake = new LowerIntake(leds);
   private int i = 1;
 
@@ -136,7 +136,7 @@ public class RobotContainer {
     //Default Commands ==================================================================================================================
     Swerve.setDefaultCommand(
       new RunCommand(() -> Swerve.drive(
-        -revGamePad.getLeftX(),
+        revGamePad.getLeftX(),
         revGamePad.getLeftY(), 
         revGamePad.getRightX(),
         revGamePad.getRightY()
@@ -193,9 +193,9 @@ public class RobotContainer {
 
     revGamePad.onSquare().onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
 
-    //revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
+    revGamePad.onTriangle().whileTrue(new Aim(aimer, true));
     // revGamePad.onO().whileTrue(new Aim(aimer, false));
-    //revGamePad.onX().whileTrue(new Aim(aimer, false));
+    revGamePad.onX().whileTrue(new Aim(aimer, false));
 
     //Waypoints ==================================================================================================================
     

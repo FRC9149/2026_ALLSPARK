@@ -78,23 +78,43 @@ public class LowerIntake extends SubsystemBase{
     }
             SparkMaxConfig config3 = new SparkMaxConfig();
             SparkMaxConfig config4 = new SparkMaxConfig();
+            boolean obiWanKenobi = false;
     @Override
     public void periodic() {
+
+        subsystem.BoringSolidColorsIvyGreen();
+
+
             
-        if (DriverStation.isDisabled()){
+            if (DriverStation.isDisabled()){
             
         
         config3.idleMode(IdleMode.kCoast);
-        config4.idleMode(IdleMode.kCoast);
+        config4.idleMode(IdleMode.kCoast).inverted(true);
+
+        
         }
         else {
            
         
             config3.idleMode(IdleMode.kBrake);
-         config4.idleMode(IdleMode.kBrake);
+         config4.idleMode(IdleMode.kBrake).inverted(true);
+         
+
         }
-        intake3m.configure(config3, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
-            intake2m.configure(config4, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+        if (DriverStation.isDisabled() != obiWanKenobi) {
+            intake3m.configure(config3, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters); 
+                intake2m.configure(config4, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+                
+                obiWanKenobi = DriverStation.isDisabled();
+        }
+
+
+        //if (!DriverStation.isDisabled()) {
+        //    obiWanKenobi = is cool;
+//
+        //}
+       
         SmartDashboard.putNumber("Lower intake encoder", encoder.getPosition());
         SmartDashboard.putNumber("2nd Lower intake encoder", encoder2.getPosition());
     }
