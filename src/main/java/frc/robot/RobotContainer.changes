@@ -1,0 +1,72 @@
+Made some code, but don't want to update RobotContainer because we made changes that aren't pushed, so I made this file.
+
+just copy and paste the things inside the functions into their given functions (you don't need to copy the actual function)
+
+for the DancePad controller, you will need to make sure it doesn't activate other things on the robot while you are using it to control the robot. 
+(I didn't feel like changing this [I might later in the weekend])
+
+
+This one doesn't have a function, it's just in the class
+
+private final SendableChooser<Character> driveChooser = new SendableChooser<Character>();
+
+
+
+public RobotContainer() {
+
+
+    driveChooser.setDefaultOption("Robot to angle", 'R');
+    driveChooser.addOption("Infinite rotation", 'I');
+    driveChooser.addOption("DancePad", 'D');
+    SmartDashboard.putData("Drive Mode", driveChooser);
+
+
+}
+
+
+
+
+public void configureBindings() {
+
+
+    driveChooser.onChange((Character driveMode) -> {
+      switch(driveMode) {
+        case 'R': 
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              revGamePad.getLeftX(),
+              revGamePad.getLeftY(), 
+              revGamePad.getRightX(),
+              revGamePad.getRightY()
+            ), Swerve)
+          ); 
+          break;
+
+        case 'I': 
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              revGamePad.getLeftX(),
+              revGamePad.getLeftY(), 
+              revGamePad.getRightX(),
+              true
+            ), Swerve)
+          ); 
+          break;
+
+        case 'D': 
+          double speed = 0.75;
+          double rotationSpeed = 0.75;
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              dancePad.getLeft() ? -speed : dancePad.getRight() ? speed : 0,
+              dancePad.getDown() ? -speed : dancePad.getUp() ? speed : 0,
+              dancePad.getX() ? -rotationSpeed : dancePad.getO() ? rotationSpeed : 0,
+              true
+            ), Swerve)
+          ); 
+          break;
+      }
+    });
+
+
+}
