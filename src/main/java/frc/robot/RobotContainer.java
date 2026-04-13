@@ -86,8 +86,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
   private final Aiming aimer = new Aiming();
-  private final LedStrip leds = new LedStrip(2, 300);
-  private final LowerIntake lowerIntake = new LowerIntake(leds);
+ // private final LedStrip leds = new LedStrip(2, 300);
+ // private final LowerIntake lowerIntake = new LowerIntake(leds);
   private int i = 1;
 
   //Controllers ================================================================================================
@@ -245,22 +245,22 @@ public class RobotContainer {
    */
   private final Led ledd = new Led();
 
-  public Command Leds() {
-  Optional<Alliance> alliance = DriverStation.getAlliance();
-  
-  if (alliance.isPresent()) {
-    if (alliance.get() == Alliance.Red) {
-      // Make LEDs red
-      return new Leds(ledd, 255, 0, 0);
-    } if (alliance.get() == Alliance.Blue) {
-      // Make LEDs blue
-      return new Leds(ledd, 0, 0, 139);
-    } else { 
-      // Gold when not on an alliance
-      return new Leds(ledd, 255, 215, 0);
-    }
-  }
-    return null;
+  //public Command Leds() {
+  //Optional<Alliance> alliance = DriverStation.getAlliance();
+  //
+  //if (alliance.isPresent()) {
+  //  if (alliance.get() == Alliance.Red) {
+  //    // Make LEDs red
+  //    return new Leds(ledd, 255, 0, 0);
+  //  } if (alliance.get() == Alliance.Blue) {
+  //    // Make LEDs blue
+  //    return new Leds(ledd, 0, 0, 139);
+  //  } else { 
+  //    // Gold when not on an alliance
+  //    return new Leds(ledd, 255, 215, 0);
+  //  }
+  //}
+  //  return null;
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
