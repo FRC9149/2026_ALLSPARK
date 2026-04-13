@@ -51,6 +51,7 @@ import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Shooter;
 
 import com.robocats.vision.LimelightCamera;
+import com.robocats.LED.LedStrip;
 import com.robocats.controllers.DancePad;
 import com.robocats.controllers.RevGamePad;
 
@@ -86,8 +87,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Climber climber = new Climber(false);
   private final Aiming aimer = new Aiming();
- // private final LedStrip leds = new LedStrip(2, 300);
- // private final LowerIntake lowerIntake = new LowerIntake(leds);
+ private final LedStrip leds = new LedStrip(2, 300);
+ private final LowerIntake lowerIntake = new LowerIntake(leds);
   private int i = 1;
 
   //Controllers ================================================================================================
