@@ -82,6 +82,7 @@ public class RobotContainer {
       m_field
     );
     private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Character> driveChooser = new SendableChooser<Character>();
   private final Shooter shooter = new Shooter();
   private final HopperFeed hopper = new HopperFeed();
   private final Intake intake = new Intake();
@@ -132,7 +133,11 @@ public class RobotContainer {
 
     shooterChooser.setDefaultOption("true", true);
     shooterChooser.addOption("false", false);
+    driveChooser.setDefaultOption("Robot to angle", 'R');
+    driveChooser.addOption("Infinite rotation", 'I');
+    driveChooser.addOption("DancePad", 'D');
 
+    SmartDashboard.putData("Drive Mode", driveChooser);
     SmartDashboard.putData("Should use flywheel", shooterChooser);
 
     //Default Commands ==================================================================================================================
@@ -144,6 +149,44 @@ public class RobotContainer {
         revGamePad.getRightY()
         ), Swerve)
     ); 
+    driveChooser.onChange((Character driveMode) -> {
+      switch(driveMode) {
+        case 'R': 
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              revGamePad.getLeftX(),
+              revGamePad.getLeftY(), 
+              revGamePad.getRightX(),
+              revGamePad.getRightY()
+            ), Swerve)
+          ); 
+          break;
+
+        case 'I': 
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              revGamePad.getLeftX(),
+              revGamePad.getLeftY(), 
+              revGamePad.getRightX(),
+              true
+            ), Swerve)
+          ); 
+          break;
+
+        case 'D': 
+          double speed = 0.75;
+          double rotationSpeed = 0.75;
+          Swerve.setDefaultCommand(
+            new RunCommand(()->Swerve.drive(
+              dancePad.getLeft() ? -speed : dancePad.getRight() ? speed : 0,
+              dancePad.getDown() ? -speed : dancePad.getUp() ? speed : 0,
+              dancePad.getX() ? -rotationSpeed : dancePad.getO() ? rotationSpeed : 0,
+              true
+            ), Swerve)
+          ); 
+          break;
+      }
+    });
 
     shooter.setDefaultCommand( 
       new RunCommand( () -> {
@@ -225,18 +268,25 @@ public class RobotContainer {
     //dancePad.onCenter().negate().and(dancePad::getO)
 
     //gyro
-    dancePad.onCenter().and(dancePad::getUp).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getUp).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
     //aimer
-    dancePad.onCenter().and(dancePad::getX).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
-    dancePad.onCenter().and(dancePad::getO).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
-    dancePad.onCenter().and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
-    dancePad.onCenter().and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
-    dancePad.onCenter().and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getX).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getO).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     //shooter/hopper/intake
-    dancePad.onCenter().and(dancePad::getRight).whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
-    dancePad.onCenter().and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getRight).whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, false));
 
 
+
+
+    dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getStart).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
+    dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getSelect).whileTrue(new MoveIntake(lowerIntake, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
+    dancePad.onCenter().negate().and(()->driveChooser.getSelected() == 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onSquare().and(()->driveChooser.getSelected() == 'D').whileTrue(new Command_4_intake(intake, 0.7));
   }
 
   /* 
