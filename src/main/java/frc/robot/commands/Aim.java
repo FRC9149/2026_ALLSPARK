@@ -39,7 +39,7 @@ public class Aim extends Command{
   @Override
   public void execute() {
     height += (up ? 1 : -1) * 0.0035;
-    height = MathUtil.clamp(height, 0, 0.85);
+    height = MathUtil.clamp(height, 0, 0.95);
     
     subsystem.setHeight(height);
   }

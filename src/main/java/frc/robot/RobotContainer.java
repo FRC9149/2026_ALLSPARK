@@ -155,8 +155,8 @@ public class RobotContainer {
         case 'R': 
           Swerve.setDefaultCommand(
             new RunCommand(()->Swerve.drive(
-              revGamePad.getLeftX(),
-              revGamePad.getLeftY(), 
+              revGamePad.getLeftX() / 13,
+              revGamePad.getLeftY() / 13, 
               revGamePad.getRightX(),
               revGamePad.getRightY()
             ), Swerve)
