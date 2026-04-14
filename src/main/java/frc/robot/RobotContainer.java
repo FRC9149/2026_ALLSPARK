@@ -11,6 +11,7 @@ import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
 import frc.robot.commands.Leds;
+import frc.robot.commands.LockSwerve;
 import frc.robot.commands.FaceTag;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
@@ -250,8 +251,8 @@ public class RobotContainer {
 
     revGamePad.onDPadLeft().whileTrue(new Command_4_intake(intake, -0.35));
 
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuel(shooter, hopper, Swerve, 0.55, false));
-    revGamePad.onRightBumper().whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuelNoLock(shooter, hopper,  0.55, false));
+    revGamePad.onRightBumper().whileTrue(new ShootFuelNoLock(shooter, hopper,  1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
     revGamePad.onOptions().whileTrue(new MoveIntake(lowerIntake, true));
@@ -271,7 +272,7 @@ public class RobotContainer {
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getUp).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
     //aimer
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getX).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
-    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getO).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getO).whileTrue(new LockSwerve(Swerve));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
@@ -294,7 +295,7 @@ public class RobotContainer {
 
     @return the command to run in autonomous
    */
-  private final Led ledd = new Led();
+ // private final Led ledd = new Led();
 
   //public Command Leds() {
   //Optional<Alliance> alliance = DriverStation.getAlliance();
