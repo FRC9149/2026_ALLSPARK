@@ -16,6 +16,7 @@ import frc.robot.commands.FaceTag;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.ShootFuel;
 import frc.robot.commands.ShootFuelNoLock;
+import frc.robot.commands.ShootWithExtraWait;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -69,7 +70,7 @@ public class RobotContainer {
   
   private final SendableChooser<Boolean> shooterChooser = new SendableChooser<>();
 
-  private LimelightCamera limelightCamerafour;
+  public LimelightCamera limelightCamerafour;
   private LimelightCamera limelightCameraBack;
 
   private final Field2d m_field = new Field2d();
@@ -140,6 +141,7 @@ public class RobotContainer {
 
     SmartDashboard.putData("Drive Mode", driveChooser);
     SmartDashboard.putData("Should use flywheel", shooterChooser);
+    
 
     //Default Commands ==================================================================================================================
     Swerve.setDefaultCommand(
@@ -155,8 +157,8 @@ public class RobotContainer {
         case 'R': 
           Swerve.setDefaultCommand(
             new RunCommand(()->Swerve.drive(
-              revGamePad.getLeftX() / 13,
-              revGamePad.getLeftY() / 13, 
+              revGamePad.getLeftX(),
+              revGamePad.getLeftY(), 
               revGamePad.getRightX(),
               revGamePad.getRightY()
             ), Swerve)
@@ -169,7 +171,7 @@ public class RobotContainer {
               revGamePad.getLeftX(),
               revGamePad.getLeftY(), 
               revGamePad.getRightX(),
-              true
+              revGamePad.getRightY()
             ), Swerve)
           ); 
           break;
@@ -201,7 +203,7 @@ public class RobotContainer {
     
     Swerve.setupPathPlanner();
 
-    NamedCommands.registerCommand("Shoot", new ShootFuel(shooter, hopper, Swerve, 0.45, false));
+    NamedCommands.registerCommand("Shoot", new ShootFuelNoLock(shooter, hopper,  0.57, false));
     NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.7));
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
@@ -251,7 +253,7 @@ public class RobotContainer {
 
     revGamePad.onDPadLeft().whileTrue(new Command_4_intake(intake, -0.35));
 
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuelNoLock(shooter, hopper,  0.55, false));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuelNoLock(shooter, hopper,  0.57, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuelNoLock(shooter, hopper,  1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
@@ -277,7 +279,7 @@ public class RobotContainer {
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     //shooter/hopper/intake
-    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getRight).whileTrue(new ShootFuel(shooter, hopper, Swerve, 1, true));
+    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getRight).whileTrue(new ShootFuelNoLock(shooter, hopper,  1, true));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getDown).whileTrue(new MoveIntake(lowerIntake, false));
 
 

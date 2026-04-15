@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HopperFeed;
 
 /** An example command that uses an example subsystem. */
-public class ShootFuel extends Command {
+public class ShootWithExtraWait extends Command {
   @SuppressWarnings("PMD.UnusedPrivateField")
   private final Shooter shooterSub;
   private final HopperFeed hopperSub;
@@ -27,7 +27,7 @@ public class ShootFuel extends Command {
    *
    * @param shooterSub The subsystem used by this command.
    */
-  public ShootFuel(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double flyspeed, boolean Reverse) {
+  public ShootWithExtraWait(Shooter shooterSub, HopperFeed hopperSub, SwerveSubsystem swerve, double flywheel, boolean Reverse) {
     this.shooterSub = shooterSub;
     this.hopperSub = hopperSub;
     this.swerve = swerve;
@@ -49,14 +49,15 @@ public class ShootFuel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(!Reverse){shooterSub.flyWheel(flyspeed);}
     if(Reverse == true) {
       shooterSub.lower(-1);
       hopperSub.setSpeed(-1);
       shooterSub.flyWheel(-0.3);
-    } else if(i >25) {
-      shooterSub.lower(lowerSpeed);
+    } else if(i >60) {
+      shooterSub.lower(0.7);
       
-      if (j>13){
+      if (j>80){
         hopperSub.setSpeed(1);
       }
       j++;

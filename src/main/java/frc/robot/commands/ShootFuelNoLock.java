@@ -49,11 +49,13 @@ public class ShootFuelNoLock extends Command {
     if(Reverse == true) {
       shooterSub.lower(-0.7);
       hopperSub.setSpeed(-1);
-    } else if(i >50) {
-      shooterSub.lower(1);
+      shooterSub.flyWheel(-0.3);
+    } else if(i >25) {
+      shooterSub.lower(.7);
       
-      if (j>25){
-        hopperSub.setSpeed(1);
+
+      if (j>13){
+        hopperSub.setSpeed(0.7);
       }
       j++;
     }
