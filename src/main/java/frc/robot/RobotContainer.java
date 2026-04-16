@@ -7,10 +7,9 @@ package frc.robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.WaypointConstants;
 import frc.robot.commands.Aim;
-import frc.robot.commands.AimExact;
+//import frc.robot.commands.AimExact;
 import frc.robot.commands.ClimbToLevel;
 import frc.robot.commands.Command_4_intake;
-import frc.robot.commands.Leds;
 import frc.robot.commands.LockSwerve;
 import frc.robot.commands.FaceTag;
 import frc.robot.commands.MoveIntake;
@@ -45,7 +44,6 @@ import edu.wpi.first.wpilibj.util.Color;
 
 import com.robocats.swerve.SwerveSubsystem;
 
-import frc.robot.subsystems.Led;
 import frc.robot.subsystems.Aiming;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -54,6 +52,7 @@ import frc.robot.subsystems.Shooter;
 
 import com.robocats.vision.LimelightCamera;
 import com.robocats.LED.LedStrip;
+import com.robocats.LED.implement_LEDPattern;
 import com.robocats.controllers.DancePad;
 import com.robocats.controllers.RevGamePad;
 
@@ -199,22 +198,27 @@ public class RobotContainer {
           shooter.flyWheel(shooterChooser.getSelected() ? 0.2 : 0);
         }
       }, shooter)
-    );    
+    );
     
-    Swerve.setupPathPlanner();
-
+    leds.setDefaultCommand(new RunCommand( () -> 
+      leds.flash()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+      // leds.setAllianeColor(leds.rgbToColor(255, 0, 0)[0])
+    ));                                                                                                  
+                                                                                       
+    Swerve.setupPathPlanner();                                                    
+                                                                                                                     
     NamedCommands.registerCommand("Shoot", new ShootFuelNoLock(shooter, hopper,  0.57, false));
-    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.7));
-    NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));
-    NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));
-    NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));
-    NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));
-    NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));
-    NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));
-    NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));
-
-
-    autoChooser = AutoBuilder.buildAutoChooser();
+    NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.7));                           
+    NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));                                            
+    NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));                                                    
+    NamedCommands.registerCommand("Climb1", new ClimbToLevel(climber, 1));                                           
+    NamedCommands.registerCommand("Climb2", new ClimbToLevel(climber, 2));                                                     
+    NamedCommands.registerCommand("Climb3", new ClimbToLevel(climber, 3));                                                                   
+    //NamedCommands.registerCommand("Aim1", new AimExact(aimer, .35));                                                                         
+    NamedCommands.registerCommand("RetractClimber", new RunCommand(climber::retract, climber));                                 
+                                                                                                                                                 
+                                                                                                                                                            
+    autoChooser = AutoBuilder.buildAutoChooser();                                                                                
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();

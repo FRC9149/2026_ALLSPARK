@@ -31,17 +31,15 @@ public class Aim extends Command{
   @Override
   public void initialize() {
     //subsystem.setHeight(aimHeight);
-    height = subsystem.getHeight();
+    
     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    height += (up ? 1 : -1) * 0.0035;
-    height = MathUtil.clamp(height, 0, 0.95);
-    
-    subsystem.setHeight(height);
+    if(up) { subsystem.extend();}
+    else if (!up){subsystem.retract();}
   }
 
   // Returns true when the command should end.
@@ -52,5 +50,7 @@ public class Aim extends Command{
   
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}  
+  public void end(boolean interrupted) {
+    subsystem.stop();
+  }  
 }
