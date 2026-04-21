@@ -49,6 +49,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LowerIntake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.TempLed;
 
 import com.robocats.vision.LimelightCamera;
 import com.robocats.LED.LedStrip;
@@ -90,7 +91,9 @@ public class RobotContainer {
   private final Climber climber = new Climber(false);
   private final Aiming aimer = new Aiming();
  private final LedStrip leds = new LedStrip(2, 300);
+ private final TempLed newLeds = new TempLed();
  private final LowerIntake lowerIntake = new LowerIntake(leds);
+//  private final TempLed newLeds = new TempLed();
   private int i = 1;
 
   //Controllers ================================================================================================
@@ -106,11 +109,12 @@ public class RobotContainer {
   JoystickButton A6 = new JoystickButton(ButtonBoard, 6);
   JoystickButton A7 = new JoystickButton(ButtonBoard, 7);
   JoystickButton A8 = new JoystickButton(ButtonBoard, 8);
+
   JoystickButton A9 = new JoystickButton(ButtonBoard, 9);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // ================= PATHPLANNER EVENTS ===================================================================================================================================
+    // ================= PATHPLANNER EVENTS ======================================
 
     PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
       m_field.getObject("target pose").setPose(pose);
@@ -126,8 +130,8 @@ public class RobotContainer {
      limelightCamerafour = new LimelightCamera("limelight-four", Swerve::getRotation, null);
      limelightCameraBack = new LimelightCamera("limelight-back", Swerve::getRotation, null);
 
-     Swerve.addCamera(0, limelightCamerafour);
-     Swerve.addCamera(1, limelightCameraBack);
+    //  Swerve.addCamera(0, limelightCamerafour);
+    //  Swerve.addCamera(1, limelightCameraBack);
 
     // ================= Choosers ==================================================================================================================================
     // autoChooser.setDefaultOption("Do Nothing", new InstantCommand());
@@ -200,14 +204,17 @@ public class RobotContainer {
       }, shooter)
     );
     
-    leds.setDefaultCommand(new RunCommand( () -> 
-      leds.flash()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-      // leds.setAllianeColor(leds.rgbToColor(255, 0, 0)[0])
-    ));                                                                                                  
+  //  leds.setDefaultCommand(new RunCommand( () -> {
+    // leds.setAll(0, 0, 255);
+      //  leds.setAllianeColor(leds.rgbToColor(255, 0, 0)[0]);
+    //  }, leds
+  //  )); 
+  newLeds.setup();
+   newLeds.setBlue();                                                                                                 
                                                                                        
     Swerve.setupPathPlanner();                                                    
                                                                                                                      
-    NamedCommands.registerCommand("Shoot", new ShootFuelNoLock(shooter, hopper,  0.57, false));
+    NamedCommands.registerCommand("Shoot", new ShootFuelNoLock(shooter, hopper,  0.535, false));
     NamedCommands.registerCommand("Intake", new Command_4_intake(intake, 0.7));                           
     NamedCommands.registerCommand("LowerIntake", new MoveIntake(lowerIntake, false));                                            
     NamedCommands.registerCommand("RaiseIntake", new MoveIntake(lowerIntake, true));                                                    
@@ -257,7 +264,7 @@ public class RobotContainer {
 
     revGamePad.onDPadLeft().whileTrue(new Command_4_intake(intake, -0.35));
 
-    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuelNoLock(shooter, hopper,  0.57, false));
+    revGamePad.onRightTrigger(0.1).whileTrue(new ShootFuelNoLock(shooter, hopper,  0.535, false));
     revGamePad.onRightBumper().whileTrue(new ShootFuelNoLock(shooter, hopper,  1, true));
 
     revGamePad.onLeftBumper().whileTrue(new MoveIntake(lowerIntake, false));
@@ -265,6 +272,7 @@ public class RobotContainer {
     revGamePad.onLeftTrigger(0.1).whileTrue(new Command_4_intake(intake, 0.7));
 
     revGamePad.onDPadUp().whileTrue(new FaceTag(Swerve, limelightCamerafour));
+    // revGamePad.onRightStickIn().or(revGamePad.onLeftStickIn()).onTrue(new RunCommand(()->{int a = 1/0;}));
 
     //DANCE PAD ==========================================================================================================
     //Ex:
@@ -279,8 +287,8 @@ public class RobotContainer {
     //aimer
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getX).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getO).whileTrue(new LockSwerve(Swerve));
-    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
-    dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getSquare).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
+   
+
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getLeft).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
     //shooter/hopper/intake
     dancePad.onCenter().and(()->driveChooser.getSelected() != 'D').and(dancePad::getRight).whileTrue(new ShootFuelNoLock(shooter, hopper,  1, true));
@@ -292,8 +300,8 @@ public class RobotContainer {
     dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getStart).onTrue(new InstantCommand(Swerve.swerveConfig.gyroscope()::zero, Swerve));
     dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getSelect).whileTrue(new MoveIntake(lowerIntake, false));
     dancePad.onCenter().and(()->driveChooser.getSelected() == 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 1, false));
-    dancePad.onCenter().negate().and(()->driveChooser.getSelected() == 'D').and(dancePad::getTriangle).whileTrue(new ShootFuelNoLock(shooter, hopper, 0.55, false));
-    dancePad.onSquare().and(()->driveChooser.getSelected() == 'D').whileTrue(new Command_4_intake(intake, 0.7));
+
+    dancePad.onSquare().and(()->driveChooser.getSelected() == 'D').whileTrue(new Command_4_intake(intake, 0.8));
   }
 
   /* 

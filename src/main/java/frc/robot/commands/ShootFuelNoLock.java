@@ -55,7 +55,7 @@ public class ShootFuelNoLock extends Command {
       
 
       if (j>13){
-        hopperSub.setSpeed(0.7);
+        hopperSub.setSpeed(0.6);
       }
       j++;
     }
